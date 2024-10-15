@@ -1,0 +1,8 @@
+# Ignore Docker volumes
+data/
+
+# Ignore common Node.js dependencies and logs
+**/node_modules
+**/dist
+**/build
+**/logs
