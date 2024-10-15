@@ -3,6 +3,7 @@ import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import expressSession from 'express-session';
 import cors from 'cors';
 import prisma from './constants/config.js';
+import usersRouter from './routes/users.js';
 
 const app = express();
 const PORT = 3000;
@@ -38,6 +39,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/', usersRouter);
 
 app.get('/', (req, res) => {
   res.send('hello');
