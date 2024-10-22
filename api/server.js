@@ -11,7 +11,11 @@ const PORT = 3000
 // cors setup
 app.use(
     cors({
-        origin: ['http://localhost:5137', 'http://localhost:5174'],
+        origin: [
+            'http://localhost:5137',
+            'http://localhost:5174',
+            'http://localhost:5173',
+        ],
         methods: ['POST', 'PUT', 'GET', 'OPTION', 'HEAD', 'DELETE', 'PATCH'],
         credentials: true,
     })
