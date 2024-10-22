@@ -1,52 +1,43 @@
 services:
-  db:
-    image: postgres:17
-    networks:
-      - glutenfree-map_default
-    container_name: db
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: user
-      POSTGRES_DB: db
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-  api:
-    build: ./api
-    networks:
-      - glutenfree-map_default
-    container_name: api
-    restart: always
-    ports:
-      - 3000:3000
-    depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-      - DB_USER=user
-      - DB_PASSWORD=password
-      - DB_NAME=db
-      - DB_PORT=5432
-      - DATABASE_URL=postgresql://user:password@db:5432/db?schema=public
-    volumes:
-      - ./api:/usr/src/app
-  frontend:
-    build: ./frontend
-    networks:
-      - glutenfree-map_default
-    container_name: frontend
-    restart: always
-    ports:
-      - 5173:5173
-    depends_on:
-      - api
-      - db
-    environment:
-      - VITE_AXIOS_BASE_URL=http://localhost:3000
-    volumes:
-      - ./frontend:/usr/src/app
-networks:
-  glutenfree-map_default:
-    external: true
+    db:
+        image: postgres:17
+        container_name: db
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: user
+            POSTGRES_DB: db
+        volumes:
+            - ./data:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+    api:
+        build: ./api
+        container_name: api
+        restart: always
+        ports:
+            - 3000:3000
+        depends_on:
+            - db
+        environment:
+            - DB_HOST=db
+            - DB_USER=user
+            - DB_PASSWORD=password
+            - DB_NAME=db
+            - DB_PORT=5432
+            - DATABASE_URL=postgresql://user:password@db:5432/db?schema=public
+        volumes:
+            - ./api:/usr/src/app
+    frontend:
+        build: ./frontend
+        container_name: frontend
+        restart: always
+        ports:
+            - 5173:5173
+        depends_on:
+            - api
+            - db
+        environment:
+            - VITE_AXIOS_BASE_URL=http://localhost:3000
+        volumes:
+            - ./frontend:/usr/src/app
