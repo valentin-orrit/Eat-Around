@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -15,13 +15,13 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
-  password String
-  is_admin Boolean
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  password  String
+  is_admin  Boolean
   favorites Favorite[]
-  city      City?     @relation(fields: [cityId], references: [id])
+  city      City?      @relation(fields: [cityId], references: [id])
   cityId    Int?
 
   createdAt DateTime @default(now())
@@ -29,31 +29,31 @@ model User {
 }
 
 model Place {
-  id          Int       @id @default(autoincrement())
-  name        String
-  latitude    Float
-  longitude   Float
-  favorites   Favorite[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  latitude  Float
+  longitude Float
+  favorites Favorite[]
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model City {
-  id          Int       @id @default(autoincrement())
-  name        String
+  id   Int    @id @default(autoincrement())
+  name String
   User User[]
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Favorite {
-  id       Int      @id @default(autoincrement())
-  user     User     @relation(fields: [userId], references: [id])
-  userId   Int
-  place    Place    @relation(fields: [placeId], references: [id])
-  placeId  Int
+  id      Int   @id @default(autoincrement())
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int
+  place   Place @relation(fields: [placeId], references: [id])
+  placeId Int
 
   createdAt DateTime @default(now())
 
@@ -61,9 +61,9 @@ model Favorite {
 }
 
 model Session {
-  id String @id
-  sid String @unique
-  data String
+  id        String   @id
+  sid       String   @unique
+  data      String
   expiresAt DateTime
-  userId String?
+  userId    String?
 }
