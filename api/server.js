@@ -4,6 +4,9 @@ import expressSession from 'express-session'
 import cors from 'cors'
 import prisma from './constants/config.js'
 import usersRouter from './routes/users.js'
+import citiesRouter from './routes/cities.js'
+import placesRouter from './routes/places.js'
+import favoritesRouter from './routes/favorites.js'
 
 const app = express()
 const PORT = 3000
@@ -44,6 +47,9 @@ app.use(
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/', usersRouter)
+app.use('/', citiesRouter)
+app.use('/', placesRouter)
+app.use('/', favoritesRouter)
 
 app.get('/', (req, res) => {
     res.send('hello')
