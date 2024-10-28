@@ -42,7 +42,6 @@ model Place {
 model City {
   id          Int       @id @default(autoincrement())
   name        String
-  zipcode     String @unique
   User User[]
 
   createdAt DateTime    @default(now())
