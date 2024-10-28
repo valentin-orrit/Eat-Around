@@ -1,13 +1,18 @@
 import './styles/App.css'
-import DisplayUsers from './components/DisplayUsers'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Home from './pages/Homepage'
+import Dashboard from './pages/Dashboard'
 
 function App() {
     return (
-        <>
-            <div>
-                <DisplayUsers />
-            </div>
-        </>
+        <Router>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+        </Router>
     )
 }
 
