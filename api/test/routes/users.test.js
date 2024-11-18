@@ -1,13 +1,13 @@
 import request from 'supertest'
 import { jest } from '@jest/globals'
 import express from 'express'
-import userRoutes from '../../routes/users.js'
+import usersRouter from '../../routes/users.js'
 import prisma from '../../prisma/client.js'
 
 describe('User Routes', () => {
     const app = express()
     app.use(express.json())
-    app.use(userRoutes)
+    app.use(usersRouter)
 
     // GET all users
     describe('GET /api/users', () => {
