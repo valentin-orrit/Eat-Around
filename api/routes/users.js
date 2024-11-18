@@ -9,7 +9,7 @@ router.get('/api/users', async (req, res) => {
         const users = await prisma.user.findMany({})
         res.status(200).json(users)
     } catch (error) {
-        console.error('error fetching users:', error)
+        //console.error('error fetching users:', error)
         res.status(500).json({ error: error.message })
     }
 })
