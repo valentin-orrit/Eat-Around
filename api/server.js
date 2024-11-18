@@ -52,7 +52,7 @@ app.use('/', placesRouter)
 app.use('/', favoritesRouter)
 
 app.get('/', (req, res) => {
-    res.send('hello')
+    res.send('hello to API')
 })
 
 app.listen(PORT, (err) => {
