@@ -1,8 +1,7 @@
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
+import prisma from '../prisma/client.js'
 
 const router = express.Router()
-const prisma = new PrismaClient()
 
 // GET - get all places
 router.get('/api/places', async (req, res) => {
