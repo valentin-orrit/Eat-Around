@@ -4,19 +4,20 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "dev" ]
+    push:
+        branches: ['dev']
+    pull_request:
+        branches: ['dev']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-    - run: npm run test:api
+        strategy:
+            matrix:
+                node-version: [22.x]
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+        steps:
+            - run: docker-compose.yml
+            - run: npm run test:api
