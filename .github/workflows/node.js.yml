@@ -56,6 +56,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            # Install dependencies for the API
+            - name: Install API dependencies
+              run: npm install --prefix ./api
+
             # Run tests
             - name: Run API tests
               run: npm run test:api
