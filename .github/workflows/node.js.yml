@@ -27,6 +27,10 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y docker-compose
 
+            # Install all dependencies
+            - name: Install all dependencies
+              run: npm run install:all
+
             # Start Docker Compose services
             - name: Start Docker Compose
               run: |
