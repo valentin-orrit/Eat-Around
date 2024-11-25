@@ -1,6 +1,7 @@
 {
     "name": "glutenfree-map",
     "scripts": {
-        "install:all": "npm install --prefix ./api && npm install --prefix ./frontend"
+        "install:all": "npm install --prefix ./api && npm install --prefix ./frontend",
+        "test:api": "npm run test --prefix ./api"
     }
 }
