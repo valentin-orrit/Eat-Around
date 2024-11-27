@@ -9,7 +9,7 @@ import placesRouter from './routes/places.js'
 import favoritesRouter from './routes/favorites.js'
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // cors setup
 app.use(
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
     res.send('hello to API')
 })
 
-app.listen(PORT, (err) => {
+app.listen(PORT, '0.0.0.0', (err) => {
     if (err) console.log(err)
     console.log(`Server is running on port ${PORT}`)
 })
