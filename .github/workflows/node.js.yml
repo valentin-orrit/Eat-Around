@@ -35,7 +35,6 @@ jobs:
             # Start Docker Compose services
             - name: Start Docker Compose
               run: |
-                  docker-compose up -d db
                   docker-compose up -d api
 
             # Wait for services to be ready
