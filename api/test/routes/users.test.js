@@ -10,7 +10,7 @@ describe('User Routes', () => {
     app.use(usersRouter)
 
     // GET all users
-    describe('GET /api/users', () => {
+    describe('GET /users', () => {
         it('should return all users', async () => {
             const mockUsers = [
                 { id: 1, name: 'John', email: 'john@test.com' },
@@ -19,7 +19,7 @@ describe('User Routes', () => {
 
             jest.spyOn(prisma.user, 'findMany').mockResolvedValue(mockUsers)
 
-            const response = await request(app).get('/api/users')
+            const response = await request(app).get('/users')
 
             expect(response.statusCode).toBe(200)
             expect(response.body).toEqual(mockUsers)
@@ -30,7 +30,7 @@ describe('User Routes', () => {
                 new Error('Database error')
             )
 
-            const response = await request(app).get('/api/users')
+            const response = await request(app).get('/users')
 
             expect(response.statusCode).toBe(500)
             expect(response.body).toHaveProperty('error')
@@ -38,12 +38,12 @@ describe('User Routes', () => {
     })
 
     // GET single user
-    describe('GET /api/user/:id', () => {
+    describe('GET /user/:id', () => {
         it('should return a specific user', async () => {
             const mockUser = { id: 1, name: 'John', email: 'john@test.com' }
             jest.spyOn(prisma.user, 'findUnique').mockResolvedValue(mockUser)
 
-            const response = await request(app).get('/api/user/1')
+            const response = await request(app).get('/user/1')
 
             expect(response.statusCode).toBe(200)
             expect(response.body).toEqual(mockUser)
@@ -52,7 +52,7 @@ describe('User Routes', () => {
         it('should return 404 if user not found', async () => {
             prisma.user.findUnique.mockResolvedValue(null)
 
-            const response = await request(app).get('/api/user/999')
+            const response = await request(app).get('/user/999')
 
             expect(response.statusCode).toBe(404)
             expect(response.body).toHaveProperty('error', 'User not found')
@@ -60,7 +60,7 @@ describe('User Routes', () => {
     })
 
     // POST create user
-    describe('POST /api/create-user', () => {
+    describe('POST /create-user', () => {
         it('should create a new user', async () => {
             const newUser = {
                 name: 'New User',
@@ -72,7 +72,7 @@ describe('User Routes', () => {
             jest.spyOn(prisma.user, 'create').mockResolvedValue(createdUser)
 
             const response = await request(app)
-                .post('/api/create-user')
+                .post('/create-user')
                 .send(newUser)
 
             expect(response.statusCode).toBe(200)
@@ -81,7 +81,7 @@ describe('User Routes', () => {
     })
 
     // PUT update user
-    describe('PUT /api/update-user/:id', () => {
+    describe('PUT /update-user/:id', () => {
         it('should update an existing user', async () => {
             const updateData = {
                 name: 'Updated Name',
@@ -92,7 +92,7 @@ describe('User Routes', () => {
             jest.spyOn(prisma.user, 'update').mockResolvedValue(updatedUser)
 
             const response = await request(app)
-                .put('/api/update-user/1')
+                .put('/update-user/1')
                 .send(updateData)
 
             expect(response.statusCode).toBe(200)
@@ -101,12 +101,12 @@ describe('User Routes', () => {
     })
 
     // DELETE user
-    describe('DELETE /api/user/:id', () => {
+    describe('DELETE /user/:id', () => {
         it('should delete a user', async () => {
             const deletedUser = { id: 1, name: 'John', email: 'john@test.com' }
             jest.spyOn(prisma.user, 'delete').mockResolvedValue(deletedUser)
 
-            const response = await request(app).delete('/api/user/1')
+            const response = await request(app).delete('/user/1')
 
             expect(response.statusCode).toBe(200)
             expect(response.body).toEqual(deletedUser)
@@ -117,7 +117,7 @@ describe('User Routes', () => {
             error.code = 'P2025'
             prisma.user.delete.mockRejectedValue(error)
 
-            const response = await request(app).delete('/api/user/999')
+            const response = await request(app).delete('/user/999')
 
             expect(response.statusCode).toBe(404)
             expect(response.body).toHaveProperty('error', 'User not found')

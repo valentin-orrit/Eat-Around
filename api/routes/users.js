@@ -14,7 +14,7 @@ router.get('/users', async (req, res) => {
 })
 
 // GET - get user
-router.get('/api/user/:id', async (req, res) => {
+router.get('/user/:id', async (req, res) => {
     const { id } = req.params
 
     try {
@@ -33,7 +33,7 @@ router.get('/api/user/:id', async (req, res) => {
 })
 
 // POST - create a user
-router.post('/api/create-user', async (req, res) => {
+router.post('/create-user', async (req, res) => {
     const { name, email, password, is_admin } = req.body
 
     try {
@@ -52,7 +52,7 @@ router.post('/api/create-user', async (req, res) => {
 })
 
 // PUT - update user
-router.put('/api/update-user/:id', async (req, res) => {
+router.put('/update-user/:id', async (req, res) => {
     const { id } = req.params
     const { name, email, is_admin } = req.body
 
@@ -73,7 +73,7 @@ router.put('/api/update-user/:id', async (req, res) => {
 })
 
 // DELETE - delete user
-router.delete('/api/user/:id', async (req, res) => {
+router.delete('/user/:id', async (req, res) => {
     const { id } = req.params
 
     try {
