@@ -8,7 +8,7 @@ export default function DisplayUsers() {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_AXIOS_BASE_URL}/api/users`
+                    `${import.meta.env.VITE_AXIOS_BASE_URL}/users`
                 )
                 setUsers(response.data)
             } catch (error) {

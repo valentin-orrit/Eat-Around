@@ -4,7 +4,7 @@ import prisma from '../prisma/client.js'
 const router = express.Router()
 
 // GET - get all favorites
-router.get('/api/favorites', async (req, res) => {
+router.get('/favorites', async (req, res) => {
     try {
         const favorites = await prisma.favorite.findMany({
             include: {

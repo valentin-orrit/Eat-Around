@@ -4,7 +4,7 @@ import prisma from '../prisma/client.js'
 const router = express.Router()
 
 // GET - get all users
-router.get('/api/users', async (req, res) => {
+router.get('/users', async (req, res) => {
     try {
         const users = await prisma.user.findMany({})
         res.status(200).json(users)

@@ -53,7 +53,7 @@ app.use('/', placesRouter)
 app.use('/', favoritesRouter)
 
 app.get('/', (req, res) => {
-    res.send('hello to API')
+    res.send('welcome to Eat Around API')
 })
 
 app.listen(PORT, '0.0.0.0', (err) => {

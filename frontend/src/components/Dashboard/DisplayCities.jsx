@@ -8,7 +8,7 @@ export default function DisplayCities() {
         const fetchCities = async () => {
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_AXIOS_BASE_URL}/api/cities`
+                    `${import.meta.env.VITE_AXIOS_BASE_URL}/cities`
                 )
                 setCities(response.data)
             } catch (error) {

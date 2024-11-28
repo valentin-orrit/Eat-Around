@@ -8,7 +8,7 @@ export default function DisplayPlaces() {
         const fetchPlaces = async () => {
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_AXIOS_BASE_URL}/api/places`
+                    `${import.meta.env.VITE_AXIOS_BASE_URL}/places`
                 )
                 setPlaces(response.data)
             } catch (error) {

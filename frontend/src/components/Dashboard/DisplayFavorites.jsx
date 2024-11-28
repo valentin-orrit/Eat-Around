@@ -8,7 +8,7 @@ export default function DisplayFavorites() {
         const fetchFavorites = async () => {
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_AXIOS_BASE_URL}/api/favorites`
+                    `${import.meta.env.VITE_AXIOS_BASE_URL}/favorites`
                 )
                 setFavorites(response.data)
             } catch (error) {
