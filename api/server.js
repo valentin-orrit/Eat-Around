@@ -18,6 +18,7 @@ app.use(
             'http://localhost:5137',
             'http://localhost:5174',
             'http://localhost:5173',
+            'https://eat-around-frontend.fly.dev',
         ],
         methods: ['POST', 'PUT', 'GET', 'OPTION', 'HEAD', 'DELETE', 'PATCH'],
         credentials: true,

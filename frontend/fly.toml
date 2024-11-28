@@ -1,19 +1,19 @@
-# fly.toml app configuration file generated for eat-around-api on 2024-11-27T16:54:04+01:00
+# fly.toml app configuration file generated for eat-around-frontend on 2024-11-28T10:42:12+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'eat-around-api'
+app = 'eat-around-frontend'
 primary_region = 'cdg'
 
 [build]
 
 [http_service]
-  internal_port = 3000
-  force_https = false
+  internal_port = 80
+  force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0
   processes = ['app']
 
 [[vm]]
