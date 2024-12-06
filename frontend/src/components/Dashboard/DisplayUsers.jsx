@@ -3,13 +3,12 @@ import axios from 'axios'
 
 export default function DisplayUsers() {
     const [users, setUsers] = useState([])
+    const api = import.meta.env.VITE_AXIOS_BASE_URL
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_AXIOS_BASE_URL}/users`
-                )
+                const response = await axios.get(`${api}/users`)
                 setUsers(response.data)
             } catch (error) {
                 console.error('Error fetching users:', error)
@@ -18,6 +17,8 @@ export default function DisplayUsers() {
 
         fetchUsers()
     }, [])
+
+    console.log(api)
 
     return (
         <div className="min-w-0.5 my-10 mx-40">
