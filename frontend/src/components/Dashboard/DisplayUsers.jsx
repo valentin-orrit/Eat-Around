@@ -18,8 +18,6 @@ export default function DisplayUsers() {
         fetchUsers()
     }, [])
 
-    console.log(api)
-
     return (
         <div className="min-w-0.5 my-10 mx-40">
             <div className="overflow-x-auto">

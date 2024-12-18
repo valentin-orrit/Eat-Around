@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom'
+import {
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    UserButton,
+} from '@clerk/clerk-react'
 
 export default function Navbar() {
     return (
         <nav className="bg-amber-500 p-4 mb-20">
-            <div className="container flex justify-between items-center grow">
+            <div className="container flex justify-between items-center align-middle grow">
                 <h1 className="text-white text-xl font-bold">Eat Around</h1>
                 <div className="flex space-x-4">
                     <Link
@@ -18,6 +24,14 @@ export default function Navbar() {
                     >
                         Dashboard
                     </Link>
+                    <div className="flex justify-center">
+                        <SignedOut>
+                            <SignInButton />
+                        </SignedOut>
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+                    </div>
                 </div>
             </div>
         </nav>
