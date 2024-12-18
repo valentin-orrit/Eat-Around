@@ -90,8 +90,6 @@ export default function MapInit() {
                     defaultCenter={userPosition}
                     defaultZoom={14}
                     mapId="DEMO_MAP_ID"
-                    center={userPosition}
-                    
                     onClick={() => console.log("Aie")}
                 >
                     <AdvancedMarker position={userPosition} />
