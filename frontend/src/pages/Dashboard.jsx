@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { Navigate } from 'react-router-dom'
 import DisplayUsers from '../components/Dashboard/DisplayUsers'
-import DisplayCities from '../components/Dashboard/DisplayCities'
 import DisplayPlaces from '../components/Dashboard/DisplayPlaces'
-import DisplayFavorites from '../components/Dashboard/DisplayFavorites'
 
 export default function Dashboard() {
     const [visibleTables, setVisibleTables] = useState({
@@ -47,24 +45,6 @@ export default function Dashboard() {
                 {visibleTables.users && <DisplayUsers />}
             </div>
 
-            {/* Cities Dropdown */}
-            <div className="w-full mb-4">
-                <button
-                    onClick={() => toggleTable('cities')}
-                    className="flex justify-between items-center w-full border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md hover:bg-gray-100 focus:outline-none"
-                >
-                    <span>Cities</span>
-                    <span
-                        className={`transform transition-transform duration-200 ${
-                            visibleTables.cities ? 'rotate-180' : 'rotate-0'
-                        }`}
-                    >
-                        ▼
-                    </span>
-                </button>
-                {visibleTables.cities && <DisplayCities />}
-            </div>
-
             {/* Places Dropdown */}
             <div className="w-full mb-4">
                 <button
@@ -81,24 +61,6 @@ export default function Dashboard() {
                     </span>
                 </button>
                 {visibleTables.places && <DisplayPlaces />}
-            </div>
-
-            {/* Favorites Dropdown */}
-            <div className="w-full mb-4">
-                <button
-                    onClick={() => toggleTable('favorites')}
-                    className="flex justify-between items-center w-full border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md hover:bg-gray-100 focus:outline-none"
-                >
-                    <span>Favorites</span>
-                    <span
-                        className={`transform transition-transform duration-200 ${
-                            visibleTables.favorites ? 'rotate-180' : 'rotate-0'
-                        }`}
-                    >
-                        ▼
-                    </span>
-                </button>
-                {visibleTables.favorites && <DisplayFavorites />}
             </div>
         </div>
     )
