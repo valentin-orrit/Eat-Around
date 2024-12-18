@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useAuth } from '@clerk/clerk-react'
+import { Navigate } from 'react-router-dom'
 import DisplayUsers from '../components/Dashboard/DisplayUsers'
 import DisplayCities from '../components/Dashboard/DisplayCities'
 import DisplayPlaces from '../components/Dashboard/DisplayPlaces'
@@ -11,7 +13,11 @@ export default function Dashboard() {
         places: false,
         favorites: false,
     })
+    const { isSignedIn } = useAuth()
 
+    if (!isSignedIn) {
+        return <Navigate to="/" />
+    }
     const toggleTable = (table) => {
         setVisibleTables((prev) => ({
             ...prev,

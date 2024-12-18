@@ -18,15 +18,17 @@ export default function Navbar() {
                     >
                         Home
                     </Link>
-                    <Link
-                        to="/dashboard"
-                        className="text-white hover:bg-amber-700 px-3 py-2 rounded-full text-sm font-medium"
-                    >
-                        Dashboard
-                    </Link>
-                    <div className="flex justify-center">
+                    <SignedIn>
+                        <Link
+                            to="/dashboard"
+                            className="text-white hover:bg-amber-700 px-3 py-2 rounded-full text-sm font-medium"
+                        >
+                            Dashboard
+                        </Link>
+                    </SignedIn>
+                    <div className="flex justify-center text-white text-sm font-medium">
                         <SignedOut>
-                            <SignInButton />
+                            <SignInButton className="text-white bg-amber-600 hover:bg-amber-700 px-3 py-2 rounded-full " />
                         </SignedOut>
                         <SignedIn>
                             <UserButton />
