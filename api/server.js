@@ -7,6 +7,7 @@ import usersRouter from './routes/users.js'
 import citiesRouter from './routes/cities.js'
 import placesRouter from './routes/places.js'
 import favoritesRouter from './routes/favorites.js'
+import { clerkMiddleware } from './middleware/clerkMiddleware.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -47,6 +48,30 @@ app.use(
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// Add user admin status endpoint
+app.get('/api/user-status', clerkMiddleware, async (req, res) => {
+    try {
+        const clerkUserId = req.auth.userId
+
+        const user = await prisma.user.findUnique({
+            where: { clerkUserId },
+            select: { is_admin: true },
+        })
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+        }
+
+        res.json({ isAdmin: user.is_admin })
+    } catch (error) {
+        console.error('Error:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.use('/api/protected', clerkMiddleware)
+
 app.use('/', usersRouter)
 app.use('/', citiesRouter)
 app.use('/', placesRouter)
