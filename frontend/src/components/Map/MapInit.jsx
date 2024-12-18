@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
 
 export default function MapInit() {
-    const [userPosition, setUserPosition] = useState({ lat: 44.8416106, lng: -0.5810938 });
+    const [userPosition, setUserPosition] = useState(null);
     const [mapLoaded, setMapLoaded] = useState(false);
     const [restaurants, setRestaurants] = useState([]);
     const [filters, setFilters] = useState([]);
@@ -28,7 +28,7 @@ export default function MapInit() {
     }, []);
 
     useEffect(() => {
-        if (mapLoaded) {
+        if (mapLoaded && userPosition) {
             const service = new google.maps.places.PlacesService(document.createElement('div'));
             service.nearbySearch(
                 {
@@ -55,6 +55,10 @@ export default function MapInit() {
                 : [...prevFilters, filter]
         );
     };
+
+    if (!userPosition) {
+        return <div>Loading map...</div>;
+    }
 
     return (
         <div id="container" className="h-screen">
@@ -86,11 +90,11 @@ export default function MapInit() {
                     defaultCenter={userPosition}
                     defaultZoom={14}
                     mapId="DEMO_MAP_ID"
-                    center={mapLoaded ? userPosition : undefined}
+                    center={userPosition}
+                    
+                    onClick={() => console.log("Aie")}
                 >
-                    <AdvancedMarker 
-                    position={userPosition}
-                     />
+                    <AdvancedMarker position={userPosition} />
 
                     {restaurants.map((restaurant, index) => (
                         <AdvancedMarker
@@ -101,7 +105,6 @@ export default function MapInit() {
                             }}
                             title={restaurant.name}
                         />
-                        
                     ))}
                 </Map>
             </APIProvider>
