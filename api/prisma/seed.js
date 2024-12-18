@@ -1,66 +1,17 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from './client.js'
 
 async function main() {
     try {
-        // reset the db
-        await prisma.favorite.deleteMany()
-        await prisma.user.deleteMany()
-        await prisma.place.deleteMany()
-        await prisma.city.deleteMany()
-
-        console.log('Database reset successful')
-
-        // seed cities
-        await prisma.city.createMany({
-            data: [
-                { name: 'Paris' },
-                { name: 'Nantes' },
-                { name: 'Lille' },
-                { name: 'Toulouse' },
-                { name: 'Lyon' },
-            ],
-        })
-
-        // get city ids
-        const paris = await prisma.city.findFirst({ where: { name: 'Paris' } })
-        const nantes = await prisma.city.findFirst({
-            where: { name: 'Nantes' },
-        })
-
-        console.log('cities seeded')
-
         // seed users
         await prisma.user.createMany({
             data: [
                 {
-                    name: 'jean',
-                    email: 'jean@jean.com',
-                    password: '1234',
-                    is_admin: false,
-                    cityId: paris.id,
-                },
-                {
-                    name: 'sylvie',
-                    email: 'sylvie@sylvie.com',
-                    password: '1234',
-                    is_admin: false,
-                    cityId: paris.id,
-                },
-                {
-                    name: 'john',
-                    email: 'john@john.com',
-                    password: '1234',
+                    clerkUserId: 'user_2qNrJPfD0VudRW8t8mkqcxxTIcd',
                     is_admin: true,
-                    cityId: nantes.id,
                 },
                 {
-                    name: 'julie',
-                    email: 'julie@julie.com',
-                    password: '1234',
-                    is_admin: true,
-                    cityId: nantes.id,
+                    clerkUserId: 'user_2qNrLWBlX62XFEFnkUfmdbcWRT2',
+                    is_admin: false,
                 },
             ],
         })
@@ -124,28 +75,6 @@ async function main() {
         })
 
         console.log('places seeded')
-
-        // Fetch all users and places for favorites
-        const users = await prisma.user.findMany()
-        const places = await prisma.place.findMany()
-
-        // random favorite for each user
-        const favoriteData = users.flatMap((user) => {
-            return places
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3)
-                .map((place) => ({
-                    userId: user.id,
-                    placeId: place.id,
-                }))
-        })
-
-        // Create favorites
-        if (favoriteData.length > 0) {
-            await prisma.favorite.createMany({ data: favoriteData })
-        }
-
-        console.log('Favorites seeded')
         console.log('SEED SUCCESSFUL')
     } catch (error) {
         console.error('Error during database seeding:', error)

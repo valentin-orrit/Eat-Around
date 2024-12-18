@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "nodemon server.js",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "seed": "node prisma/seed.js"
+        "seed": "npx prisma migrate reset && node prisma/seed.js"
     },
     "description": "",
     "dependencies": {
