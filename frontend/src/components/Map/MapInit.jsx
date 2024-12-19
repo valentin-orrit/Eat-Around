@@ -6,9 +6,11 @@ export default function MapInit() {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [restaurants, setRestaurants] = useState([]);
     const [filters, setFilters] = useState([]);
+    const [isLoading, setIsLoading] = useState(false); 
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-    useEffect(() => {
+    const requestLocation = () => {
+        setIsLoading(true); 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (location) => {
@@ -17,15 +19,18 @@ export default function MapInit() {
                         lng: location.coords.longitude,
                     };
                     setUserPosition(position);
+                    setIsLoading(false); 
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
+                    setIsLoading(false); 
                 }
             );
         } else {
             console.warn('Geolocation is not supported by this browser.');
+            setIsLoading(false);
         }
-    }, []);
+    };
 
     useEffect(() => {
         if (mapLoaded && userPosition) {
@@ -57,7 +62,19 @@ export default function MapInit() {
     };
 
     if (!userPosition) {
-        return <div>Loading map...</div>;
+        return (
+            <div className="loading-container flex flex-col items-center justify-center h-screen">
+                <button
+                    onClick={requestLocation}
+                    className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
+                        isLoading ? 'cursor-not-allowed bg-blue-300' : ''
+                    }`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Use My Location'}
+                </button>
+            </div>
+        );
     }
 
     return (
