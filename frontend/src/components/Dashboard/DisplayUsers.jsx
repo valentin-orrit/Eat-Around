@@ -18,8 +18,6 @@ export default function DisplayUsers() {
         fetchUsers()
     }, [])
 
-    console.log(api)
-
     return (
         <div className="min-w-0.5 my-10 mx-40">
             <div className="overflow-x-auto">
@@ -27,10 +25,7 @@ export default function DisplayUsers() {
                     <thead>
                         <tr className="border-b bg-amber-400">
                             <th className="py-2 px-6 font-semibold justify-center">
-                                Name
-                            </th>
-                            <th className="py-2 px-6 font-semibold justify-center">
-                                Email
+                                clerkUserId
                             </th>
                             <th className="py-2 px-6 font-semibold justify-center">
                                 Admin Status
@@ -40,11 +35,12 @@ export default function DisplayUsers() {
                     <tbody>
                         {users.map((user) => (
                             <tr
-                                key={user.id}
+                                key={user.clerkUserId}
                                 className="border-b hover:bg-gray-50"
                             >
-                                <td className="py-2 px-4">{user.name}</td>
-                                <td className="py-2 px-4">{user.email}</td>
+                                <td className="py-2 px-4">
+                                    {user.clerkUserId}
+                                </td>
                                 <td className="py-2 px-4">
                                     {user.is_admin ? 'Yes' : 'No'}
                                 </td>

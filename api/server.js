@@ -34,7 +34,7 @@ app.use(
             maxAge: 360000,
             httpOnly: true,
         },
-        secret: 'a santa at nasa',
+        secret: process.env.EXPRESS_SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
         store: new PrismaSessionStore(prisma, {
