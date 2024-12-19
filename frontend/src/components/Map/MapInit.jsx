@@ -61,13 +61,14 @@ export default function MapInit() {
     }
 
     return (
-        <div id="container" className="h-screen">
+        <div id="container" className="h-screen flex flex-col items-center">
             <APIProvider
                 apiKey={apiKey}
                 libraries={['places']}
                 onLoad={() => setMapLoaded(true)}
             >
-                <div className="filter-buttons" style={{ margin: '10px' }}>
+                {/* Filter Buttons */}
+                <div className="filter-buttons flex flex-wrap justify-center my-4">
                     {['vegetarian', 'gluten-free', 'vegan', 'halal', 'lactose-free'].map((filter) => (
                         <button
                             key={filter}
@@ -85,27 +86,31 @@ export default function MapInit() {
                         </button>
                     ))}
                 </div>
-
-                <Map
-                    defaultCenter={userPosition}
-                    defaultZoom={14}
-                    mapId="DEMO_MAP_ID"
-                    onClick={() => console.log("Aie")}
-                >
-                    <AdvancedMarker position={userPosition} />
-
-                    {restaurants.map((restaurant, index) => (
-                        <AdvancedMarker
-                            key={index}
-                            position={{
-                                lat: restaurant.geometry.location.lat(),
-                                lng: restaurant.geometry.location.lng(),
-                            }}
-                            title={restaurant.name}
-                        />
-                    ))}
-                </Map>
+    
+                {/* Map */}
+                <div className="w-full flex justify-center">
+                    <div className="relative w-9/12 h-[60vh]">
+                        <Map
+                            defaultCenter={userPosition}
+                            defaultZoom={14}
+                            mapId="DEMO_MAP_ID"
+                            onClick={() => console.log("Aie")}
+                        >
+                            <AdvancedMarker position={userPosition} />
+                            {restaurants.map((restaurant, index) => (
+                                <AdvancedMarker
+                                    key={index}
+                                    position={{
+                                        lat: restaurant.geometry.location.lat(),
+                                        lng: restaurant.geometry.location.lng(),
+                                    }}
+                                    title={restaurant.name}
+                                />
+                            ))}
+                        </Map>
+                    </div>
+                </div>
             </APIProvider>
         </div>
     );
-}
+}    
