@@ -6,11 +6,20 @@ export default function MapInit() {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [restaurants, setRestaurants] = useState([]);
     const [filters, setFilters] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
     const requestLocation = () => {
         setIsLoading(true); 
+    
+        const errorMessageElement = document.getElementById('error-message');
+        
+    const clearErrorMessage = () => {
+        if (errorMessageElement) {
+            errorMessageElement.textContent = ''; // Clear the error message
+        }
+    };
+    
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (location) => {
@@ -20,17 +29,29 @@ export default function MapInit() {
                     };
                     setUserPosition(position);
                     setIsLoading(false); 
+    
+                    if (errorMessageElement) {
+                        errorMessageElement.textContent = ''; 
+                    }
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
+                    if (errorMessageElement) {
+                        errorMessageElement.textContent = 'Problem getting your location';
+                        setTimeout(clearErrorMessage, 5000);
+                    }
                     setIsLoading(false); 
                 }
             );
         } else {
             console.warn('Geolocation is not supported by this browser.');
+            if (errorMessageElement) {
+                errorMessageElement.textContent = 'Problem getting your location';
+                setTimeout(clearErrorMessage, 5000);
+            }
             setIsLoading(false);
         }
-    };
+    };    
 
     useEffect(() => {
         if (mapLoaded && userPosition) {
@@ -73,6 +94,7 @@ export default function MapInit() {
                 >
                     {isLoading ? 'Loading...' : 'Use My Location'}
                 </button>
+                <div id="error-message" className="text-red-500 mt-4"></div> {/* Error message placeholder */}
             </div>
         );
     }
@@ -84,7 +106,6 @@ export default function MapInit() {
                 libraries={['places']}
                 onLoad={() => setMapLoaded(true)}
             >
-                {/* Filter Buttons */}
                 <div className="filter-buttons flex flex-wrap justify-center my-4">
                     {['vegetarian', 'gluten-free', 'vegan', 'halal', 'lactose-free'].map((filter) => (
                         <button
@@ -104,7 +125,6 @@ export default function MapInit() {
                     ))}
                 </div>
     
-                {/* Map */}
                 <div className="w-full flex justify-center">
                     <div className="relative w-9/12 h-[60vh]">
                         <Map
