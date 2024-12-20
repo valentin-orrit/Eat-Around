@@ -7,9 +7,11 @@ import usersRouter from './routes/users.js'
 import citiesRouter from './routes/cities.js'
 import placesRouter from './routes/places.js'
 import favoritesRouter from './routes/favorites.js'
+import { startNgrok } from './config/ngrok.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
+const NGROK_URL = process.env.NGROK_URL
 
 // cors setup
 app.use(
@@ -19,6 +21,7 @@ app.use(
             'http://localhost:5174',
             'http://localhost:5173',
             'https://eat-around-frontend.fly.dev',
+            `https://${process.env.NGROK_URL}`,
         ],
         methods: ['POST', 'PUT', 'GET', 'OPTION', 'HEAD', 'DELETE', 'PATCH'],
         credentials: true,
@@ -53,10 +56,19 @@ app.use('/', placesRouter)
 app.use('/', favoritesRouter)
 
 app.get('/', (req, res) => {
-    res.send('welcome to Eat Around API')
+    const message = `
+    <h1>Welcome to Eat Around API</h1>
+    ${`<p>Public URL: <a href="${`https://${process.env.NGROK_URL}`}" target="_blank">${`https://${process.env.NGROK_URL}`}</a></p>`}
+`
+    res.send(message)
 })
 
-app.listen(PORT, '0.0.0.0', (err) => {
+app.listen(PORT, '0.0.0.0', async (err) => {
     if (err) console.log(err)
     console.log(`Server is running on port ${PORT}`)
+
+    if (process.env.NODE_ENV !== 'production') {
+        await startNgrok(PORT, NGROK_URL)
+        console.log(`Public ngrok URL: ${NGROK_URL}`)
+    }
 })
