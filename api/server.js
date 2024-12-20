@@ -56,11 +56,16 @@ app.use('/', placesRouter)
 app.use('/', favoritesRouter)
 
 app.get('/', (req, res) => {
-    const message = `
-    <h1>Welcome to Eat Around API</h1>
-    ${`<p>Public URL: <a href="${`https://${process.env.NGROK_URL}`}" target="_blank">${`https://${process.env.NGROK_URL}`}</a></p>`}
-`
-    res.send(message)
+    const welcomeMessage = '<h1>Welcome to Eat Around API</h1>'
+    const ngrokMessage = `${`<p>Public URL: <a href="${`https://${process.env.NGROK_URL}`}" target="_blank">${NGROK_URL}</a></p>`}`
+
+    if (process.env.NODE_ENV !== 'production') {
+        res.send(welcomeMessage + ngrokMessage)
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+        res.send(welcomeMessage)
+    }
 })
 
 app.listen(PORT, '0.0.0.0', async (err) => {
