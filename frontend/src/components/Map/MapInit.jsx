@@ -121,7 +121,7 @@ export default function MapInit() {
                     className="w-full p-2 border border-gray-300 rounded-lg shadow-md"
                 />
             </div>
-            <div className="loading-container  justify-center h-screen">
+            <div className="main-container w-9/12 justify-center h-screen">
                 {userPosition ? (
                     <>
                         <div className="filter-buttons justify-center my-4">
@@ -154,7 +154,7 @@ export default function MapInit() {
                                         defaultCenter={userPosition}
                                         defaultZoom={14}
                                         mapId="DEMO_MAP_ID"
-                                        onClick={() => console.log("Aie")}
+                                        scrollwheel={true}
                                     >
                                         <AdvancedMarker position={userPosition} />
                                         {restaurants.map((restaurant, index) => (
