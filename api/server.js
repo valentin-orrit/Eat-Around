@@ -7,6 +7,7 @@ import usersRouter from './routes/users.js'
 import citiesRouter from './routes/cities.js'
 import placesRouter from './routes/places.js'
 import favoritesRouter from './routes/favorites.js'
+import clerkWebhooksRouter from './routes/clerk-webhooks.js'
 import { startNgrok } from './config/ngrok.js'
 
 const app = express()
@@ -27,6 +28,8 @@ app.use(
         credentials: true,
     })
 )
+
+app.use('/api/webhooks/clerk', express.raw({ type: 'application/json' }))
 
 // session setup
 app.use(
@@ -54,6 +57,7 @@ app.use('/', usersRouter)
 app.use('/', citiesRouter)
 app.use('/', placesRouter)
 app.use('/', favoritesRouter)
+app.use('/', clerkWebhooksRouter)
 
 app.get('/', (req, res) => {
     const welcomeMessage = '<h1>Welcome to Eat Around API</h1>'
