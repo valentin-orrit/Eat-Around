@@ -12,9 +12,7 @@ export default function MapInit() {
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true);
-
         const errorMessageElement = document.getElementById('error-message');
-
         const clearErrorMessage = () => {
             if (errorMessageElement) {
                 errorMessageElement.textContent = '';
@@ -22,7 +20,6 @@ export default function MapInit() {
         };
 
         if (inputAddress) {
-            // Use Google Maps Geocoding API for address
             fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(inputAddress)}&key=${apiKey}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -107,99 +104,92 @@ export default function MapInit() {
         );
     };
 
-    if (!userPosition) {
-        return (
-            <div className="loading-container flex flex-col items-center justify-center h-screen">
-                <div className="w-3/4 md:w-1/2 mb-4">
-                    <input
-                        type="text"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                requestLocation(address);
-                            }
-                        }}
-                        placeholder="Enter your address"
-                        className="w-full p-2 border border-gray-300 rounded-lg shadow-md"
-                    />
-                </div>
-                <div className="flex flex-col space-y-4">
-                    <button
-                        onClick={() => requestLocation(address)}
-                        className={`px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition-all ${
-                            isLoading ? 'cursor-not-allowed bg-green-300' : ''
-                        }`}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? 'Loading...' : 'Find Location'}
-                    </button>
-                        <h1 className="text-lg font-semibold text-gray-500">OR</h1>
-                    <button
-                        onClick={() => requestLocation()}
-                        className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
-                            isLoading ? 'cursor-not-allowed bg-blue-300' : ''
-                        }`}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? 'Loading...' : 'Use My Location'}
-                    </button>
-                </div>
-                <div id="error-message" className="text-red-500 mt-4"></div> {/* Error message placeholder */}
-            </div>
-        );
-    }
-
     return (
-        <div id="container" className="h-screen flex flex-col items-center">
-            <APIProvider
-                apiKey={apiKey}
-                libraries={['places']}
-                onLoad={() => setMapLoaded(true)}
-            >
-                <div className="filter-buttons flex flex-wrap justify-center my-4">
-                    {['vegetarian', 'gluten-free', 'vegan', 'halal', 'lactose-free'].map((filter) => (
-                        <button
-                            key={filter}
-                            onClick={() => toggleFilter(filter)}
-                            style={{
-                                margin: '5px',
-                                padding: '10px',
-                                backgroundColor: filters.includes(filter) ? 'lightgreen' : 'lightgray',
-                                border: 'none',
-                                borderRadius: '5px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            {filter}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="w-full flex justify-center">
-                    <div className="relative w-9/12 h-[60vh]">
-                        <Map
-                            defaultCenter={userPosition}
-                            defaultZoom={14}
-                            mapId="DEMO_MAP_ID"
-                            onClick={() => console.log("Aie")}
-                        >
-                            <AdvancedMarker position={userPosition} />
-                            {restaurants.map((restaurant, index) => (
-                                <AdvancedMarker
-                                    key={index}
-                                    position={{
-                                        lat: restaurant.geometry.location.lat(),
-                                        lng: restaurant.geometry.location.lng(),
+        <div className="h-screen flex flex-col items-center">
+            <div className="w-3/4 md:w-1/2 mb-4">
+                <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            requestLocation(address);
+                        }
+                    }}
+                    placeholder="Enter your address"
+                    className="w-full p-2 border border-gray-300 rounded-lg shadow-md"
+                />
+            </div>
+            <div className="loading-container  justify-center h-screen">
+                {userPosition ? (
+                    <>
+                        <div className="filter-buttons justify-center my-4">
+                            {['vegetarian', 'gluten-free', 'vegan', 'halal', 'lactose-free'].map((filter) => (
+                                <button
+                                    key={filter}
+                                    onClick={() => toggleFilter(filter)}
+                                    style={{
+                                        margin: '5px',
+                                        padding: '10px',
+                                        backgroundColor: filters.includes(filter) ? 'lightgreen' : 'lightgray',
+                                        border: 'none',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
                                     }}
-                                    title={restaurant.name}
-                                />
+                                >
+                                    {filter}
+                                </button>
                             ))}
-                        </Map>
-                    </div>
-                </div>
-            </APIProvider>
+                        </div>
+
+                        <div className="h-screen flex flex-col items-center">
+                            <div className="relative w-9/12 h-[60vh]">
+                                <APIProvider
+                                    apiKey={apiKey}
+                                    libraries={['places']}
+                                    onLoad={() => setMapLoaded(true)}
+                                >
+                                    <Map
+                                        defaultCenter={userPosition}
+                                        defaultZoom={14}
+                                        mapId="DEMO_MAP_ID"
+                                        onClick={() => console.log("Aie")}
+                                    >
+                                        <AdvancedMarker position={userPosition} />
+                                        {restaurants.map((restaurant, index) => (
+                                            <AdvancedMarker
+                                                key={index}
+                                                position={{
+                                                    lat: restaurant.geometry.location.lat(),
+                                                    lng: restaurant.geometry.location.lng(),
+                                                }}
+                                                title={restaurant.name}
+                                            />
+                                        ))}
+                                    </Map>
+                                </APIProvider>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="flex flex-col space-y-4">
+                            <h1 className="text-lg font-semibold text-gray-500">OR</h1>
+                            <button
+                                onClick={() => requestLocation()}
+                                className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
+                                    isLoading ? 'cursor-not-allowed bg-blue-300' : ''
+                                }`}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Loading...' : 'Use My Location'}
+                            </button>
+                        </div>
+                        <div id="error-message" className="text-red-500 mt-4"></div>
+                    </>
+                )}
+            </div>
         </div>
     );
 }
