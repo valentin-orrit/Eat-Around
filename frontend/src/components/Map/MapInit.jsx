@@ -7,20 +7,48 @@ export default function MapInit() {
     const [restaurants, setRestaurants] = useState([]);
     const [filters, setFilters] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [address, setAddress] = useState('');
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-    const requestLocation = () => {
-        setIsLoading(true); 
-    
+    const requestLocation = (inputAddress) => {
+        setIsLoading(true);
+
         const errorMessageElement = document.getElementById('error-message');
-        
-    const clearErrorMessage = () => {
-        if (errorMessageElement) {
-            errorMessageElement.textContent = ''; // Clear the error message
-        }
-    };
-    
-        if (navigator.geolocation) {
+
+        const clearErrorMessage = () => {
+            if (errorMessageElement) {
+                errorMessageElement.textContent = '';
+            }
+        };
+
+        if (inputAddress) {
+            // Use Google Maps Geocoding API for address
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(inputAddress)}&key=${apiKey}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status === 'OK') {
+                        const position = data.results[0].geometry.location;
+                        setUserPosition(position);
+                        setIsLoading(false);
+                        clearErrorMessage();
+                    } else {
+                        console.error('Geocoding error:', data.status);
+                        if (errorMessageElement) {
+                            errorMessageElement.textContent = 'Problem locating the address';
+                            setTimeout(clearErrorMessage, 5000);
+                        }
+                        setIsLoading(false);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching geocode data:', error);
+                    if (errorMessageElement) {
+                        errorMessageElement.textContent = 'Problem locating the address';
+                        setTimeout(clearErrorMessage, 5000);
+                    }
+                    setIsLoading(false);
+                });
+        } else if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (location) => {
                     const position = {
@@ -28,11 +56,8 @@ export default function MapInit() {
                         lng: location.coords.longitude,
                     };
                     setUserPosition(position);
-                    setIsLoading(false); 
-    
-                    if (errorMessageElement) {
-                        errorMessageElement.textContent = ''; 
-                    }
+                    setIsLoading(false);
+                    clearErrorMessage();
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
@@ -40,7 +65,7 @@ export default function MapInit() {
                         errorMessageElement.textContent = 'Problem getting your location';
                         setTimeout(clearErrorMessage, 5000);
                     }
-                    setIsLoading(false); 
+                    setIsLoading(false);
                 }
             );
         } else {
@@ -51,7 +76,7 @@ export default function MapInit() {
             }
             setIsLoading(false);
         }
-    };    
+    };
 
     useEffect(() => {
         if (mapLoaded && userPosition) {
@@ -85,15 +110,42 @@ export default function MapInit() {
     if (!userPosition) {
         return (
             <div className="loading-container flex flex-col items-center justify-center h-screen">
-                <button
-                    onClick={requestLocation}
-                    className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
-                        isLoading ? 'cursor-not-allowed bg-blue-300' : ''
-                    }`}
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Use My Location'}
-                </button>
+                <div className="w-3/4 md:w-1/2 mb-4">
+                    <input
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                requestLocation(address);
+                            }
+                        }}
+                        placeholder="Enter your address"
+                        className="w-full p-2 border border-gray-300 rounded-lg shadow-md"
+                    />
+                </div>
+                <div className="flex flex-col space-y-4">
+                    <button
+                        onClick={() => requestLocation(address)}
+                        className={`px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition-all ${
+                            isLoading ? 'cursor-not-allowed bg-green-300' : ''
+                        }`}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Find Location'}
+                    </button>
+                        <h1 className="text-lg font-semibold text-gray-500">OR</h1>
+                    <button
+                        onClick={() => requestLocation()}
+                        className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
+                            isLoading ? 'cursor-not-allowed bg-blue-300' : ''
+                        }`}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Use My Location'}
+                    </button>
+                </div>
                 <div id="error-message" className="text-red-500 mt-4"></div> {/* Error message placeholder */}
             </div>
         );
@@ -124,7 +176,7 @@ export default function MapInit() {
                         </button>
                     ))}
                 </div>
-    
+
                 <div className="w-full flex justify-center">
                     <div className="relative w-9/12 h-[60vh]">
                         <Map
@@ -150,4 +202,4 @@ export default function MapInit() {
             </APIProvider>
         </div>
     );
-}    
+}
