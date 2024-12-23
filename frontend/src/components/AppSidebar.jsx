@@ -1,24 +1,11 @@
 import { Link } from 'react-router-dom'
-import {
-    Calendar,
-    Home,
-    Inbox,
-    Search,
-    Settings,
-    LogIn,
-    Gauge,
-    ChevronDown,
-    Heart,
-} from 'lucide-react'
+import { Home, LogIn, Gauge, ChevronDown, Heart, Filter } from 'lucide-react'
 import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar'
 import {
@@ -36,16 +23,7 @@ import { useUserData } from '../hooks/useUserData'
 
 export default function AppSidebar() {
     const { userData } = useUserData()
-
-    const {
-        state,
-        open,
-        setOpen,
-        openMobile,
-        setOpenMobile,
-        isMobile,
-        toggleSidebar,
-    } = useSidebar()
+    const { state, setOpen } = useSidebar()
 
     return (
         <Sidebar collapsible="icon" className="bg-eagreen gap-y-0">
@@ -80,39 +58,81 @@ export default function AppSidebar() {
                                 </Link>
                             )}
                         </SidebarMenuButton>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <Collapsible
-                    defaultOpen
-                    className="group/collapsible text-eaoffwhite "
-                >
-                    <SidebarGroup>
-                        <SidebarMenuButton
-                            asChild
-                            className="px-3 py-2 rounded-md text-sm font-medium hover:bg-eaorange "
-                        >
-                            <CollapsibleTrigger>
-                                {state === 'collapsed' ? (
-                                    <Heart
-                                        className="mr-2"
-                                        onClick={() => setOpen(true)}
-                                    />
-                                ) : (
-                                    <Heart className="mr-2" />
-                                )}
-                                Likes
-                                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                            </CollapsibleTrigger>
+                        <SidebarMenuButton asChild>
+                            <Link
+                                to="/"
+                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-medium"
+                            >
+                                <Home />
+                                Home
+                            </Link>
                         </SidebarMenuButton>
-                        {state === 'collapsed' ? null : (
-                            <CollapsibleContent className="text-left pl-4 ">
-                                <SidebarContent>One</SidebarContent>
-                                <SidebarContent>Two</SidebarContent>
-                                <SidebarContent>Three</SidebarContent>
-                            </CollapsibleContent>
-                        )}
-                    </SidebarGroup>
-                </Collapsible>
+                    </SidebarGroupContent>
+
+                    <Collapsible
+                        defaultOpen
+                        className="group/collapsible text-eaoffwhite "
+                    >
+                        <SidebarGroupContent>
+                            <SidebarMenuButton
+                                asChild
+                                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-eaorange "
+                            >
+                                <CollapsibleTrigger>
+                                    {state === 'collapsed' ? (
+                                        <Filter
+                                            className="mr-2"
+                                            onClick={() => setOpen(true)}
+                                        />
+                                    ) : (
+                                        <Filter className="mr-2" />
+                                    )}
+                                    Filters
+                                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                                </CollapsibleTrigger>
+                            </SidebarMenuButton>
+                            {state === 'collapsed' ? null : (
+                                <CollapsibleContent className="text-left pl-4 ">
+                                    <SidebarContent>One</SidebarContent>
+                                    <SidebarContent>Two</SidebarContent>
+                                    <SidebarContent>Three</SidebarContent>
+                                </CollapsibleContent>
+                            )}
+                        </SidebarGroupContent>
+                    </Collapsible>
+
+                    <Collapsible
+                        defaultOpen
+                        className="group/collapsible text-eaoffwhite "
+                    >
+                        <SidebarGroupContent>
+                            <SidebarMenuButton
+                                asChild
+                                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-eaorange "
+                            >
+                                <CollapsibleTrigger>
+                                    {state === 'collapsed' ? (
+                                        <Heart
+                                            className="mr-2"
+                                            onClick={() => setOpen(true)}
+                                        />
+                                    ) : (
+                                        <Heart className="mr-2" />
+                                    )}
+                                    Likes
+                                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                                </CollapsibleTrigger>
+                            </SidebarMenuButton>
+                            {state === 'collapsed' ? null : (
+                                <CollapsibleContent className="text-left pl-4 ">
+                                    <SidebarContent>One</SidebarContent>
+                                    <SidebarContent>Two</SidebarContent>
+                                    <SidebarContent>Three</SidebarContent>
+                                </CollapsibleContent>
+                            )}
+                        </SidebarGroupContent>
+                    </Collapsible>
+                </SidebarGroup>
             </SidebarContent>
         </Sidebar>
     )
