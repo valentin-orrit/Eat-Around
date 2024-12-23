@@ -7,5 +7,10 @@
     "version": "1.0.0",
     "description": "glutenfree map app",
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "prettier": {
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true
+    }
 }
