@@ -127,9 +127,9 @@ export default function MapInit() {
             >
                 <div
                     id="search"
-                    className="flex items-center w-full h-10 p-2 border border-gray-300 rounded-full shadow-md"
+                    className="flex items-center w-full h-10 p-2 border border-gray-300 rounded-full shadow-md bg-white"
                 >
-                    <Search className="stroke-eaogreyaccent mr-2" />
+                    <Search className="stroke-eaogreyaccent" />
                     <input
                         type="text"
                         value={address}
@@ -140,7 +140,7 @@ export default function MapInit() {
                                 requestLocation(address)
                             }
                         }}
-                        className="bg-transparent w-full"
+                        className="bg-transparent w-full rounded-full px-2"
                         placeholder="Search for a city, region or zipcode..."
                     />
                 </div>
