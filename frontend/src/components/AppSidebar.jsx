@@ -3,9 +3,12 @@ import { Home, LogIn, Gauge, ChevronDown, Heart, Filter } from 'lucide-react'
 import {
     Sidebar,
     SidebarContent,
+    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
+    SidebarMenu,
     SidebarMenuButton,
+    SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar'
 import {
@@ -26,11 +29,14 @@ export default function AppSidebar() {
     const { state, setOpen } = useSidebar()
 
     return (
-        <Sidebar collapsible="icon" className="bg-eagreen gap-y-0">
-            <SidebarContent>
+        <Sidebar collapsible="icon" className="bg-eagreen">
+            <SidebarContent className="bg-eagreen gap-y-0">
                 <SidebarGroup>
                     <SidebarGroupContent>
-                        <div id="user-button" className="py-4">
+                        <div
+                            id="user-button"
+                            className="py-4 flex justify-center"
+                        >
                             <SignedOut>
                                 <SidebarMenuButton asChild isActive>
                                     <div className="flex justify-center text-white text-sm font-medium my-4">
@@ -47,6 +53,17 @@ export default function AppSidebar() {
                                 <UserButton />
                             </SignedIn>
                         </div>
+
+                        <SidebarMenuButton asChild>
+                            <Link
+                                to="/"
+                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-medium"
+                            >
+                                <Home />
+                                Home
+                            </Link>
+                        </SidebarMenuButton>
+
                         <SidebarMenuButton asChild>
                             {userData && userData.is_admin && (
                                 <Link
@@ -57,15 +74,6 @@ export default function AppSidebar() {
                                     Dashboard
                                 </Link>
                             )}
-                        </SidebarMenuButton>
-                        <SidebarMenuButton asChild>
-                            <Link
-                                to="/"
-                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-medium"
-                            >
-                                <Home />
-                                Home
-                            </Link>
                         </SidebarMenuButton>
                     </SidebarGroupContent>
 
@@ -92,7 +100,7 @@ export default function AppSidebar() {
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left pl-4 ">
+                                <CollapsibleContent className="text-left pl-4">
                                     <SidebarContent>One</SidebarContent>
                                     <SidebarContent>Two</SidebarContent>
                                     <SidebarContent>Three</SidebarContent>
@@ -134,6 +142,16 @@ export default function AppSidebar() {
                     </Collapsible>
                 </SidebarGroup>
             </SidebarContent>
+
+            <SidebarFooter>
+                <SidebarMenu>
+                    <SidebarMenuItem className="bg-eagreen text-eaoffwhite">
+                        {state === 'collapsed' ? null : (
+                            <div>Eat Around © {new Date().getFullYear()}</div>
+                        )}
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
         </Sidebar>
     )
 }
