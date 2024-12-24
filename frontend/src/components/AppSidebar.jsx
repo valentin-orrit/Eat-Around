@@ -58,7 +58,7 @@ export default function AppSidebar() {
                         <SidebarMenuButton asChild>
                             <Link
                                 to="/"
-                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-medium"
+                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-base"
                             >
                                 <Home />
                                 Home
@@ -69,7 +69,7 @@ export default function AppSidebar() {
                             {userData && userData.is_admin && (
                                 <Link
                                     to="/dashboard"
-                                    className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-medium"
+                                    className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-base"
                                 >
                                     <Gauge />
                                     Dashboard
@@ -85,23 +85,20 @@ export default function AppSidebar() {
                         <SidebarGroupContent>
                             <SidebarMenuButton
                                 asChild
-                                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-eaorange "
+                                className="px-3 py-2 rounded-md text-base hover:bg-eaorange"
                             >
                                 <CollapsibleTrigger>
                                     {state === 'collapsed' ? (
-                                        <Filter
-                                            className="mr-2"
-                                            onClick={() => setOpen(true)}
-                                        />
+                                        <Filter onClick={() => setOpen(true)} />
                                     ) : (
-                                        <Filter className="mr-2" />
+                                        <Filter />
                                     )}
                                     Filters
                                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left pl-4">
+                                <CollapsibleContent className="text-left text-sm ml-4">
                                     <SidebarContent>One</SidebarContent>
                                     <SidebarContent>Two</SidebarContent>
                                     <SidebarContent>Three</SidebarContent>
@@ -117,23 +114,20 @@ export default function AppSidebar() {
                         <SidebarGroupContent>
                             <SidebarMenuButton
                                 asChild
-                                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-eaorange "
+                                className="px-3 py-2 rounded-md text-base hover:bg-eaorange"
                             >
                                 <CollapsibleTrigger>
                                     {state === 'collapsed' ? (
-                                        <Heart
-                                            className="mr-2"
-                                            onClick={() => setOpen(true)}
-                                        />
+                                        <Heart onClick={() => setOpen(true)} />
                                     ) : (
-                                        <Heart className="mr-2" />
+                                        <Heart />
                                     )}
                                     Likes
                                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left pl-4 ">
+                                <CollapsibleContent className="text-left ml-4">
                                     <SidebarContent>One</SidebarContent>
                                     <SidebarContent>Two</SidebarContent>
                                     <SidebarContent>Three</SidebarContent>
