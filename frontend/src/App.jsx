@@ -7,21 +7,23 @@ import Layout from './components/Layout'
 
 function App() {
     return (
-        <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedAdminRoute>
-                                <Dashboard />
-                            </ProtectedAdminRoute>
-                        }
-                    />
-                </Routes>
-            </Layout>
-        </Router>
+        <div className="flex flex-col bg-eaoffwhite text-eablack w-screen">
+            <Router>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <ProtectedAdminRoute>
+                                    <Dashboard />
+                                </ProtectedAdminRoute>
+                            }
+                        />
+                    </Routes>
+                </Layout>
+            </Router>
+        </div>
     )
 }
 

@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react'
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
+import { Search } from 'lucide-react'
 
 export default function MapInit() {
     const [userPosition, setUserPosition] = useState(null)
@@ -119,56 +120,58 @@ export default function MapInit() {
     }
 
     return (
-        <div className="h-screen flex flex-col items-center">
-            <div className="w-3/4 md:w-1/2 mb-4">
-                <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault()
-                            requestLocation(address)
-                        }
-                    }}
-                    placeholder="Enter your address"
-                    className="w-full p-2 border border-gray-300 rounded-lg shadow-md"
-                />
+        <div className="flex flex-col w-full">
+            <div
+                id="searchandfilters"
+                className="flex justify-center items-center mx-8"
+            >
+                <div
+                    id="search"
+                    className="flex items-center w-full h-10 p-2 border border-gray-300 rounded-full shadow-md"
+                >
+                    <Search className="stroke-eaogreyaccent mr-2" />
+                    <input
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault()
+                                requestLocation(address)
+                            }
+                        }}
+                        className="bg-transparent w-full"
+                        placeholder="Search for a city, region or zipcode..."
+                    />
+                </div>
+                <div className="filter-buttons my-4 whitespace-nowrap">
+                    {[
+                        'vegetarian',
+                        'gluten-free',
+                        'vegan',
+                        'halal',
+                        'lactose-free',
+                    ].map((filter) => (
+                        <button
+                            key={filter}
+                            onClick={() => toggleFilter(filter)}
+                            className={`m-1 px-2 py-1 rounded-full cursor-pointer border
+        ${
+            filters.includes(filter)
+                ? 'bg-eagreen text-eaoffwhite border-eagreen'
+                : 'bg-eaoffwhite text-eaogreyaccent border-eaogreyaccent hover:border-eagreen hover:text-eagreen'
+        }`}
+                        >
+                            {filter}
+                        </button>
+                    ))}
+                </div>
             </div>
-            <div className="main-container w-9/12 justify-center h-screen">
+            <div className="justify-center">
                 {userPosition ? (
-                    <>
-                        <div className="filter-buttons justify-center my-4">
-                            {[
-                                'vegetarian',
-                                'gluten-free',
-                                'vegan',
-                                'halal',
-                                'lactose-free',
-                            ].map((filter) => (
-                                <button
-                                    key={filter}
-                                    onClick={() => toggleFilter(filter)}
-                                    style={{
-                                        margin: '5px',
-                                        padding: '10px',
-                                        backgroundColor: filters.includes(
-                                            filter
-                                        )
-                                            ? 'lightgreen'
-                                            : 'lightgray',
-                                        border: 'none',
-                                        borderRadius: '5px',
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    {filter}
-                                </button>
-                            ))}
-                        </div>
-
-                        <div className="h-screen flex flex-col items-center">
-                            <div className="relative w-9/12 h-[60vh]">
+                    <div className="w-full">
+                        <div className="flex flex-col items-center">
+                            <div className="w-4/5 h-svh">
                                 <APIProvider
                                     apiKey={apiKey}
                                     libraries={['places']}
@@ -199,7 +202,7 @@ export default function MapInit() {
                                 </APIProvider>
                             </div>
                         </div>
-                    </>
+                    </div>
                 ) : (
                     <>
                         <div className="flex flex-col space-y-4">
@@ -208,7 +211,7 @@ export default function MapInit() {
                             </h1>
                             <button
                                 onClick={() => requestLocation()}
-                                className={`px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all ${
+                                className={`mx-8 py-3 bg-eaorange text-white rounded-full shadow-lg hover:bg-orange-500 transition-all ${
                                     isLoading
                                         ? 'cursor-not-allowed bg-blue-300'
                                         : ''
