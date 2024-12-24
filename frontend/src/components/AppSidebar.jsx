@@ -146,7 +146,7 @@ export default function AppSidebar() {
 
             <SidebarFooter>
                 <SidebarMenu>
-                    <SidebarMenuItem className="bg-eagreen text-eaoffwhite my-2">
+                    <SidebarMenuItem className="bg-eagreen text-eaoffwhite my-2 text-sm">
                         {state === 'collapsed' ? (
                             <img
                                 src={LogoLight}
