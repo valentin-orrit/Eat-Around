@@ -23,6 +23,7 @@ import {
     UserButton,
 } from '@clerk/clerk-react'
 import { useUserData } from '../hooks/useUserData'
+import LogoLight from '../assets/eat-around-logo-light.svg'
 
 export default function AppSidebar() {
     const { userData } = useUserData()
@@ -145,8 +146,14 @@ export default function AppSidebar() {
 
             <SidebarFooter>
                 <SidebarMenu>
-                    <SidebarMenuItem className="bg-eagreen text-eaoffwhite">
-                        {state === 'collapsed' ? null : (
+                    <SidebarMenuItem className="bg-eagreen text-eaoffwhite my-2">
+                        {state === 'collapsed' ? (
+                            <img
+                                src={LogoLight}
+                                alt="eat around logo"
+                                className="w-8"
+                            />
+                        ) : (
                             <div>Eat Around © {new Date().getFullYear()}</div>
                         )}
                     </SidebarMenuItem>

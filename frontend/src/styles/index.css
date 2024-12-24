@@ -8,6 +8,13 @@ body,
     @apply w-full h-full min-h-screen;
     margin: 0;
     @apply text-gray-800;
+    @apply font-palanquin;
+}
+
+h1,
+h2 {
+    @apply font-palanquinDark;
+    @apply font-bold;
 }
 
 @layer base {
@@ -32,4 +39,48 @@ body,
         --sidebar-border: 240 3.7% 15.9%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
+}
+
+@font-face {
+    font-family: 'Palanquin';
+    src: url('../assets/fonts/Palanquin/Palanquin-Light.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Palanquin';
+    src: url('../assets/fonts/Palanquin/Palanquin-Medium.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Palanquin';
+    src: url('../assets/fonts/Palanquin/Palanquin-Regular.ttf') format('ttf');
+    font-weight: 500;
+    font-style: medium;
+}
+
+@font-face {
+    font-family: 'Palanquin';
+    src: url('../assets/fonts/Palanquin/Palanquin-SemiBold.ttf') format('ttf');
+    font-weight: 600;
+    font-style: semibold;
+}
+
+@font-face {
+    font-family: 'Palanquin Dark';
+    src: url('../assets/fonts/Palanquin_Dark/PalanquinDark-SemiBold.ttf')
+        format('ttf');
+    font-weight: 600;
+    font-style: semibold;
+}
+
+@font-face {
+    font-family: 'Palanquin Dark';
+    src: url('../assets/fonts/Palanquin_Dark/PalanquinDark-Bold.ttf')
+        format('ttf');
+    font-weight: 700;
+    font-style: bold;
 }

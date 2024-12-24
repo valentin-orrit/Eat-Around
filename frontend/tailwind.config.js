@@ -13,6 +13,10 @@ export default {
                 eaogreyaccent: '#a0a0a0',
                 eaogreymute: '#cccccc',
             },
+            fontFamily: {
+                palanquin: ['Palanquin', 'sans-serif'],
+                palanquinDark: ['Palanquin Dark', 'sans-serif'],
+            },
         },
     },
     // eslint-disable-next-line no-undef
