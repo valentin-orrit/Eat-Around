@@ -6,7 +6,7 @@ export default function Layout({ children }) {
         <SidebarProvider>
             <AppSidebar />
             <main className="w-screen flex">
-                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite" />
+                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite m-2 sticky top-4" />
                 {children}
             </main>
         </SidebarProvider>

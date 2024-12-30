@@ -3,10 +3,10 @@ import LogoLight from '../assets/eat-around-logo-light.svg'
 
 export default function Home() {
     return (
-        <div className="">
+        <div className="flex w-full flex-col p-4 lg:p-16">
             <div
                 id="title"
-                className="flex justify-center items-center mt-12 mb-4"
+                className="flex justify-center items-center mt-12 mb-8"
             >
                 <img
                     src={LogoLight}
@@ -14,10 +14,12 @@ export default function Home() {
                     className="w-20 mr-2 mb-2"
                 />
                 <div id="title-text" className="flex items-end">
-                    <h1 className="text-4xl font-extrabold mr-2">Eat Around</h1>
-                    <p className="text-sm pb-1">
+                    <h1 className="text-4xl font-extrabold mr-2 hidden sm:inline">
+                        Eat Around
+                    </h1>
+                    <p className="text-sm pb-1 hidden md:inline">
                         find your next{' '}
-                        <span className="text-eaorange">favorite</span> place!
+                        <span className="text-eaorange"> favorite </span> place!
                     </p>
                 </div>
             </div>

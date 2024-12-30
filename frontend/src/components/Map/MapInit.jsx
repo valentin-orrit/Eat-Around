@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react'
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
-import { Search } from 'lucide-react'
+import { Search, MapPin } from 'lucide-react'
 
 export default function MapInit() {
     const [userPosition, setUserPosition] = useState(null)
@@ -123,7 +123,7 @@ export default function MapInit() {
         <div className="flex flex-col w-full">
             <div
                 id="searchandfilters"
-                className="flex justify-center items-center mx-8"
+                className="flex flex-col xl:flex-row justify-center items-center lg:mx-16"
             >
                 <div
                     id="search"
@@ -132,6 +132,7 @@ export default function MapInit() {
                     <Search className="stroke-eaogreyaccent" />
                     <input
                         type="text"
+                        name="search"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         onKeyDown={(e) => {
@@ -144,13 +145,14 @@ export default function MapInit() {
                         placeholder="Search for a city, region or zipcode..."
                     />
                 </div>
-                <div className="filter-buttons my-4 whitespace-nowrap">
+                <div className="filter-buttons my-4 xl:whitespace-nowrap text-sm">
                     {[
                         'vegetarian',
-                        'gluten-free',
                         'vegan',
-                        'halal',
+                        'gluten-free',
                         'lactose-free',
+                        'halal',
+                        'kosher',
                     ].map((filter) => (
                         <button
                             key={filter}
@@ -169,9 +171,9 @@ export default function MapInit() {
             </div>
             <div className="justify-center">
                 {userPosition ? (
-                    <div className="w-full">
+                    <div className="mt-4">
                         <div className="flex flex-col items-center">
-                            <div className="w-4/5 h-svh">
+                            <div className="w-11/12 h-96 md:w-4/5 md:h-svh">
                                 <APIProvider
                                     apiKey={apiKey}
                                     libraries={['places']}
@@ -211,14 +213,19 @@ export default function MapInit() {
                             </h1>
                             <button
                                 onClick={() => requestLocation()}
-                                className={`mx-8 py-3 bg-eaorange text-white rounded-full shadow-lg hover:bg-orange-500 transition-all ${
+                                className={`mx-8 py-3 bg-eaorange text-white rounded-full shadow-md hover:bg-orange-500 transition-all ${
                                     isLoading
                                         ? 'cursor-not-allowed bg-blue-300'
                                         : ''
                                 }`}
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Loading...' : 'Use My Location'}
+                                <div className="flex items-center justify-center gap-2 font-medium">
+                                    <MapPin className="" />
+                                    {isLoading
+                                        ? 'Loading...'
+                                        : 'use my location'}
+                                </div>
                             </button>
                         </div>
                         <div
