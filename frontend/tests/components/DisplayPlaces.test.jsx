@@ -20,9 +20,13 @@ describe('DisplayPlaces', () => {
             longitude: '-0.57202034951001',
         },
     ]
+    const cacheKey = 'places_data'
+    const cacheTimeKey = `${cacheKey}_time`
+    const mockCacheData = JSON.stringify(mockPlaces)
 
     beforeEach(() => {
         vi.resetAllMocks()
+        localStorage.clear()
         axios.get.mockResolvedValue({ data: [] })
     })
 
@@ -38,6 +42,65 @@ describe('DisplayPlaces', () => {
 
     it('should render places from the API', async () => {
         axios.get.mockResolvedValueOnce({ data: mockPlaces })
+
+        render(<DisplayPlaces />)
+
+        await waitFor(() => {
+            expect(screen.getByText('Papilles')).toBeInTheDocument()
+            expect(screen.getByText('Jolly')).toBeInTheDocument()
+        })
+
+        expect(screen.getByText('48.88197566430336')).toBeInTheDocument()
+        expect(screen.getByText('2.346536746038661')).toBeInTheDocument()
+
+        expect(screen.getByText('44.84064548399972')).toBeInTheDocument()
+        expect(screen.getByText('-0.57202034951001')).toBeInTheDocument()
+    })
+
+    it('should render places from localStorage if cached and valid', async () => {
+        localStorage.setItem(cacheKey, mockCacheData)
+        localStorage.setItem(cacheTimeKey, (Date.now() - 10000).toString())
+
+        render(<DisplayPlaces />)
+
+        await waitFor(() => {
+            expect(screen.getByText('Papilles')).toBeInTheDocument()
+            expect(screen.getByText('Jolly')).toBeInTheDocument()
+        })
+
+        expect(screen.getByText('48.88197566430336')).toBeInTheDocument()
+        expect(screen.getByText('2.346536746038661')).toBeInTheDocument()
+
+        expect(screen.getByText('44.84064548399972')).toBeInTheDocument()
+        expect(screen.getByText('-0.57202034951001')).toBeInTheDocument()
+    })
+
+    it('should handle expired cache and fetch data again', async () => {
+        localStorage.setItem(cacheKey, mockCacheData)
+        localStorage.setItem(
+            cacheTimeKey,
+            (Date.now() - 60 * 60 * 1000).toString()
+        )
+
+        axios.get.mockResolvedValueOnce({ data: mockPlaces })
+
+        render(<DisplayPlaces />)
+
+        await waitFor(() => {
+            expect(screen.getByText('Papilles')).toBeInTheDocument()
+            expect(screen.getByText('Jolly')).toBeInTheDocument()
+        })
+
+        expect(screen.getByText('48.88197566430336')).toBeInTheDocument()
+        expect(screen.getByText('2.346536746038661')).toBeInTheDocument()
+
+        expect(screen.getByText('44.84064548399972')).toBeInTheDocument()
+        expect(screen.getByText('-0.57202034951001')).toBeInTheDocument()
+    })
+
+    it('should use cache data when API call is successful and cache is valid', async () => {
+        localStorage.setItem(cacheKey, mockCacheData)
+        localStorage.setItem(cacheTimeKey, (Date.now() - 10000).toString())
 
         render(<DisplayPlaces />)
 

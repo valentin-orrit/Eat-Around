@@ -1,38 +1,46 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-let cachedUsers = null
-
 export default function DisplayUsers() {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const api = import.meta.env.VITE_AXIOS_BASE_URL
+    const cacheKey = 'users_data'
+    const cacheTime = 30 * 60 * 1000 // 30 minutes cache expiration
 
     useEffect(() => {
         const fetchUsers = async () => {
-            if (cachedUsers) {
-                setUsers(cachedUsers)
-                setLoading(false)
-                return
-            }
-
             try {
-                const response = await axios.get(`${api}/users`)
-                cachedUsers = response.data
-                setUsers(response.data)
+                const cachedData = localStorage.getItem(cacheKey)
+                const cachedTime = localStorage.getItem(`${cacheKey}_time`)
+
+                if (
+                    cachedData &&
+                    cachedTime &&
+                    Date.now() - cachedTime < cacheTime
+                ) {
+                    setUsers(JSON.parse(cachedData))
+                    setLoading(false)
+                } else {
+                    const response = await axios.get(`${api}/users`)
+                    const newUsers = response.data
+                    setUsers(newUsers)
+
+                    localStorage.setItem(cacheKey, JSON.stringify(newUsers))
+                    localStorage.setItem(
+                        `${cacheKey}_time`,
+                        Date.now().toString()
+                    )
+                    setLoading(false)
+                }
             } catch (error) {
                 console.error('Error fetching users:', error)
-            } finally {
                 setLoading(false)
             }
         }
 
         fetchUsers()
     }, [api])
-
-    if (loading) {
-        return <p>Loading users...</p>
-    }
 
     return (
         <div className="min-w-0.5 my-10 mx-40">
@@ -49,19 +57,27 @@ export default function DisplayUsers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr
-                                key={user.clerkUserId}
-                                className="border-b hover:bg-gray-50"
-                            >
-                                <td className="py-2 px-4">
-                                    {user.clerkUserId}
-                                </td>
-                                <td className="py-2 px-4">
-                                    {user.is_admin ? 'Yes' : 'No'}
+                        {loading ? (
+                            <tr>
+                                <td colSpan="2" className="text-center py-4">
+                                    Loading...
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            users.map((user) => (
+                                <tr
+                                    key={user.clerkUserId}
+                                    className="border-b hover:bg-gray-50"
+                                >
+                                    <td className="py-2 px-4">
+                                        {user.clerkUserId}
+                                    </td>
+                                    <td className="py-2 px-4">
+                                        {user.is_admin ? 'Yes' : 'No'}
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
