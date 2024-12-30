@@ -16,7 +16,7 @@ export default function DisplayUsers() {
         }
 
         fetchUsers()
-    }, [])
+    }, [api])
 
     return (
         <div className="min-w-0.5 my-10 mx-40">
