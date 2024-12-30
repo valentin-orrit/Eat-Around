@@ -3,11 +3,11 @@ import AppSidebar from './AppSidebar'
 
 export default function Layout({ children }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider className="flex w-full">
             <AppSidebar />
-            <main className="w-screen flex">
-                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite m-2 sticky top-4" />
-                {children}
+            <main className="flex w-full">
+                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite  sticky top-4 p-0 m-2" />
+                <div className="flex w-full justify-center">{children}</div>
             </main>
         </SidebarProvider>
     )

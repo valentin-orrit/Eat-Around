@@ -7,9 +7,7 @@ import DisplayPlaces from '../components/Dashboard/DisplayPlaces'
 export default function Dashboard() {
     const [visibleTables, setVisibleTables] = useState({
         users: false,
-        cities: false,
         places: false,
-        favorites: false,
     })
     const { isSignedIn } = useAuth()
 

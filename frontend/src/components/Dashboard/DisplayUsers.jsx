@@ -1,22 +1,38 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
+let cachedUsers = null
+
 export default function DisplayUsers() {
     const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(true)
     const api = import.meta.env.VITE_AXIOS_BASE_URL
 
     useEffect(() => {
         const fetchUsers = async () => {
+            if (cachedUsers) {
+                setUsers(cachedUsers)
+                setLoading(false)
+                return
+            }
+
             try {
                 const response = await axios.get(`${api}/users`)
+                cachedUsers = response.data
                 setUsers(response.data)
             } catch (error) {
                 console.error('Error fetching users:', error)
+            } finally {
+                setLoading(false)
             }
         }
 
         fetchUsers()
     }, [api])
+
+    if (loading) {
+        return <p>Loading users...</p>
+    }
 
     return (
         <div className="min-w-0.5 my-10 mx-40">
