@@ -9,6 +9,8 @@ body,
     margin: 0;
     @apply text-gray-800;
     @apply font-palanquin;
+    @apply bg-eaoffwhite;
+    @apply text-eablack;
 }
 
 h1,

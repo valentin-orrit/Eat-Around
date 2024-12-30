@@ -7,7 +7,7 @@ import Layout from './components/Layout'
 
 function App() {
     return (
-        <div className="flex flex-col bg-eaoffwhite text-eablack w-screen">
+        <div className="flex flex-col w-dvw">
             <Router>
                 <Layout>
                     <Routes>
