@@ -47,7 +47,7 @@ h2 {
     font-family: 'Palanquin';
     src: url('../assets/fonts/Palanquin/Palanquin-Light.ttf') format('ttf');
     font-weight: 300;
-    font-style: normal;
+    font-style: light;
 }
 
 @font-face {
