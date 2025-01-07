@@ -1,7 +1,7 @@
 import MapInit from '../components/Map/MapInit'
 import LogoLight from '../assets/eat-around-logo-light.svg'
 
-export default function Home() {
+export default function Home({ filters, setFilters }) {
     return (
         <div className="flex flex-col p-4 w-11/12 lg:p-16 lg:max-w-7xl">
             <div
@@ -25,7 +25,7 @@ export default function Home() {
             </div>
 
             <div id="map" className="">
-                <MapInit />
+                <MapInit filters={filters} setFilters={setFilters} />
             </div>
 
             <div id="cards"></div>

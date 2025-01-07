@@ -21,7 +21,15 @@ function App() {
             <Router>
                 <Layout filters={filters} setFilters={setFilters}>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/"
+                            element={
+                                <Home
+                                    filters={filters}
+                                    setFilters={setFilters}
+                                />
+                            }
+                        />
                         <Route
                             path="/dashboard"
                             element={

@@ -31,8 +31,10 @@ export default function AppSidebar({ filters, setFilters }) {
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
-            prevFilters.map((f) =>
-                f.name === filterName ? { ...f, isActive: !f.isActive } : f
+            prevFilters.map((filter) =>
+                filter.name === filterName
+                    ? { ...filter, isActive: !filter.isActive }
+                    : filter
             )
         )
     }
