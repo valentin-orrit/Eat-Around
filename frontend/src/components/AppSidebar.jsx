@@ -123,27 +123,30 @@ export default function AppSidebar({ filters, setFilters }) {
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
                                 <CollapsibleContent className="text-left text-base">
-                                    <ul></ul>
-                                    {filters.map((filter) => (
-                                        <li
-                                            key={filter.name}
-                                            className="list-none hover:bg-eaoffwhite hover:cursor-pointer rounded-md group"
-                                        >
-                                            <button
+                                    <ul>
+                                        {filters.map((filter) => (
+                                            <li
                                                 key={filter.name}
-                                                className={`px-8 ${
-                                                    filter.isActive
-                                                        ? 'text-eaorange'
-                                                        : 'text-eaogreymute'
-                                                }`}
-                                                onClick={() =>
-                                                    toggleFilter(filter.name)
-                                                }
+                                                className="list-none hover:bg-eaoffwhite hover:cursor-pointer rounded-md group"
                                             >
-                                                {filter.name}
-                                            </button>
-                                        </li>
-                                    ))}
+                                                <button
+                                                    key={filter.name}
+                                                    className={`px-8 ${
+                                                        filter.isActive
+                                                            ? 'text-eaorange'
+                                                            : 'text-eaogreymute'
+                                                    }`}
+                                                    onClick={() =>
+                                                        toggleFilter(
+                                                            filter.name
+                                                        )
+                                                    }
+                                                >
+                                                    {filter.name}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </CollapsibleContent>
                             )}
                         </SidebarGroupContent>
