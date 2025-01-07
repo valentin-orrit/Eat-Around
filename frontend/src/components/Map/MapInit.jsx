@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from 'react'
-import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
+import { useRef, useState, useEffect } from 'react'
+import { AdvancedMarker, APIProvider, Map, InfoWindow } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 
 export default function MapInit() {
@@ -10,7 +10,13 @@ export default function MapInit() {
     const [filters, setFilters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
+    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+    const infoWindowRef = useRef(null);
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+
+    const handleMarkerClick = (restaurant) => {
+        setSelectedRestaurant(restaurant);
+    };
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true)
@@ -187,18 +193,33 @@ export default function MapInit() {
                                     >
                                         <AdvancedMarker
                                             position={userPosition}
+                                            title="Your location"
                                         />
-                                        {restaurants.map(
-                                            (restaurant, index) => (
-                                                <AdvancedMarker
-                                                    key={index}
-                                                    position={{
-                                                        lat: restaurant.geometry.location.lat(),
-                                                        lng: restaurant.geometry.location.lng(),
-                                                    }}
-                                                    title={restaurant.name}
-                                                />
-                                            )
+                                        {restaurants.map((restaurant, index) => (
+                                        <AdvancedMarker
+                                            key={index}
+                                            position={{
+                                                lat: restaurant.geometry.location.lat(),
+                                                lng: restaurant.geometry.location.lng(),
+                                            }}
+                                            title={restaurant.name}
+                                            onClick={() => handleMarkerClick(restaurant)} 
+                                        />
+                                        ))}
+                                        {selectedRestaurant && (
+                                            <InfoWindow
+                                                position={{
+                                                    lat: selectedRestaurant.geometry.location.lat(),
+                                                    lng: selectedRestaurant.geometry.location.lng(),
+                                                }}
+                                                onCloseClick={() => setSelectedRestaurant(null)} 
+                                            >
+                                                <div>
+                                                    <h3>{selectedRestaurant.name}</h3>
+                                                    <p>{selectedRestaurant.vicinity}</p>
+                                                    <p><strong>Rating:</strong> {selectedRestaurant.rating} ⭐</p>                                                   
+                                                </div>
+                                            </InfoWindow>
                                         )}
                                     </Map>
                                 </APIProvider>
