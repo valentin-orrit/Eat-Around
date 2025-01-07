@@ -122,32 +122,27 @@ export default function AppSidebar({ filters, setFilters }) {
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left text-base ml-6 ">
+                                <CollapsibleContent className="text-left text-base">
+                                    <ul></ul>
                                     {filters.map((filter) => (
-                                        <div
+                                        <li
                                             key={filter.name}
-                                            className="flex items-center my-0 hover:bg-eaoffwhite rounded-md"
+                                            className="list-none hover:bg-eaoffwhite hover:cursor-pointer rounded-md group"
                                         >
-                                            <input
-                                                type="checkbox"
-                                                id={filter.name}
-                                                checked={filter.isActive}
-                                                onChange={() =>
-                                                    toggleFilter(filter.name)
-                                                }
-                                                className="appearance-none mr-2 cursor-pointer"
-                                            />
-                                            <label
-                                                htmlFor={filter.name}
-                                                className={`cursor-pointer ${
+                                            <button
+                                                key={filter.name}
+                                                className={`px-8 ${
                                                     filter.isActive
-                                                        ? 'text-eaorange font-medium'
+                                                        ? 'text-eaorange'
                                                         : 'text-eaogreymute'
                                                 }`}
+                                                onClick={() =>
+                                                    toggleFilter(filter.name)
+                                                }
                                             >
                                                 {filter.name}
-                                            </label>
-                                        </div>
+                                            </button>
+                                        </li>
                                     ))}
                                 </CollapsibleContent>
                             )}
