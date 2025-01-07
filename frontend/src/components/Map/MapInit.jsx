@@ -203,7 +203,7 @@ export default function MapInit() {
                                                 lng: restaurant.geometry.location.lng(),
                                             }}
                                             title={restaurant.name}
-                                            onClick={() => handleMarkerClick(restaurant)} // Trigger the click handler
+                                            onClick={() => handleMarkerClick(restaurant)} 
                                         />
                                         ))}
                                         {selectedRestaurant && (
@@ -212,11 +212,12 @@ export default function MapInit() {
                                                     lat: selectedRestaurant.geometry.location.lat(),
                                                     lng: selectedRestaurant.geometry.location.lng(),
                                                 }}
-                                                onCloseClick={() => setSelectedRestaurant(null)} // Close the InfoWindow
+                                                onCloseClick={() => setSelectedRestaurant(null)} 
                                             >
                                                 <div>
                                                     <h3>{selectedRestaurant.name}</h3>
                                                     <p>{selectedRestaurant.vicinity}</p>
+                                                    <p><strong>Rating:</strong> {selectedRestaurant.rating} ⭐</p>                                                   
                                                 </div>
                                             </InfoWindow>
                                         )}
