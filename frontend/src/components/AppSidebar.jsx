@@ -101,7 +101,6 @@ export default function AppSidebar({ filters, setFilters }) {
                             )}
                         </SidebarMenuButton>
                     </SidebarGroupContent>
-
                     <Collapsible
                         defaultOpen
                         className="group/collapsible text-eaoffwhite "
@@ -117,34 +116,43 @@ export default function AppSidebar({ filters, setFilters }) {
                                     ) : (
                                         <Filter />
                                     )}
-                                    Filters
+                                    My filters
                                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
                                 <CollapsibleContent className="text-left text-base ml-6">
-                                    <ul>
-                                        {filters.map((filter) => (
-                                            <li
-                                                key={filter.name}
-                                                onClick={() =>
-                                                    toggleFilter(filter.name)
-                                                }
-                                                className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2 ${
-                                                    filter.isActive
-                                                        ? 'text-eaorange'
-                                                        : 'text-eaogreymute'
-                                                }`}
-                                            >
-                                                <span>{filter.name}</span>
-                                                {filter.isActive && (
-                                                    <span className="hidden [li:hover_&]:inline text-sm text-red-500">
-                                                        x
-                                                    </span>
-                                                )}
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    <SignedIn>
+                                        <ul>
+                                            {filters.map((filter) => (
+                                                <li
+                                                    key={filter.name}
+                                                    onClick={() =>
+                                                        toggleFilter(
+                                                            filter.name
+                                                        )
+                                                    }
+                                                    className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2 ${
+                                                        filter.isActive
+                                                            ? 'text-eaorange'
+                                                            : 'text-eaogreymute'
+                                                    }`}
+                                                >
+                                                    <span>{filter.name}</span>
+                                                    {filter.isActive && (
+                                                        <span className="hidden [li:hover_&]:inline text-sm text-red-500">
+                                                            x
+                                                        </span>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </SignedIn>
+                                    <SignedOut>
+                                        <p className="text-left text-eaorange text-xs">
+                                            sign in to add or remove filters
+                                        </p>
+                                    </SignedOut>
                                 </CollapsibleContent>
                             )}
                         </SidebarGroupContent>
@@ -165,15 +173,23 @@ export default function AppSidebar({ filters, setFilters }) {
                                     ) : (
                                         <Heart />
                                     )}
-                                    Likes
+                                    My favorites
                                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
                                 <CollapsibleContent className="text-left ml-6">
-                                    <SidebarContent>One</SidebarContent>
-                                    <SidebarContent>Two</SidebarContent>
-                                    <SidebarContent>Three</SidebarContent>
+                                    <SignedIn>
+                                        <SidebarContent>One</SidebarContent>
+                                        <SidebarContent>Two</SidebarContent>
+                                        <SidebarContent>Three</SidebarContent>
+                                    </SignedIn>
+                                    <SignedOut>
+                                        <p className="text-left text-eaorange text-xs">
+                                            sign in to manage your favorite
+                                            places
+                                        </p>
+                                    </SignedOut>
                                 </CollapsibleContent>
                             )}
                         </SidebarGroupContent>
