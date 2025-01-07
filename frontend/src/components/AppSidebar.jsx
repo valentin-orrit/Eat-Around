@@ -25,9 +25,33 @@ import {
 import { useUserData } from '../hooks/useUserData'
 import LogoLight from '../assets/eat-around-logo-light.svg'
 
-export default function AppSidebar() {
+export default function AppSidebar({ filters, setFilters }) {
     const { userData } = useUserData()
     const { state, setOpen } = useSidebar()
+
+    function toggleFilter(filterName) {
+        setFilters((prevFilters) =>
+            prevFilters.map((f) =>
+                f.name === filterName ? { ...f, isActive: !f.isActive } : f
+            )
+        )
+    }
+
+    ;<CollapsibleContent className="text-left text-sm ml-6">
+        {filters.map((filter) => (
+            <button
+                key={filter.name}
+                className={`flex my-1 ${
+                    filter.isActive
+                        ? 'hover:text-eaogreyaccent'
+                        : 'text-eaogreymute hover:text-eaogreymute'
+                }`}
+                onClick={() => toggleFilter(filter.name)}
+            >
+                {filter.name}
+            </button>
+        ))}
+    </CollapsibleContent>
 
     return (
         <Sidebar collapsible="icon" className="bg-eagreen">
@@ -98,10 +122,30 @@ export default function AppSidebar() {
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left text-sm ml-4">
-                                    <SidebarContent>One</SidebarContent>
-                                    <SidebarContent>Two</SidebarContent>
-                                    <SidebarContent>Three</SidebarContent>
+                                <CollapsibleContent className="text-left text-sm ml-6">
+                                    {filters.map((filter) =>
+                                        filter.isActive ? (
+                                            <button
+                                                className="flex hover:text-eaogreymute my-1"
+                                                key={filter.name}
+                                                onClick={() =>
+                                                    toggleFilter(filter.name)
+                                                }
+                                            >
+                                                {filter.name}
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="flex text-eaogreymute hover:text-eaogreymute my-1"
+                                                key={filter.name}
+                                                onClick={() =>
+                                                    toggleFilter(filter.name)
+                                                }
+                                            >
+                                                {filter.name}
+                                            </button>
+                                        )
+                                    )}
                                 </CollapsibleContent>
                             )}
                         </SidebarGroupContent>
@@ -127,7 +171,7 @@ export default function AppSidebar() {
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left ml-4">
+                                <CollapsibleContent className="text-left ml-6">
                                     <SidebarContent>One</SidebarContent>
                                     <SidebarContent>Two</SidebarContent>
                                     <SidebarContent>Three</SidebarContent>
