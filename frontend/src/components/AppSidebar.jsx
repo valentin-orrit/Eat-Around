@@ -122,28 +122,26 @@ export default function AppSidebar({ filters, setFilters }) {
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left text-base">
+                                <CollapsibleContent className="text-left text-base ml-6">
                                     <ul>
                                         {filters.map((filter) => (
                                             <li
                                                 key={filter.name}
-                                                className="list-none hover:bg-eaoffwhite hover:cursor-pointer rounded-md group"
+                                                onClick={() =>
+                                                    toggleFilter(filter.name)
+                                                }
+                                                className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2 ${
+                                                    filter.isActive
+                                                        ? 'text-eaorange'
+                                                        : 'text-eaogreymute'
+                                                }`}
                                             >
-                                                <button
-                                                    key={filter.name}
-                                                    className={`px-8 ${
-                                                        filter.isActive
-                                                            ? 'text-eaorange'
-                                                            : 'text-eaogreymute'
-                                                    }`}
-                                                    onClick={() =>
-                                                        toggleFilter(
-                                                            filter.name
-                                                        )
-                                                    }
-                                                >
-                                                    {filter.name}
-                                                </button>
+                                                <span>{filter.name}</span>
+                                                {filter.isActive && (
+                                                    <span className="hidden [li:hover_&]:inline text-sm text-red-500">
+                                                        x
+                                                    </span>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
