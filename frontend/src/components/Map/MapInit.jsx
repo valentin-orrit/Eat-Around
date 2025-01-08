@@ -12,7 +12,6 @@ export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
-    // const [selectedfilters, setSelectedFilters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
