@@ -39,22 +39,6 @@ export default function AppSidebar({ filters, setFilters }) {
         )
     }
 
-    ;<CollapsibleContent className="text-left text-sm ml-6">
-        {filters.map((filter) => (
-            <button
-                key={filter.name}
-                className={`flex my-1 ${
-                    filter.isActive
-                        ? 'hover:text-eaogreyaccent'
-                        : 'text-eaogreymute hover:text-eaogreymute'
-                }`}
-                onClick={() => toggleFilter(filter.name)}
-            >
-                {filter.name}
-            </button>
-        ))}
-    </CollapsibleContent>
-
     return (
         <Sidebar collapsible="icon" className="bg-eagreen">
             <SidebarContent className="bg-eagreen gap-y-0">
@@ -128,7 +112,7 @@ export default function AppSidebar({ filters, setFilters }) {
                                         <ul>
                                             {filters.map((filter) => (
                                                 <li
-                                                    key={filter.name}
+                                                    key={filter.key}
                                                     onClick={() =>
                                                         toggleFilter(
                                                             filter.name

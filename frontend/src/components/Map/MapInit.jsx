@@ -12,12 +12,16 @@ export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
-    // const [filters, setFilters] = useState([])
+    // const [selectedfilters, setSelectedFilters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const infoWindowRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const selectedFilters = filters
+        .filter((f) => f.isSelected)
+        .map((f) => f.name)
+        .join(' ')
 
     const handleMarkerClick = (restaurant) => {
         setSelectedRestaurant(restaurant)
@@ -106,7 +110,7 @@ export default function MapInit({ filters, setFilters }) {
                     location: userPosition,
                     radius: 5000,
                     type: 'restaurant',
-                    keyword: filters.join(' '),
+                    keyword: selectedFilters,
                 },
                 (results, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -122,11 +126,13 @@ export default function MapInit({ filters, setFilters }) {
         }
     }, [mapLoaded, userPosition, filters])
 
-    const toggleFilter = (filter) => {
+    function toggleFilter(filterName) {
         setFilters((prevFilters) =>
-            prevFilters.includes(filter)
-                ? prevFilters.filter((f) => f !== filter)
-                : [...prevFilters, filter]
+            prevFilters.map((filter) =>
+                filter.name === filterName
+                    ? { ...filter, isSelected: !filter.isSelected }
+                    : filter
+            )
         )
     }
 
@@ -165,7 +171,7 @@ export default function MapInit({ filters, setFilters }) {
                                     onClick={() => toggleFilter(filter.name)}
                                     className={`m-1 px-2 py-1 rounded-full cursor-pointer border
                 ${
-                    filters.includes(filter.name)
+                    selectedFilters.includes(filter.name)
                         ? 'bg-eagreen text-eaoffwhite border-eagreen'
                         : 'bg-eaoffwhite text-eaogreyaccent border-eaogreyaccent hover:border-eagreen hover:text-eagreen'
                 }`}
