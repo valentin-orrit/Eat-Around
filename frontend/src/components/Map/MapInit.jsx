@@ -8,11 +8,11 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 
-export default function MapInit() {
+export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
-    const [filters, setFilters] = useState([])
+    // const [filters, setFilters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
@@ -157,27 +157,23 @@ export default function MapInit() {
                     />
                 </div>
                 <div className="filter-buttons my-4 xl:whitespace-nowrap text-sm">
-                    {[
-                        'vegetarian',
-                        'vegan',
-                        'gluten-free',
-                        'lactose-free',
-                        'halal',
-                        'kosher',
-                    ].map((filter) => (
-                        <button
-                            key={filter}
-                            onClick={() => toggleFilter(filter)}
-                            className={`m-1 px-2 py-1 rounded-full cursor-pointer border
-        ${
-            filters.includes(filter)
-                ? 'bg-eagreen text-eaoffwhite border-eagreen'
-                : 'bg-eaoffwhite text-eaogreyaccent border-eaogreyaccent hover:border-eagreen hover:text-eagreen'
-        }`}
-                        >
-                            {filter}
-                        </button>
-                    ))}
+                    {filters.map(
+                        (filter) =>
+                            filter.isActive && (
+                                <button
+                                    key={filter.key}
+                                    onClick={() => toggleFilter(filter.name)}
+                                    className={`m-1 px-2 py-1 rounded-full cursor-pointer border
+                ${
+                    filters.includes(filter.name)
+                        ? 'bg-eagreen text-eaoffwhite border-eagreen'
+                        : 'bg-eaoffwhite text-eaogreyaccent border-eaogreyaccent hover:border-eagreen hover:text-eagreen'
+                }`}
+                                >
+                                    {filter.name}
+                                </button>
+                            )
+                    )}
                 </div>
             </div>
             <div className="justify-center">

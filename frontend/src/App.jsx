@@ -8,12 +8,12 @@ import { useState } from 'react'
 
 function App() {
     const [filters, setFilters] = useState([
-        { name: 'vegetarian', isActive: true },
-        { name: 'vegan', isActive: true },
-        { name: 'gluten-free', isActive: true },
-        { name: 'lactose-free', isActive: true },
-        { name: 'halal', isActive: true },
-        { name: 'kosher', isActive: true },
+        { key: 1, name: 'vegetarian', isActive: true },
+        { key: 2, name: 'vegan', isActive: true },
+        { key: 3, name: 'gluten-free', isActive: true },
+        { key: 4, name: 'lactose-free', isActive: true },
+        { key: 5, name: 'halal', isActive: true },
+        { key: 6, name: 'kosher', isActive: true },
     ])
 
     return (
