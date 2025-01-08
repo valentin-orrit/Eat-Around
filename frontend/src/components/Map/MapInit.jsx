@@ -137,7 +137,6 @@ export default function MapInit() {
                 (details, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                         resolve({ ...restaurant, ...details });
-                        console.log(details)
                     } else {
                         console.error('Error fetching details:', status);
                         resolve(restaurant);
@@ -244,34 +243,48 @@ export default function MapInit() {
                                         )}
                                         {selectedRestaurant && (
                                             <InfoWindow
-                                                position={{
-                                                    lat: selectedRestaurant.geometry.location.lat(),
-                                                    lng: selectedRestaurant.geometry.location.lng(),
+                                            position={{
+                                                lat: selectedRestaurant.geometry.location.lat(),
+                                                lng: selectedRestaurant.geometry.location.lng(),
                                                 }}
-                                                onCloseClick={() =>
-                                                    setSelectedRestaurant(null)
-                                                }
+                                            onCloseClick={() => setSelectedRestaurant(null)}
                                             >
-                                                <div>
-                                                    <h3>
-                                                        {
-                                                            selectedRestaurant.name
-                                                        }
-                                                    </h3>
+                                            <div style={{ maxWidth: '300px' }}>
+                                                <h3>{selectedRestaurant.name}</h3>
+                                                <p><strong>Address:</strong> {selectedRestaurant.vicinity}</p>
+                                                {selectedRestaurant.rating && (
+                                                    <p><strong>Rating:</strong> {selectedRestaurant.rating} ⭐</p>
+                                                )}
+                                                {selectedRestaurant.opening_hours && (
                                                     <p>
-                                                        {
-                                                            selectedRestaurant.vicinity
-                                                        }
+                                                        <strong>Open Now:</strong>{' '}
+                                                        {selectedRestaurant.opening_hours.open_now ? 'Yes' : 'No'}
                                                     </p>
+                                                )}
+                                                {selectedRestaurant.formatted_phone_number && (
+                                                    <p><strong>Phone:</strong> {selectedRestaurant.formatted_phone_number}</p>
+                                                )}
+                                                {selectedRestaurant.website && (
                                                     <p>
-                                                        <strong>Rating:</strong>{' '}
-                                                        {
-                                                            selectedRestaurant.rating
-                                                        }{' '}
-                                                        ⭐
+                                                        <strong>Website:</strong>{' '}
+                                                        <a
+                                                            href={selectedRestaurant.website}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {selectedRestaurant.website}
+                                                        </a>
                                                     </p>
-                                                </div>
-                                            </InfoWindow>
+                                                )}
+                                                {selectedRestaurant.photos && selectedRestaurant.photos.length > 0 && (
+                                                    <img
+                                                        src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=${selectedRestaurant.photos[0].photo_reference}&key=${apiKey}`}
+                                                        alt={selectedRestaurant.name}
+                                                        style={{ width: '100%', maxHeight: '150px', objectFit: 'cover' }}
+                                                    />
+                                                )}
+                                            </div>
+                                        </InfoWindow>
                                         )}
                                     </Map>
                                 </APIProvider>
