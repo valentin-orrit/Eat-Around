@@ -98,29 +98,54 @@ export default function MapInit() {
 
     useEffect(() => {
         if (mapLoaded && userPosition) {
-            const service = new google.maps.places.PlacesService(
-                document.createElement('div')
-            )
-            service.nearbySearch(
+            const service = new google.maps.places.PlacesService(document.createElement('div'));
+    
+            const fetchNearbyRestaurants = () => {
+                service.nearbySearch(
+                    {
+                        location: userPosition,
+                        radius: 5000,
+                        type: 'restaurant',
+                        keyword: filters.join(' '),
+                    },
+                    async (results, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            const detailedRestaurants = await Promise.all(
+                                results.map((restaurant) =>
+                                    fetchRestaurantDetails(service, restaurant)
+                                )
+                            );
+                            setRestaurants(detailedRestaurants);
+                        } else {
+                            console.error('Error searching for restaurants:', status);
+                        }
+                    }
+                );
+            };
+    
+            fetchNearbyRestaurants();
+        }
+    }, [mapLoaded, userPosition, filters]);
+    
+    const fetchRestaurantDetails = (service, restaurant) => {
+        return new Promise((resolve) => {
+            service.getDetails(
                 {
-                    location: userPosition,
-                    radius: 5000,
-                    type: 'restaurant',
-                    keyword: filters.join(' '),
+                    placeId: restaurant.place_id,
+                    fields: ['name', 'vicinity', 'photos', 'rating', 'formatted_phone_number', 'website', 'opening_hours'],
                 },
-                (results, status) => {
+                (details, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        setRestaurants(results)
+                        resolve({ ...restaurant, ...details });
+                        console.log(details)
                     } else {
-                        console.error(
-                            'Error searching for restaurants:',
-                            status
-                        )
+                        console.error('Error fetching details:', status);
+                        resolve(restaurant);
                     }
                 }
-            )
-        }
-    }, [mapLoaded, userPosition, filters])
+            );
+        });
+    };
 
     const toggleFilter = (filter) => {
         setFilters((prevFilters) =>
