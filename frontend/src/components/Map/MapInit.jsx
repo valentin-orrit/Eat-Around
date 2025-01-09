@@ -7,6 +7,7 @@ import {
     InfoWindow,
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
+import PLacesCarousel from './PlacesCarousel'
 
 export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
@@ -176,6 +177,7 @@ export default function MapInit({ filters, setFilters }) {
 
     return (
         <div className="flex flex-col w-full">
+            <PLacesCarousel />
             <div
                 id="searchandfilters"
                 className="flex flex-col xl:flex-row justify-center items-center lg:mx-16"
