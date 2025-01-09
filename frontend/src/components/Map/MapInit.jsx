@@ -343,7 +343,7 @@ export default function MapInit({ filters, setFilters }) {
                                                             .photos.length >
                                                             0 && (
                                                             <img
-                                                                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=${selectedRestaurant.photos[0].photo_reference}&key=${apiKey}`}
+                                                                src={selectedRestaurant.photos[0]?.getUrl()}
                                                                 alt={
                                                                     selectedRestaurant.name
                                                                 }
