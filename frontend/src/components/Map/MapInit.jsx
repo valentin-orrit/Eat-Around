@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { useRef, useState, useEffect } from 'react'
 import {
     AdvancedMarker,
@@ -7,6 +6,7 @@ import {
     InfoWindow,
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
+import axios from 'axios'
 
 export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
@@ -172,6 +172,22 @@ export default function MapInit({ filters, setFilters }) {
                     : filter
             )
         )
+    }
+
+    async function handleSaveToFavorites(place) {
+        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
+        console.log(place)
+        try {
+            await axios.post(
+                `${apiBack}/create-place`,
+                {
+                    name: place.name,
+                    latitude: place.geometry.location.lat(),
+                    longitude: place.geometry.location.lng()
+                })
+        } catch (error) {
+            console.error('Error saving place:', error)
+        }
     }
 
     return (
@@ -355,7 +371,7 @@ export default function MapInit({ filters, setFilters }) {
                                                             />
                                                         )}
                                                         <button
-                                                            onClick={() => handleSaveToFavorites(selectedPlace)}
+                                                            onClick={() => handleSaveToFavorites(selectedRestaurant)}
                                                             style={{
                                                                 padding: '8px 12px',
                                                                 backgroundColor: '#007BFF',

@@ -14,4 +14,23 @@ router.get('/places', async (req, res) => {
     }
 })
 
+// POST - create a new place
+router.post('/create-place', async (req, res) => {
+    const { name, latitude, longitude } = req.body
+
+    try {
+        const newPlace = await prisma.place.create({
+            data: {
+                name,
+                latitude,
+                longitude,
+            }
+        })
+        res.status(200).json(newPlace)
+    } catch (error) {
+        console.error('error creating place:', error)
+        res.status(500).json({ error: error.message })
+    }
+})
+
 export default router
