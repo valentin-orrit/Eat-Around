@@ -233,7 +233,7 @@ export default function MapInit({ filters, setFilters }) {
                                     <Map
                                         defaultCenter={userPosition}
                                         defaultZoom={14}
-                                        mapId="DEMO_MAP_ID"
+                                        mapId="281c4f31582ca5d6"
                                         scrollwheel={true}
                                     >
                                         <AdvancedMarker
