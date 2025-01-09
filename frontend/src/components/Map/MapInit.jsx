@@ -104,26 +104,65 @@ export default function MapInit({ filters, setFilters }) {
             const service = new google.maps.places.PlacesService(
                 document.createElement('div')
             )
-            service.nearbySearch(
+
+            const fetchNearbyRestaurants = () => {
+                service.nearbySearch(
+                    {
+                        location: userPosition,
+                        radius: 5000,
+                        type: 'restaurant',
+                        keyword: selectedFilters,
+                    },
+                    async (results, status) => {
+                        if (
+                            status === google.maps.places.PlacesServiceStatus.OK
+                        ) {
+                            const detailedRestaurants = await Promise.all(
+                                results.map((restaurant) =>
+                                    fetchRestaurantDetails(service, restaurant)
+                                )
+                            )
+                            setRestaurants(detailedRestaurants)
+                        } else {
+                            console.error(
+                                'Error searching for restaurants:',
+                                status
+                            )
+                        }
+                    }
+                )
+            }
+
+            fetchNearbyRestaurants()
+        }
+    }, [mapLoaded, userPosition, filters])
+
+    const fetchRestaurantDetails = (service, restaurant) => {
+        return new Promise((resolve) => {
+            service.getDetails(
                 {
-                    location: userPosition,
-                    radius: 5000,
-                    type: 'restaurant',
-                    keyword: selectedFilters,
+                    placeId: restaurant.place_id,
+                    fields: [
+                        'name',
+                        'vicinity',
+                        'photos',
+                        'rating',
+                        'formatted_phone_number',
+                        'website',
+                        'opening_hours',
+                    ],
                 },
-                (results, status) => {
+                (details, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        setRestaurants(results)
+                        resolve({ ...restaurant, ...details })
                     } else {
-                        console.error(
-                            'Error searching for restaurants:',
-                            status
-                        )
+                        console.error('Error fetching details:', status)
+                        resolve(restaurant)
                     }
                 }
             )
-        }
-    }, [mapLoaded, userPosition, filters])
+        })
+    }
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
@@ -228,24 +267,93 @@ export default function MapInit({ filters, setFilters }) {
                                                     setSelectedRestaurant(null)
                                                 }
                                             >
-                                                <div>
+                                                <div
+                                                    style={{
+                                                        maxWidth: '300px',
+                                                    }}
+                                                >
                                                     <h3>
                                                         {
                                                             selectedRestaurant.name
                                                         }
                                                     </h3>
                                                     <p>
+                                                        <strong>
+                                                            Address:
+                                                        </strong>{' '}
                                                         {
                                                             selectedRestaurant.vicinity
                                                         }
                                                     </p>
-                                                    <p>
-                                                        <strong>Rating:</strong>{' '}
-                                                        {
-                                                            selectedRestaurant.rating
-                                                        }{' '}
-                                                        ⭐
-                                                    </p>
+                                                    {selectedRestaurant.rating && (
+                                                        <p>
+                                                            <strong>
+                                                                Rating:
+                                                            </strong>{' '}
+                                                            {
+                                                                selectedRestaurant.rating
+                                                            }{' '}
+                                                            ⭐
+                                                        </p>
+                                                    )}
+                                                    {selectedRestaurant.opening_hours && (
+                                                        <p>
+                                                            <strong>
+                                                                Open Now:
+                                                            </strong>{' '}
+                                                            {selectedRestaurant
+                                                                .opening_hours
+                                                                .open_now
+                                                                ? 'Yes'
+                                                                : 'No'}
+                                                        </p>
+                                                    )}
+                                                    {selectedRestaurant.formatted_phone_number && (
+                                                        <p>
+                                                            <strong>
+                                                                Phone:
+                                                            </strong>{' '}
+                                                            {
+                                                                selectedRestaurant.formatted_phone_number
+                                                            }
+                                                        </p>
+                                                    )}
+                                                    {selectedRestaurant.website && (
+                                                        <p>
+                                                            <strong>
+                                                                Website:
+                                                            </strong>{' '}
+                                                            <a
+                                                                href={
+                                                                    selectedRestaurant.website
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                            >
+                                                                {
+                                                                    selectedRestaurant.website
+                                                                }
+                                                            </a>
+                                                        </p>
+                                                    )}
+                                                    {selectedRestaurant.photos &&
+                                                        selectedRestaurant
+                                                            .photos.length >
+                                                            0 && (
+                                                            <img
+                                                                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=${selectedRestaurant.photos[0].photo_reference}&key=${apiKey}`}
+                                                                alt={
+                                                                    selectedRestaurant.name
+                                                                }
+                                                                style={{
+                                                                    width: '100%',
+                                                                    maxHeight:
+                                                                        '150px',
+                                                                    objectFit:
+                                                                        'cover',
+                                                                }}
+                                                            />
+                                                        )}
                                                 </div>
                                             </InfoWindow>
                                         )}
