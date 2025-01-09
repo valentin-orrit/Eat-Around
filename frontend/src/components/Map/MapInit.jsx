@@ -354,6 +354,21 @@ export default function MapInit({ filters, setFilters }) {
                                                                 }}
                                                             />
                                                         )}
+                                                        <button
+                                                            onClick={() => handleSaveToFavorites(selectedPlace)}
+                                                            style={{
+                                                                padding: '8px 12px',
+                                                                backgroundColor: '#007BFF',
+                                                                color: '#FFF',
+                                                                border: 'none',
+                                                                borderRadius: '4px',
+                                                                cursor: 'pointer',
+                                                                marginTop: '10px',
+                                                            }}
+                                                        >
+                                                            Save to Favorites
+                                                        </button>
+
                                                 </div>
                                             </InfoWindow>
                                         )}
