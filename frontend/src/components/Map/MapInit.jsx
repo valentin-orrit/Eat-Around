@@ -177,7 +177,7 @@ export default function MapInit({ filters, setFilters }) {
 
     return (
         <div className="flex flex-col w-full">
-            <PLacesCarousel />
+            <PLacesCarousel restaurants={restaurants} />
             <div
                 id="searchandfilters"
                 className="flex flex-col xl:flex-row justify-center items-center lg:mx-16"
