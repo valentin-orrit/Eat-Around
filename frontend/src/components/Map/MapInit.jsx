@@ -7,6 +7,7 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 import axios from 'axios'
+import { useAuth } from '@clerk/clerk-react'
 
 export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
@@ -17,6 +18,7 @@ export default function MapInit({ filters, setFilters }) {
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const infoWindowRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
@@ -174,19 +176,20 @@ export default function MapInit({ filters, setFilters }) {
         )
     }
 
-    async function handleSaveToFavorites(place) {
-        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
-        console.log(place)
+    async function handleSaveToFavorites(place, userId) {
+        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL;
+    
         try {
-            await axios.post(
-                `${apiBack}/create-place`,
-                {
-                    name: place.name,
-                    latitude: place.geometry.location.lat(),
-                    longitude: place.geometry.location.lng()
-                })
+            const response = await axios.post(`${apiBack}/add-place-to-favorite`, {
+                name: place.name,
+                latitude: place.geometry.location.lat(),
+                longitude: place.geometry.location.lng(),
+                clerkUserId: userId,
+            });
+    
+            console.log('Place added to favorites:', response.data);
         } catch (error) {
-            console.error('Error saving place:', error)
+            console.error('Error saving place to favorites:', error);
         }
     }
 
@@ -371,7 +374,7 @@ export default function MapInit({ filters, setFilters }) {
                                                             />
                                                         )}
                                                         <button
-                                                            onClick={() => handleSaveToFavorites(selectedRestaurant)}
+                                                            onClick={() => handleSaveToFavorites(selectedRestaurant, userId)}
                                                             style={{
                                                                 padding: '8px 12px',
                                                                 backgroundColor: '#007BFF',

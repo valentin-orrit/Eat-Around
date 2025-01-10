@@ -21,6 +21,8 @@ model User {
   favorites   Favorite[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@index([clerkUserId])
 }
 
 model Place {
