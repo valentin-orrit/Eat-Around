@@ -16,7 +16,7 @@ router.get('/places', async (req, res) => {
 
 // POST - add place to favorite
 router.post('/add-place-to-favorite', async (req, res) => {
-    const { name, latitude, longitude, clerkUserId } = req.body;
+    const { name, address, latitude, longitude, clerkUserId } = req.body;
 
     try {
         if (!clerkUserId) {
@@ -33,11 +33,11 @@ router.post('/add-place-to-favorite', async (req, res) => {
 
         let place = await prisma.place.findFirst({
             where: { name, latitude, longitude },
-        });
+        })
 
         if (!place) {
             place = await prisma.place.create({
-                data: { name, latitude, longitude },
+                data: { name, address, latitude, longitude },
             });
         }
 

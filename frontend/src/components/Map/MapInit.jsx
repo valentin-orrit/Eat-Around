@@ -182,6 +182,7 @@ export default function MapInit({ filters, setFilters }) {
         try {
             const response = await axios.post(`${apiBack}/add-place-to-favorite`, {
                 name: place.name,
+                address: place.vicinity,
                 latitude: place.geometry.location.lat(),
                 longitude: place.geometry.location.lng(),
                 clerkUserId: userId,
