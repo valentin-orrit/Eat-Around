@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { useRef, useState, useEffect } from 'react'
 import {
     AdvancedMarker,
@@ -8,6 +7,8 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 import PLacesCarousel from './PlacesCarousel'
+import axios from 'axios'
+import { useAuth } from '@clerk/clerk-react'
 
 export default function MapInit({ filters, setFilters }) {
     const [userPosition, setUserPosition] = useState(null)
@@ -18,6 +19,7 @@ export default function MapInit({ filters, setFilters }) {
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const infoWindowRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
@@ -175,6 +177,27 @@ export default function MapInit({ filters, setFilters }) {
         )
     }
 
+    async function handleSaveToFavorites(place, userId) {
+        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
+
+        try {
+            const response = await axios.post(
+                `${apiBack}/add-place-to-favorite`,
+                {
+                    name: place.name,
+                    address: place.vicinity,
+                    latitude: place.geometry.location.lat(),
+                    longitude: place.geometry.location.lng(),
+                    clerkUserId: userId,
+                }
+            )
+
+            console.log('Place added to favorites:', response.data)
+        } catch (error) {
+            console.error('Error saving place to favorites:', error)
+        }
+    }
+
     return (
         <div className="flex flex-col w-full">
             <PLacesCarousel restaurants={restaurants} />
@@ -235,7 +258,7 @@ export default function MapInit({ filters, setFilters }) {
                                     <Map
                                         defaultCenter={userPosition}
                                         defaultZoom={14}
-                                        mapId="DEMO_MAP_ID"
+                                        mapId="281c4f31582ca5d6"
                                         scrollwheel={true}
                                     >
                                         <AdvancedMarker
@@ -356,6 +379,26 @@ export default function MapInit({ filters, setFilters }) {
                                                                 }}
                                                             />
                                                         )}
+                                                    <button
+                                                        onClick={() =>
+                                                            handleSaveToFavorites(
+                                                                selectedRestaurant,
+                                                                userId
+                                                            )
+                                                        }
+                                                        style={{
+                                                            padding: '8px 12px',
+                                                            backgroundColor:
+                                                                '#007BFF',
+                                                            color: '#FFF',
+                                                            border: 'none',
+                                                            borderRadius: '4px',
+                                                            cursor: 'pointer',
+                                                            marginTop: '10px',
+                                                        }}
+                                                    >
+                                                        Save to Favorites
+                                                    </button>
                                                 </div>
                                             </InfoWindow>
                                         )}

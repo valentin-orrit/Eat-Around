@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Home, LogIn, Gauge, ChevronDown, Heart, Filter } from 'lucide-react'
 import {
@@ -21,13 +22,18 @@ import {
     SignedOut,
     SignInButton,
     UserButton,
+    useAuth
 } from '@clerk/clerk-react'
 import { useUserData } from '../hooks/useUserData'
 import LogoLight from '../assets/eat-around-logo-light.svg'
+import axios from 'axios'
 
 export default function AppSidebar({ filters, setFilters }) {
     const { userData } = useUserData()
     const { state, setOpen } = useSidebar()
+    const [favorites, setFavorites] = useState([])
+    const { userId } = useAuth()
+    const api = import.meta.env.VITE_AXIOS_BASE_URL
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
@@ -38,6 +44,19 @@ export default function AppSidebar({ filters, setFilters }) {
             )
         )
     }
+
+    useEffect(() => {
+        async function fetchFavorites(userId) {
+            try {
+                const response = await axios.get(`${api}/favorites/${userId}`)
+                setFavorites(response.data)
+            } catch (error) {
+                console.error('Error fetching favorites:', error)
+            }
+        }
+        
+        fetchFavorites(userId)
+    }, [api])
 
     return (
         <Sidebar collapsible="icon" className="bg-eagreen">
@@ -166,9 +185,18 @@ export default function AppSidebar({ filters, setFilters }) {
                             {state === 'collapsed' ? null : (
                                 <CollapsibleContent className="text-left ml-6">
                                     <SignedIn>
-                                        <SidebarContent>One</SidebarContent>
-                                        <SidebarContent>Two</SidebarContent>
-                                        <SidebarContent>Three</SidebarContent>
+                                    <ul>
+                                            {favorites.map((favorite) => (
+                                                <li
+                                                    key={favorite.place.id}
+                                                    // onClick={ }
+                                                    className='flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2'
+                                                >
+                                                    <span>{favorite.place.name}</span>
+                                                    <span>{favorite.place.address?.split(',')[1]}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </SignedIn>
                                     <SignedOut>
                                         <p className="text-left text-eaorange text-xs">
