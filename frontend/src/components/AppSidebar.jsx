@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Home, LogIn, Gauge, ChevronDown, Heart, Filter } from 'lucide-react'
+import { Home, LogIn, Gauge, ChevronRight, Heart, Filter } from 'lucide-react'
 import {
     Sidebar,
     SidebarContent,
@@ -91,7 +91,7 @@ export default function AppSidebar({ filters, setFilters }) {
                         <SidebarMenuButton asChild>
                             <Link
                                 to="/"
-                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-base"
+                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-semibold"
                             >
                                 <Home />
                                 Home
@@ -102,7 +102,7 @@ export default function AppSidebar({ filters, setFilters }) {
                             {userData && userData.is_admin && (
                                 <Link
                                     to="/dashboard"
-                                    className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-base"
+                                    className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-semibold"
                                 >
                                     <Gauge />
                                     Dashboard
@@ -119,14 +119,14 @@ export default function AppSidebar({ filters, setFilters }) {
                                 asChild
                                 className="px-3 py-2 rounded-md text-base hover:bg-eaorange"
                             >
-                                <CollapsibleTrigger>
+                                <CollapsibleTrigger className="text-sm font-semibold">
                                     {state === 'collapsed' ? (
                                         <Filter onClick={() => setOpen(true)} />
                                     ) : (
                                         <Filter />
                                     )}
                                     My filters
-                                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
@@ -141,10 +141,10 @@ export default function AppSidebar({ filters, setFilters }) {
                                                             filter.name
                                                         )
                                                     }
-                                                    className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-1 text-sm ${
+                                                    className={`flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-2 text-sm ${
                                                         filter.isActive
-                                                            ? 'text-eaorange'
-                                                            : 'text-eaogreymute'
+                                                            ? 'text-eaoffwhite'
+                                                            : 'text-gray-400'
                                                     }`}
                                                 >
                                                     <span>{filter.name}</span>
@@ -176,14 +176,14 @@ export default function AppSidebar({ filters, setFilters }) {
                                 asChild
                                 className="px-3 py-2 rounded-md text-base hover:bg-eaorange"
                             >
-                                <CollapsibleTrigger>
+                                <CollapsibleTrigger className="text-sm font-semibold">
                                     {state === 'collapsed' ? (
                                         <Heart onClick={() => setOpen(true)} />
                                     ) : (
                                         <Heart />
                                     )}
                                     My favorites
-                                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
@@ -194,7 +194,7 @@ export default function AppSidebar({ filters, setFilters }) {
                                                 <li
                                                     key={favorite.place.id}
                                                     // onClick={ }
-                                                    className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-1 text-sm"
+                                                    className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-2 text-sm"
                                                 >
                                                     <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
                                                         {favorite.place.name}
