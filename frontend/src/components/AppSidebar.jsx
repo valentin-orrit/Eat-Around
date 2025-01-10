@@ -22,7 +22,7 @@ import {
     SignedOut,
     SignInButton,
     UserButton,
-    useAuth
+    useAuth,
 } from '@clerk/clerk-react'
 import { useUserData } from '../hooks/useUserData'
 import LogoLight from '../assets/eat-around-logo-light.svg'
@@ -47,16 +47,20 @@ export default function AppSidebar({ filters, setFilters }) {
 
     useEffect(() => {
         async function fetchFavorites(userId) {
+            if (!favorites || !userId) {
+                return
+            }
+
             try {
                 const response = await axios.get(`${api}/favorites/${userId}`)
-                setFavorites(response.data)
+                setFavorites(response.data || [])
             } catch (error) {
                 console.error('Error fetching favorites:', error)
             }
         }
-        
+
         fetchFavorites(userId)
-    }, [api])
+    }, [api, userId])
 
     return (
         <Sidebar collapsible="icon" className="bg-eagreen">
@@ -185,15 +189,23 @@ export default function AppSidebar({ filters, setFilters }) {
                             {state === 'collapsed' ? null : (
                                 <CollapsibleContent className="text-left ml-6">
                                     <SignedIn>
-                                    <ul>
-                                            {favorites.map((favorite) => (
+                                        <ul>
+                                            {favorites?.map((favorite) => (
                                                 <li
                                                     key={favorite.place.id}
                                                     // onClick={ }
-                                                    className='flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2'
+                                                    className="flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2"
                                                 >
-                                                    <span>{favorite.place.name}</span>
-                                                    <span>{favorite.place.address?.split(',')[1]}</span>
+                                                    <span>
+                                                        {favorite.place.name}
+                                                    </span>
+                                                    <span>
+                                                        {
+                                                            favorite.place.address?.split(
+                                                                ','
+                                                            )[1]
+                                                        }
+                                                    </span>
                                                 </li>
                                             ))}
                                         </ul>
