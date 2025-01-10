@@ -63,7 +63,7 @@ export default function AppSidebar({ filters, setFilters }) {
     }, [api, userId])
 
     return (
-        <Sidebar collapsible="icon" className="bg-eagreen">
+        <Sidebar collapsible="icon" className="bg-eagreen lg:w-1/5 xl:w-1/6">
             <SidebarContent className="bg-eagreen gap-y-0">
                 <SidebarGroup>
                     <SidebarGroupContent>
@@ -196,7 +196,7 @@ export default function AppSidebar({ filters, setFilters }) {
                                                     // onClick={ }
                                                     className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-1 text-sm"
                                                 >
-                                                    <span className="w-24 text-nowrap text-ellipsis overflow-hidden">
+                                                    <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
                                                         {favorite.place.name}
                                                     </span>
                                                     <span className="text-gray-200 overflow-hidden text-xs">
