@@ -141,7 +141,7 @@ export default function AppSidebar({ filters, setFilters }) {
                                                             filter.name
                                                         )
                                                     }
-                                                    className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2 ${
+                                                    className={`flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-1 text-sm ${
                                                         filter.isActive
                                                             ? 'text-eaorange'
                                                             : 'text-eaogreymute'
@@ -194,12 +194,12 @@ export default function AppSidebar({ filters, setFilters }) {
                                                 <li
                                                     key={favorite.place.id}
                                                     // onClick={ }
-                                                    className="flex justify-between items-center list-none group hover:bg-eaoffwhite hover:cursor-pointer rounded-md px-2"
+                                                    className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-1 text-sm"
                                                 >
-                                                    <span>
+                                                    <span className="w-24 text-nowrap text-ellipsis overflow-hidden">
                                                         {favorite.place.name}
                                                     </span>
-                                                    <span>
+                                                    <span className="text-gray-200 overflow-hidden text-xs">
                                                         {
                                                             favorite.place.address?.split(
                                                                 ','
