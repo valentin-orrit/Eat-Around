@@ -228,7 +228,7 @@ export default function AppSidebar({
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="text-eagreen hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-eagreen"
+                                                                    className="text-eagreen hover:bg-eagreen hover:text-white px-2 rounded-md cursor-pointer border border-eagreen"
                                                                 >
                                                                     <Check
                                                                         size={
