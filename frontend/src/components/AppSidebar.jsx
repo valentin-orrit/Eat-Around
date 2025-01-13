@@ -73,8 +73,13 @@ export default function AppSidebar({ filters, setFilters }) {
     }, [api, userId])
 
     async function handleDelete(id) {
-        console.log(`Deleted favorite with id: ${id}`)
         try {
+            await axios.delete(`${api}/favorites/${id}`)
+
+            setFavorites((prevFavorites) =>
+                prevFavorites.filter((favorite) => favorite.id !== id)
+            )
+
             setConfirmationId(null)
         } catch (error) {
             console.error(`Error deleting favorite with id: ${id}`, error)
@@ -210,12 +215,12 @@ export default function AppSidebar({ filters, setFilters }) {
                                         <ul>
                                             {favorites?.map((favorite) => (
                                                 <li
-                                                    key={favorite.place.id}
+                                                    key={favorite.id}
                                                     className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-2 text-sm"
                                                 >
                                                     <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
                                                         {confirmationId ===
-                                                        favorite.place.id ? (
+                                                        favorite.id ? (
                                                             <span className="bg-eaoffwhite px-3 rounded-md text-red-500 font-semibold">
                                                                 delete?
                                                             </span>
@@ -225,14 +230,12 @@ export default function AppSidebar({ filters, setFilters }) {
                                                     </span>
                                                     <span className="text-gray-200 overflow-hidden text-xs">
                                                         {confirmationId ===
-                                                        favorite.place.id ? (
+                                                        favorite.id ? (
                                                             <div className="flex gap-0 bg-eaoffwhite rounded-md">
                                                                 <div
                                                                     onClick={() =>
                                                                         handleDelete(
-                                                                            favorite
-                                                                                .place
-                                                                                .id
+                                                                            favorite.id
                                                                         )
                                                                     }
                                                                     className="text-eagreen hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer"
@@ -276,9 +279,7 @@ export default function AppSidebar({ filters, setFilters }) {
                                                                 <span
                                                                     onClick={() =>
                                                                         setConfirmationId(
-                                                                            favorite
-                                                                                .place
-                                                                                .id
+                                                                            favorite.id
                                                                         )
                                                                     }
                                                                     className="hidden [li:hover_&]:inline hover:bg-eaoffwhite text-sm text-red-500 rounded-md px-4"
