@@ -6,9 +6,12 @@ import { ProtectedAdminRoute } from './components/ProtectedAdminRoute'
 import Layout from './components/Layout'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
+import axios from 'axios'
 
 function App() {
     const { userId, isLoaded } = useAuth()
+    const [favorites, setFavorites] = useState([])
+    const api = import.meta.env.VITE_AXIOS_BASE_URL
 
     const defaultFilters = [
         { key: 1, name: 'vegetarian', isActive: true, isSelected: false },
@@ -20,6 +23,23 @@ function App() {
     ]
 
     const [filters, setFilters] = useState(null)
+
+    async function fetchFavorites(api, userId, setFavorites) {
+        if (!api || !userId) {
+            return
+        }
+
+        try {
+            const response = await axios.get(`${api}/favorites/${userId}`)
+            setFavorites(response.data || [])
+        } catch (error) {
+            console.error('Error fetching favorites:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchFavorites(api, userId, setFavorites)
+    }, [api, userId])
 
     useEffect(() => {
         if (isLoaded) {
@@ -49,10 +69,17 @@ function App() {
         return <div>Loading...</div>
     }
 
+    console.log(favorites)
+
     return (
         <div className="flex flex-col w-dvw">
             <Router>
-                <Layout filters={filters} setFilters={setFilters}>
+                <Layout
+                    filters={filters}
+                    setFilters={setFilters}
+                    favorites={favorites}
+                    setFavorites={setFavorites}
+                >
                     <Routes>
                         <Route
                             path="/"
@@ -60,6 +87,8 @@ function App() {
                                 <Home
                                     filters={filters}
                                     setFilters={setFilters}
+                                    favorites={favorites}
+                                    setFavorites={setFavorites}
                                 />
                             }
                         />

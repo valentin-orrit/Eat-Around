@@ -1,10 +1,21 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import AppSidebar from './AppSidebar'
 
-export default function Layout({ children, filters, setFilters }) {
+export default function Layout({
+    children,
+    filters,
+    setFilters,
+    favorites,
+    setFavorites,
+}) {
     return (
         <SidebarProvider className="flex w-full">
-            <AppSidebar filters={filters} setFilters={setFilters} />
+            <AppSidebar
+                filters={filters}
+                setFilters={setFilters}
+                favorites={favorites}
+                setFavorites={setFavorites}
+            />
             <main className="flex w-full">
                 <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite  sticky top-4 p-0 m-2 lg:hidden" />
                 <div className="flex w-full justify-center">{children}</div>

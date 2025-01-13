@@ -8,8 +8,6 @@ import {
 } from '../ui/carousel'
 
 export default function PLacesCarousel({ restaurants }) {
-    // console.log(restaurants[0])
-
     return (
         <div className="flex justify-center align-middle text-eablack my-4">
             {restaurants && (

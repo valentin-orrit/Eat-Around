@@ -10,7 +10,12 @@ import PLacesCarousel from './PlacesCarousel'
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react'
 
-export default function MapInit({ filters, setFilters }) {
+export default function MapInit({
+    filters,
+    setFilters,
+    favorites,
+    setFavorites,
+}) {
     const [userPosition, setUserPosition] = useState(null)
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
@@ -181,18 +186,20 @@ export default function MapInit({ filters, setFilters }) {
         const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
 
         try {
-            const response = await axios.post(
-                `${apiBack}/add-place-to-favorite`,
-                {
-                    name: place.name,
-                    address: place.vicinity,
-                    latitude: place.geometry.location.lat(),
-                    longitude: place.geometry.location.lng(),
-                    clerkUserId: userId,
-                }
+            await axios.post(`${apiBack}/add-place-to-favorite`, {
+                name: place.name,
+                address: place.vicinity,
+                latitude: place.geometry.location.lat(),
+                longitude: place.geometry.location.lng(),
+                clerkUserId: userId,
+            })
+
+            const favoritesResponse = await axios.get(
+                `${apiBack}/favorites/${userId}`
             )
 
-            console.log('Place added to favorites:', response.data)
+            setFavorites(favoritesResponse.data || [])
+            setSelectedRestaurant(null)
         } catch (error) {
             console.error('Error saving place to favorites:', error)
         }

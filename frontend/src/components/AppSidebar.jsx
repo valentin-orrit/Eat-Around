@@ -37,11 +37,14 @@ import { useUserData } from '../hooks/useUserData'
 import LogoLight from '../assets/eat-around-logo-light.svg'
 import axios from 'axios'
 
-export default function AppSidebar({ filters, setFilters }) {
+export default function AppSidebar({
+    filters,
+    setFilters,
+    favorites,
+    setFavorites,
+}) {
     const { userData } = useUserData()
     const { state, setOpen } = useSidebar()
-    const [favorites, setFavorites] = useState([])
-    const { userId } = useAuth()
     const api = import.meta.env.VITE_AXIOS_BASE_URL
     const [confirmationId, setConfirmationId] = useState(null)
 
@@ -54,23 +57,6 @@ export default function AppSidebar({ filters, setFilters }) {
             )
         )
     }
-
-    useEffect(() => {
-        async function fetchFavorites(userId) {
-            if (!favorites || !userId) {
-                return
-            }
-
-            try {
-                const response = await axios.get(`${api}/favorites/${userId}`)
-                setFavorites(response.data || [])
-            } catch (error) {
-                console.error('Error fetching favorites:', error)
-            }
-        }
-
-        fetchFavorites(userId)
-    }, [api, userId])
 
     async function handleDelete(id) {
         try {
