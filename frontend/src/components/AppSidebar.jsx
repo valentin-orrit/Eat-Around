@@ -72,12 +72,16 @@ export default function AppSidebar({ filters, setFilters }) {
         fetchFavorites(userId)
     }, [api, userId])
 
-    const handleDelete = (id) => {
+    async function handleDelete(id) {
         console.log(`Deleted favorite with id: ${id}`)
-        setConfirmationId(null)
+        try {
+            setConfirmationId(null)
+        } catch (error) {
+            console.error(`Error deleting favorite with id: ${id}`, error)
+        }
     }
 
-    const cancelDelete = () => {
+    function cancelDelete() {
         setConfirmationId(null)
     }
 
