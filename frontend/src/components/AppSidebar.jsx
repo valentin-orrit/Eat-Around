@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Home, LogIn, Gauge, ChevronRight, Heart, Filter } from 'lucide-react'
+import {
+    Home,
+    LogIn,
+    Gauge,
+    ChevronRight,
+    Heart,
+    Filter,
+    X,
+    Check,
+} from 'lucide-react'
 import {
     Sidebar,
     SidebarContent,
@@ -34,6 +43,7 @@ export default function AppSidebar({ filters, setFilters }) {
     const [favorites, setFavorites] = useState([])
     const { userId } = useAuth()
     const api = import.meta.env.VITE_AXIOS_BASE_URL
+    const [confirmationId, setConfirmationId] = useState(null)
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
@@ -61,6 +71,15 @@ export default function AppSidebar({ filters, setFilters }) {
 
         fetchFavorites(userId)
     }, [api, userId])
+
+    const handleDelete = (id) => {
+        console.log(`Deleted favorite with id: ${id}`)
+        setConfirmationId(null)
+    }
+
+    const cancelDelete = () => {
+        setConfirmationId(null)
+    }
 
     return (
         <Sidebar collapsible="icon" className="bg-eagreen lg:w-1/5 xl:w-1/6">
@@ -148,11 +167,6 @@ export default function AppSidebar({ filters, setFilters }) {
                                                     }`}
                                                 >
                                                     <span>{filter.name}</span>
-                                                    {filter.isActive && (
-                                                        <span className="hidden [li:hover_&]:inline text-sm text-red-500">
-                                                            x
-                                                        </span>
-                                                    )}
                                                 </li>
                                             ))}
                                         </ul>
@@ -193,18 +207,92 @@ export default function AppSidebar({ filters, setFilters }) {
                                             {favorites?.map((favorite) => (
                                                 <li
                                                     key={favorite.place.id}
-                                                    // onClick={ }
                                                     className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-2 text-sm"
                                                 >
                                                     <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
-                                                        {favorite.place.name}
+                                                        {confirmationId ===
+                                                        favorite.place.id ? (
+                                                            <span className="bg-eaoffwhite px-3 rounded-md text-red-500 font-semibold">
+                                                                delete?
+                                                            </span>
+                                                        ) : (
+                                                            favorite.place.name
+                                                        )}
                                                     </span>
                                                     <span className="text-gray-200 overflow-hidden text-xs">
-                                                        {
-                                                            favorite.place.address?.split(
-                                                                ','
-                                                            )[1]
-                                                        }
+                                                        {confirmationId ===
+                                                        favorite.place.id ? (
+                                                            <div className="flex gap-0 bg-eaoffwhite rounded-md">
+                                                                <div
+                                                                    onClick={() =>
+                                                                        handleDelete(
+                                                                            favorite
+                                                                                .place
+                                                                                .id
+                                                                        )
+                                                                    }
+                                                                    className="text-eagreen hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer"
+                                                                >
+                                                                    <Check
+                                                                        size={
+                                                                            12
+                                                                        }
+                                                                        strokeWidth={
+                                                                            3
+                                                                        }
+                                                                        className="inline"
+                                                                    />
+                                                                </div>
+                                                                <div
+                                                                    onClick={
+                                                                        cancelDelete
+                                                                    }
+                                                                    className="text-red-500 hover:bg-red-500 hover:text-eaoffwhite px-2 rounded-md cursor-pointer mr-2"
+                                                                >
+                                                                    <X
+                                                                        size={
+                                                                            12
+                                                                        }
+                                                                        strokeWidth={
+                                                                            3
+                                                                        }
+                                                                        className="inline"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <>
+                                                                <span className="[li:hover_&]:hidden">
+                                                                    {
+                                                                        favorite.place.address?.split(
+                                                                            ','
+                                                                        )[1]
+                                                                    }
+                                                                </span>
+                                                                <span
+                                                                    onClick={() =>
+                                                                        setConfirmationId(
+                                                                            favorite
+                                                                                .place
+                                                                                .id
+                                                                        )
+                                                                    }
+                                                                    className="hidden [li:hover_&]:inline hover:bg-eaoffwhite text-sm text-red-500 rounded-md px-4"
+                                                                >
+                                                                    <span className="">
+                                                                        <X
+                                                                            size={
+                                                                                14
+                                                                            }
+                                                                            strokeWidth={
+                                                                                3
+                                                                            }
+                                                                            className="inline"
+                                                                        />
+                                                                    </span>
+                                                                </span>
+                                                            </>
+                                                        )}
                                                     </span>
                                                 </li>
                                             ))}
