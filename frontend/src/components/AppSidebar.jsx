@@ -31,7 +31,6 @@ import {
     SignedOut,
     SignInButton,
     UserButton,
-    useAuth,
 } from '@clerk/clerk-react'
 import { useUserData } from '../hooks/useUserData'
 import LogoLight from '../assets/eat-around-logo-light.svg'
@@ -144,7 +143,7 @@ export default function AppSidebar({
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left text-base ml-6">
+                                <CollapsibleContent className="text-left text-base ml-4">
                                     <SignedIn>
                                         <ul>
                                             {filters.map((filter) => (
@@ -196,35 +195,40 @@ export default function AppSidebar({
                                 </CollapsibleTrigger>
                             </SidebarMenuButton>
                             {state === 'collapsed' ? null : (
-                                <CollapsibleContent className="text-left ml-6">
+                                <CollapsibleContent className="text-left ml-4">
                                     <SignedIn>
                                         <ul>
                                             {favorites?.map((favorite) => (
                                                 <li
                                                     key={favorite.id}
-                                                    className="flex justify-between items-center list-none group hover:bg-eaorange hover:cursor-pointer rounded-md px-2 text-sm"
+                                                    className={`flex justify-between items-center list-none group hover:cursor-pointer rounded-md px-2 text-sm ${
+                                                        confirmationId ===
+                                                        favorite.id
+                                                            ? 'hover:bg-eaoffwhite bg-eaoffwhite border-eaorange'
+                                                            : 'hover:bg-eaorange'
+                                                    }`}
                                                 >
                                                     <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
                                                         {confirmationId ===
                                                         favorite.id ? (
-                                                            <span className="bg-eaoffwhite px-3 rounded-md text-red-500 font-semibold">
+                                                            <span className="px-2 rounded-md text-red-500 font-semibold">
                                                                 delete?
                                                             </span>
                                                         ) : (
                                                             favorite.place.name
                                                         )}
                                                     </span>
-                                                    <span className="text-gray-200 overflow-hidden text-xs">
+                                                    <span className="text-gray-200 text-xs">
                                                         {confirmationId ===
                                                         favorite.id ? (
-                                                            <div className="flex gap-0 bg-eaoffwhite rounded-md">
+                                                            <div className="flex gap-1 bg-eaoffwhite rounded-md">
                                                                 <div
                                                                     onClick={() =>
                                                                         handleDelete(
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="text-eagreen hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer"
+                                                                    className="text-eagreen hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-eagreen"
                                                                 >
                                                                     <Check
                                                                         size={
@@ -240,7 +244,7 @@ export default function AppSidebar({
                                                                     onClick={
                                                                         cancelDelete
                                                                     }
-                                                                    className="text-red-500 hover:bg-red-500 hover:text-eaoffwhite px-2 rounded-md cursor-pointer mr-2"
+                                                                    className="text-red-500 hover:bg-red-500 hover:text-eaoffwhite px-2 rounded-md cursor-pointer mr-2 border border-red-500"
                                                                 >
                                                                     <X
                                                                         size={
@@ -268,7 +272,7 @@ export default function AppSidebar({
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="hidden [li:hover_&]:inline hover:bg-eaoffwhite text-sm text-red-500 rounded-md px-4"
+                                                                    className="hidden [li:hover_&]:inline bg-red-500 hover:bg-eaoffwhite hover:text-red-500 text-sm text-eaoffwhite rounded-md px-2"
                                                                 >
                                                                     <span className="">
                                                                         <X

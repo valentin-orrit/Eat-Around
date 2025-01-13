@@ -69,8 +69,6 @@ function App() {
         return <div>Loading...</div>
     }
 
-    console.log(favorites)
-
     return (
         <div className="flex flex-col w-dvw">
             <Router>
