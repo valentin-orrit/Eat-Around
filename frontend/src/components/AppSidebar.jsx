@@ -27,6 +27,12 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip'
+import {
     SignedIn,
     SignedOut,
     SignInButton,
@@ -206,17 +212,40 @@ export default function AppSidebar({
                                                         favorite.id
                                                             ? 'hover:bg-eaoffwhite bg-eaoffwhite border-eaorange'
                                                             : 'hover:bg-eaorange'
-                                                    }`}
+                                                    } `}
                                                 >
-                                                    <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden">
-                                                        {confirmationId ===
-                                                        favorite.id ? (
-                                                            <span className="px-2 rounded-md text-red-500 font-semibold">
-                                                                delete?
-                                                            </span>
-                                                        ) : (
-                                                            favorite.place.name
-                                                        )}
+                                                    <span className="w-2/3 text-nowrap text-ellipsis overflow-hidden bg-gradient-to-r from-eaoffwhite from-70% to-transparent text-transparent bg-clip-text">
+                                                        <TooltipProvider
+                                                            delayDuration={150}
+                                                        >
+                                                            <Tooltip>
+                                                                <TooltipTrigger className="">
+                                                                    {confirmationId ===
+                                                                    favorite.id ? (
+                                                                        <span className="px-2 rounded-md text-red-500 font-semibold">
+                                                                            delete?
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="">
+                                                                            {
+                                                                                favorite
+                                                                                    .place
+                                                                                    .name
+                                                                            }
+                                                                        </span>
+                                                                    )}
+                                                                </TooltipTrigger>
+                                                                <TooltipContent className="bg-eaoffwhite text-eablack rounded-md py-0">
+                                                                    <p>
+                                                                        {
+                                                                            favorite
+                                                                                .place
+                                                                                .name
+                                                                        }
+                                                                    </p>
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        </TooltipProvider>
                                                     </span>
                                                     <span className="text-gray-200 text-xs">
                                                         {confirmationId ===
@@ -228,7 +257,7 @@ export default function AppSidebar({
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="text-eagreen hover:bg-eagreen hover:text-white px-2 rounded-md cursor-pointer border border-eagreen"
+                                                                    className="text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-green-500"
                                                                 >
                                                                     <Check
                                                                         size={
