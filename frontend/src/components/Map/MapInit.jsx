@@ -23,12 +23,60 @@ export default function MapInit({
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const infoWindowRef = useRef(null)
+    const inputRef = useRef(null);
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
         .join(' ')
+
+    function loadGoogleMapsApi(apiKey, libraries = []) {
+        return new Promise((resolve, reject) => {
+            if (window.google && window.google.maps) {
+                resolve(window.google.maps);
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=${libraries.join(',')}`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => resolve(window.google.maps);
+            script.onerror = (err) => reject(err);
+            document.head.appendChild(script);
+        });
+    }
+
+
+    useEffect(() => {
+        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    
+        loadGoogleMapsApi(apiKey, ['places'])
+            .then(() => {
+                if (inputRef.current) {
+                    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+                        types: ['(cities)'],
+                        fields: ['geometry', 'formatted_address'],
+                    });
+    
+                    autocomplete.addListener('place_changed', () => {
+                        const place = autocomplete.getPlace();
+                        if (place.geometry && place.geometry.location) {
+                            const position = {
+                                lat: place.geometry.location.lat(),
+                                lng: place.geometry.location.lng(),
+                            };
+                            setAddress(place.formatted_address);
+                            setUserPosition(position);
+                        } else {
+                            console.error('No geometry found for the selected place.');
+                        }
+                    });
+                }
+            })
+            .catch((err) => console.error('Error loading Google Maps API:', err));
+    }, []);
+        
 
     const handleMarkerClick = (restaurant) => {
         setSelectedRestaurant(restaurant)
@@ -220,12 +268,13 @@ export default function MapInit({
                     <input
                         type="text"
                         name="search"
+                        ref={inputRef}
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                e.preventDefault()
-                                requestLocation(address)
+                                e.preventDefault();
+                                requestLocation(address);
                             }
                         }}
                         className="bg-transparent w-full rounded-full px-2"
