@@ -31,21 +31,31 @@ export default function MapInit({
         .map((f) => f.name)
         .join(' ')
 
-    function loadGoogleMapsApi(apiKey, libraries = []) {
-        return new Promise((resolve, reject) => {
-            if (window.google && window.google.maps) {
-                resolve(window.google.maps);
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=${libraries.join(',')}`;
-            script.async = true;
-            script.defer = true;
-            script.onload = () => resolve(window.google.maps);
-            script.onerror = (err) => reject(err);
-            document.head.appendChild(script);
-        });
-    }
+        function loadGoogleMapsApi(apiKey, libraries = []) {
+            return new Promise((resolve, reject) => {
+                if (window.google && window.google.maps) {
+                    resolve(window.google.maps);
+                    return;
+                }
+                if (document.querySelector(`script[src*="maps.googleapis.com"]`)) {
+                    // Wait for the existing script to load
+                    const interval = setInterval(() => {
+                        if (window.google && window.google.maps) {
+                            clearInterval(interval);
+                            resolve(window.google.maps);
+                        }
+                    }, 50);
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=${libraries.join(',')}`;
+                script.async = true;
+                script.defer = true;
+                script.onload = () => resolve(window.google.maps);
+                script.onerror = (err) => reject(err);
+                document.head.appendChild(script);
+            });
+        }
 
 
     useEffect(() => {
@@ -255,7 +265,7 @@ export default function MapInit({
 
     return (
         <div className="flex flex-col w-full">
-            <PLacesCarousel restaurants={restaurants} />
+            {/* <PLacesCarousel restaurants={restaurants} /> */}
             <div
                 id="searchandfilters"
                 className="flex flex-col xl:flex-row justify-center items-center lg:mx-16"
