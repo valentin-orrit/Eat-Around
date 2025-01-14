@@ -289,7 +289,7 @@ export default function AppSidebar({
                                                             </div>
                                                         ) : (
                                                             <>
-                                                                <span className="[li:hover_&]:hidden">
+                                                                <span className="[li:hover_&]:hidden text-nowrap text-ellipsis">
                                                                     {
                                                                         favorite.place.address?.split(
                                                                             ','

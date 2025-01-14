@@ -27,15 +27,23 @@ export default function PLacesCarousel({ restaurants }) {
                                 <div className="flex">
                                     <Card>
                                         <CardContent className="flex flex-col flex-wrap mt-1 p-1">
-                                            <img
-                                                src={restaurant.photos[0]?.getUrl()}
-                                                alt={
-                                                    restaurant.name.split(
-                                                        ','
-                                                    )[0]
-                                                }
-                                                className="w-full h-auto"
-                                            />
+                                            {restaurant.photos?.[0] ? (
+                                                <img
+                                                    src={restaurant.photos[0].getUrl()}
+                                                    alt={
+                                                        restaurant.name.split(
+                                                            ','
+                                                        )[0]
+                                                    }
+                                                    className="w-full h-auto"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-auto flex items-center justify-center bg-gray-200">
+                                                    <span className="text-sm text-gray-600">
+                                                        No Image Available
+                                                    </span>
+                                                </div>
+                                            )}
                                             <span className="text-eagreen font-semibold">
                                                 {restaurant.name.split(',')[0]}
                                             </span>
