@@ -9,6 +9,7 @@ import {
     Filter,
     X,
     Check,
+    HeartOff,
 } from 'lucide-react'
 import {
     Sidebar,
@@ -250,14 +251,14 @@ export default function AppSidebar({
                                                     <span className="text-gray-200 text-xs">
                                                         {confirmationId ===
                                                         favorite.id ? (
-                                                            <div className="flex gap-1 bg-eaoffwhite rounded-md">
+                                                            <div className="flex gap-1 bg-eaoffwhite rounded-md h-6">
                                                                 <div
                                                                     onClick={() =>
                                                                         handleDelete(
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-green-500"
+                                                                    className="text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-green-500 group/confirm my-[2px]"
                                                                 >
                                                                     <Check
                                                                         size={
@@ -266,23 +267,23 @@ export default function AppSidebar({
                                                                         strokeWidth={
                                                                             3
                                                                         }
-                                                                        className="inline"
+                                                                        className="inline-block relative transition-all ease-in-out duration-300 group-hover/confirm:stroke-[4px]"
                                                                     />
                                                                 </div>
                                                                 <div
                                                                     onClick={
                                                                         cancelDelete
                                                                     }
-                                                                    className="text-red-500 hover:bg-red-500 hover:text-eaoffwhite px-2 rounded-md cursor-pointer mr-2 border border-red-500"
+                                                                    className="text-red-500 hover:bg-red-500 hover:text-eaoffwhite px-2 rounded-md cursor-pointer mr-2 border border-red-500 group/abort my-[2px]"
                                                                 >
                                                                     <X
                                                                         size={
                                                                             12
                                                                         }
                                                                         strokeWidth={
-                                                                            3
+                                                                            2
                                                                         }
-                                                                        className="inline"
+                                                                        className="inline-block relative transition-all ease-in-out duration-300 group-hover/abort:stroke-[4px]"
                                                                     />
                                                                 </div>
                                                             </div>
@@ -301,17 +302,17 @@ export default function AppSidebar({
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="hidden [li:hover_&]:inline bg-red-500 hover:bg-eaoffwhite hover:text-red-500 text-sm text-eaoffwhite rounded-md px-2"
+                                                                    className="hidden [li:hover_&]:inline bg-red-500 text-sm text-eaoffwhite rounded-md px-2 group/remove"
                                                                 >
                                                                     <span className="">
-                                                                        <X
+                                                                        <HeartOff
                                                                             size={
-                                                                                14
+                                                                                16
                                                                             }
                                                                             strokeWidth={
-                                                                                3
+                                                                                2
                                                                             }
-                                                                            className="inline"
+                                                                            className="inline-block relative bottom-px w-4 transition-all ease-in-out duration-300 group-hover/remove:w-10 group-hover/remove:stroke-[3px]"
                                                                         />
                                                                     </span>
                                                                 </span>
