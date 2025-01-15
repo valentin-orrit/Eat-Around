@@ -2,6 +2,7 @@ import './styles/App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Homepage'
 import Dashboard from './pages/Dashboard'
+import Contact from "./pages/Contact"
 import { ProtectedAdminRoute } from './components/ProtectedAdminRoute'
 import Layout from './components/Layout'
 import { useState, useEffect } from 'react'
@@ -96,6 +97,12 @@ function App() {
                                 <ProtectedAdminRoute>
                                     <Dashboard />
                                 </ProtectedAdminRoute>
+                            }
+                        />
+                        <Route 
+                            path="/contact"
+                            element={
+                                    <Contact />
                             }
                         />
                     </Routes>

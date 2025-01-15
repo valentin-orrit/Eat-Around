@@ -10,6 +10,7 @@ import {
     X,
     Check,
     HeartOff,
+    UserPen,
 } from 'lucide-react'
 import {
     Sidebar,
@@ -128,6 +129,15 @@ export default function AppSidebar({
                                     Dashboard
                                 </Link>
                             )}
+                        </SidebarMenuButton>
+                        <SidebarMenuButton asChild>
+                            <Link
+                                to="/contact"
+                                className="text-eaoffwhite hover:bg-eaorange px-3 rounded-full text-sm font-semibold"
+                            >
+                                <UserPen />
+                                Contact
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarGroupContent>
                     <Collapsible
