@@ -289,7 +289,7 @@ export default function AppSidebar({
                                                             </div>
                                                         ) : (
                                                             <>
-                                                                <span className="[li:hover_&]:hidden text-nowrap text-ellipsis">
+                                                                <span className="hidden md:inline [li:hover_&]:hidden text-nowrap text-ellipsis">
                                                                     {
                                                                         favorite.place.address?.split(
                                                                             ','
@@ -302,7 +302,7 @@ export default function AppSidebar({
                                                                             favorite.id
                                                                         )
                                                                     }
-                                                                    className="hidden [li:hover_&]:inline bg-red-500 text-sm text-eaoffwhite rounded-md px-2 group/remove"
+                                                                    className="inline md:hidden [li:hover_&]:inline bg-eagreen text-eaorange hover:text-eaoffwhite md:bg-red-500 hover:bg-red-500 text-sm md:text-eaoffwhite rounded-md px-2 group/remove"
                                                                 >
                                                                     <span className="">
                                                                         <HeartOff
