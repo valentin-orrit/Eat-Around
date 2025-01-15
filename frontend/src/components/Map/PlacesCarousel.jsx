@@ -7,7 +7,11 @@ import {
 } from '../ui/carousel'
 import PlaceCard from './PlaceCard'
 
-export default function PlacesCarousel({ restaurants }) {
+export default function PlacesCarousel({
+    restaurants,
+    favorites,
+    setFavorites,
+}) {
     return (
         <div className="flex justify-center align-middle text-eablack mt-8 w-full">
             {restaurants.length > 0 && (
@@ -25,7 +29,11 @@ export default function PlacesCarousel({ restaurants }) {
                                 className="basis-1/3 md:basis-1/4 xl:basis-1/5 p-1 min-w-11/12 flex"
                             >
                                 <div className="flex">
-                                    <PlaceCard restaurant={restaurant} />
+                                    <PlaceCard
+                                        restaurant={restaurant}
+                                        favorites={favorites}
+                                        setFavorites={setFavorites}
+                                    />
                                 </div>
                             </CarouselItem>
                         ))}

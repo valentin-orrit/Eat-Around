@@ -1,8 +1,36 @@
 import { Card, CardContent } from '../ui/card'
-import { Globe, Phone } from 'lucide-react'
+import { Globe, Phone, Heart } from 'lucide-react'
+import { useAuth } from '@clerk/clerk-react'
+import axios from 'axios'
 
-export default function PlaceCard({ restaurant }) {
-    // console.log(restaurant)
+export default function PlaceCard({ restaurant, favorites, setFavorites }) {
+    const { userId } = useAuth()
+    const isFavorite = favorites?.some(
+        (fav) =>
+            fav.name === restaurant.name && fav.address === restaurant.vicinity
+    )
+
+    async function handleSaveToFavorites(place, userId) {
+        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
+
+        try {
+            await axios.post(`${apiBack}/add-place-to-favorite`, {
+                name: place.name,
+                address: place.vicinity,
+                latitude: place.geometry.location.lat(),
+                longitude: place.geometry.location.lng(),
+                clerkUserId: userId,
+            })
+
+            const favoritesResponse = await axios.get(
+                `${apiBack}/favorites/${userId}`
+            )
+
+            setFavorites(favoritesResponse.data || [])
+        } catch (error) {
+            console.error('Error saving place to favorites:', error)
+        }
+    }
 
     return (
         <Card>
@@ -31,6 +59,21 @@ export default function PlaceCard({ restaurant }) {
                                     )}
                                 </div>
                             )}
+                            <button
+                                onClick={() =>
+                                    handleSaveToFavorites(restaurant, userId)
+                                }
+                                className="absolute top-2 right-2 p-1 rounded-full bg-white/80 hover:bg-white transition-colors"
+                            >
+                                <Heart
+                                    size={18}
+                                    className={`${
+                                        isFavorite
+                                            ? 'fill-red-500 text-red-500'
+                                            : 'text-gray-600'
+                                    }`}
+                                />
+                            </button>
                         </>
                     ) : (
                         <div className="w-full h-24 flex items-center justify-center bg-gray-200">

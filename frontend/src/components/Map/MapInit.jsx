@@ -253,29 +253,6 @@ export default function MapInit({
         )
     }
 
-    async function handleSaveToFavorites(place, userId) {
-        const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
-
-        try {
-            await axios.post(`${apiBack}/add-place-to-favorite`, {
-                name: place.name,
-                address: place.vicinity,
-                latitude: place.geometry.location.lat(),
-                longitude: place.geometry.location.lng(),
-                clerkUserId: userId,
-            })
-
-            const favoritesResponse = await axios.get(
-                `${apiBack}/favorites/${userId}`
-            )
-
-            setFavorites(favoritesResponse.data || [])
-            setSelectedRestaurant(null)
-        } catch (error) {
-            console.error('Error saving place to favorites:', error)
-        }
-    }
-
     return (
         <div className="flex flex-col w-full">
             <div
@@ -375,6 +352,8 @@ export default function MapInit({
                                                     restaurant={
                                                         selectedRestaurant
                                                     }
+                                                    favorites={favorites}
+                                                    setFavorites={setFavorites}
                                                 />
                                             </InfoWindow>
                                         )}
@@ -413,7 +392,11 @@ export default function MapInit({
                     </>
                 )}
             </div>
-            <PlacesCarousel restaurants={restaurants} />
+            <PlacesCarousel
+                restaurants={restaurants}
+                favorites={favorites}
+                setFavorites={setFavorites}
+            />
         </div>
     )
 }
