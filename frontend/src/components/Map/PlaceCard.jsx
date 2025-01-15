@@ -2,7 +2,7 @@ import { Card, CardContent } from '../ui/card'
 import { Globe, Phone } from 'lucide-react'
 
 export default function PlaceCard({ restaurant }) {
-    console.log(restaurant)
+    // console.log(restaurant)
 
     return (
         <Card>

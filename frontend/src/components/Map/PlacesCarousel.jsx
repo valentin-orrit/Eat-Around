@@ -10,7 +10,7 @@ import PlaceCard from './PlaceCard'
 export default function PlacesCarousel({ restaurants }) {
     return (
         <div className="flex justify-center align-middle text-eablack my-4">
-            {restaurants && (
+            {restaurants.length > 0 && (
                 <Carousel
                     opts={{
                         align: 'start',
@@ -22,7 +22,7 @@ export default function PlacesCarousel({ restaurants }) {
                         {restaurants.map((restaurant, index) => (
                             <CarouselItem
                                 key={index}
-                                className="sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/4 p-1 min-w-11/12 flex"
+                                className="basis-1/1 md:basis-1/4 xl:basis-1/5 p-1 min-w-11/12 flex"
                             >
                                 <div className="flex">
                                     <PlaceCard restaurant={restaurant} />
