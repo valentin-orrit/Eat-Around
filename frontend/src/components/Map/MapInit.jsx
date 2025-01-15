@@ -6,9 +6,10 @@ import {
     InfoWindow,
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
-import PLacesCarousel from './PlacesCarousel'
+import PlacesCarousel from './PlacesCarousel'
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react'
+import PlaceCard from './PlaceCard'
 
 export default function MapInit({
     filters,
@@ -61,34 +62,42 @@ export default function MapInit({
     }
 
     useEffect(() => {
-        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    
+        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+
         loadGoogleMapsApi(apiKey, ['places'])
             .then(() => {
                 if (inputRef.current) {
-                    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
-                        types: ['(cities)'],
-                        fields: ['geometry', 'formatted_address'],
-                    });
-    
+                    const autocomplete =
+                        new window.google.maps.places.Autocomplete(
+                            inputRef.current,
+                            {
+                                types: ['(cities)'],
+                                fields: ['geometry', 'formatted_address'],
+                            }
+                        )
+
                     autocomplete.addListener('place_changed', () => {
-                        const place = autocomplete.getPlace();
+                        const place = autocomplete.getPlace()
                         if (place.geometry && place.geometry.location) {
                             const position = {
                                 lat: place.geometry.location.lat(),
                                 lng: place.geometry.location.lng(),
-                            };
-                            setAddress(place.formatted_address);
-                            setUserPosition(position);
-                            setMapKey(prevKey => prevKey + 1);
+                            }
+                            setAddress(place.formatted_address)
+                            setUserPosition(position)
+                            setMapKey((prevKey) => prevKey + 1)
                         } else {
-                            console.error('No geometry found for the selected place.');
+                            console.error(
+                                'No geometry found for the selected place.'
+                            )
                         }
-                    });
+                    })
                 }
             })
-            .catch((err) => console.error('Error loading Google Maps API:', err));
-    }, []);
+            .catch((err) =>
+                console.error('Error loading Google Maps API:', err)
+            )
+    }, [])
 
     const handleMarkerClick = (restaurant) => {
         setSelectedRestaurant(restaurant)
@@ -114,7 +123,7 @@ export default function MapInit({
                     if (data.status === 'OK') {
                         const position = data.results[0].geometry.location
                         setUserPosition(position)
-                        setMapKey(prevKey => prevKey + 1)
+                        setMapKey((prevKey) => prevKey + 1)
                         setIsLoading(false)
                         clearErrorMessage()
                     } else {
@@ -144,7 +153,7 @@ export default function MapInit({
                         lng: location.coords.longitude,
                     }
                     setUserPosition(position)
-                    setMapKey(prevKey => prevKey + 1)
+                    setMapKey((prevKey) => prevKey + 1)
                     setIsLoading(false)
                     clearErrorMessage()
                 },
@@ -362,7 +371,12 @@ export default function MapInit({
                                                     setSelectedRestaurant(null)
                                                 }
                                             >
-                                                <div
+                                                <PlaceCard
+                                                    restaurant={
+                                                        selectedRestaurant
+                                                    }
+                                                />
+                                                {/* <div
                                                     style={{
                                                         maxWidth: '300px',
                                                     }}
@@ -469,7 +483,7 @@ export default function MapInit({
                                                     >
                                                         Save to Favorites
                                                     </button>
-                                                </div>
+                                                </div> */}
                                             </InfoWindow>
                                         )}
                                     </Map>
@@ -507,7 +521,7 @@ export default function MapInit({
                     </>
                 )}
             </div>
-            <PLacesCarousel restaurants={restaurants} />
+            <PlacesCarousel restaurants={restaurants} />
         </div>
     )
 }
