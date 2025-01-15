@@ -6,8 +6,8 @@ export default function PlaceCard({ restaurant }) {
 
     return (
         <Card>
-            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-40 sm:w-52 h-52 gap-y-1">
-                <div className="relative">
+            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-40 sm:w-52 h-auto gap-y-1">
+                <div className="relative ">
                     {restaurant.photos?.[0] ? (
                         <>
                             <img
