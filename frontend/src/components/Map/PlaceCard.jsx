@@ -14,13 +14,13 @@ export default function PlaceCard({ restaurant }) {
                                 src={restaurant.photos[0].getUrl()}
                                 alt={restaurant.name.split(',')[0]}
                                 className={`object-cover h-24 w-full rounded-md ${
-                                    !restaurant.opening_hours.open_now &&
+                                    !restaurant.opening_hours?.open_now &&
                                     'grayscale opacity-70'
                                 }`}
                             />
                             {restaurant.opening_hours && (
                                 <div className="absolute bottom-2 left-2">
-                                    {restaurant.opening_hours.open_now ? (
+                                    {restaurant.opening_hours?.open_now ? (
                                         <p className="border rounded-md bg-eagreen text-eaoffwhite w-14 text-center text-xs">
                                             open
                                         </p>
