@@ -5,30 +5,44 @@ import axios from 'axios'
 
 export default function PlaceCard({ restaurant, favorites, setFavorites }) {
     const { userId } = useAuth()
-    const isFavorite = favorites?.some(
-        (fav) =>
-            fav.name === restaurant.name && fav.address === restaurant.vicinity
-    )
+    const matchingFavorite = favorites?.find((fav) => {
+        const restaurantLat = restaurant.geometry.location.lat()
+        const restaurantLng = restaurant.geometry.location.lng()
+
+        const threshold = 0.0000001
+        return (
+            Math.abs(fav.place.latitude - restaurantLat) < threshold &&
+            Math.abs(fav.place.longitude - restaurantLng) < threshold
+        )
+    })
+
+    const isFavorite = !!matchingFavorite
 
     async function handleSaveToFavorites(place, userId) {
         const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
 
         try {
-            await axios.post(`${apiBack}/add-place-to-favorite`, {
-                name: place.name,
-                address: place.vicinity,
-                latitude: place.geometry.location.lat(),
-                longitude: place.geometry.location.lng(),
-                clerkUserId: userId,
-            })
+            if (isFavorite) {
+                await axios.delete(
+                    `${apiBack}/favorites/${matchingFavorite.id}`
+                )
+            } else {
+                await axios.post(`${apiBack}/add-place-to-favorite`, {
+                    name: place.name,
+                    address: place.vicinity,
+                    latitude: place.geometry.location.lat(),
+                    longitude: place.geometry.location.lng(),
+                    clerkUserId: userId,
+                })
+            }
 
+            // Refresh favorites list
             const favoritesResponse = await axios.get(
                 `${apiBack}/favorites/${userId}`
             )
-
             setFavorites(favoritesResponse.data || [])
         } catch (error) {
-            console.error('Error saving place to favorites:', error)
+            console.error('Error managing favorites:', error)
         }
     }
 
@@ -63,14 +77,14 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
                                 onClick={() =>
                                     handleSaveToFavorites(restaurant, userId)
                                 }
-                                className="absolute top-2 right-2 p-1 rounded-full bg-white/80 hover:bg-white transition-colors"
+                                className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors"
                             >
                                 <Heart
                                     size={18}
                                     className={`${
                                         isFavorite
-                                            ? 'fill-red-500 text-red-500'
-                                            : 'text-gray-600'
+                                            ? 'fill-eaorange text-eaorange'
+                                            : 'text-eaorange'
                                     }`}
                                 />
                             </button>
