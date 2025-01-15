@@ -26,7 +26,7 @@ export default function PLacesCarousel({ restaurants }) {
                             >
                                 <div className="flex">
                                     <Card>
-                                        <CardContent className="flex flex-col flex-wrap mt-1 p-1">
+                                        <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-48 h-48">
                                             {restaurant.photos?.[0] ? (
                                                 <img
                                                     src={restaurant.photos[0].getUrl()}
@@ -35,7 +35,7 @@ export default function PLacesCarousel({ restaurants }) {
                                                             ','
                                                         )[0]
                                                     }
-                                                    className="w-full h-auto"
+                                                    className="object-cover h-24"
                                                 />
                                             ) : (
                                                 <div className="w-full h-auto flex items-center justify-center bg-gray-200">
