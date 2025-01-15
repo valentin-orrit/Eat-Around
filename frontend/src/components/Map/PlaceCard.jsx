@@ -6,7 +6,7 @@ export default function PlaceCard({ restaurant }) {
 
     return (
         <Card>
-            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-52 h-52 gap-y-1">
+            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-40 sm:w-52 h-52 gap-y-1">
                 {restaurant.photos?.[0] ? (
                     <img
                         src={restaurant.photos[0].getUrl()}
@@ -28,7 +28,9 @@ export default function PlaceCard({ restaurant }) {
                         <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
-                        <span className="text-end">{restaurant.rating} ⭐</span>
+                        <span className="hidden sm:inline text-end">
+                            {restaurant.rating} ⭐
+                        </span>
                     </div>
                     <div className="flex justify-between mt-2">
                         {restaurant.website && (

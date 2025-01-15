@@ -70,7 +70,7 @@ function App() {
     }
 
     return (
-        <div className="flex flex-col w-dvw">
+        <div className="flex flex-col">
             <Router>
                 <Layout
                     filters={filters}
