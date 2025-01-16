@@ -11,6 +11,7 @@ import {
     Check,
     HeartOff,
     UserPen,
+    LoaderCircle,
 } from 'lucide-react'
 import {
     Sidebar,
@@ -50,6 +51,7 @@ export default function AppSidebar({
     favorites,
     setFavorites,
 }) {
+    const [isLoading, setIsLoading] = useState(false)
     const { userData } = useUserData()
     const { state, setOpen } = useSidebar()
     const api = import.meta.env.VITE_AXIOS_BASE_URL
@@ -67,6 +69,8 @@ export default function AppSidebar({
 
     async function handleDelete(id) {
         try {
+            setIsLoading(true)
+
             await axios.delete(`${api}/favorites/${id}`)
 
             setFavorites((prevFavorites) =>
@@ -74,6 +78,7 @@ export default function AppSidebar({
             )
 
             setConfirmationId(null)
+            setIsLoading(false)
         } catch (error) {
             console.error(`Error deleting favorite with id: ${id}`, error)
         }
@@ -270,15 +275,24 @@ export default function AppSidebar({
                                                                     }
                                                                     className="text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-md cursor-pointer border border-green-500 group/confirm my-[2px]"
                                                                 >
-                                                                    <Check
-                                                                        size={
-                                                                            12
-                                                                        }
-                                                                        strokeWidth={
-                                                                            3
-                                                                        }
-                                                                        className="inline-block relative transition-all ease-in-out duration-300 group-hover/confirm:stroke-[4px]"
-                                                                    />
+                                                                    {isLoading ? (
+                                                                        <LoaderCircle
+                                                                            size={
+                                                                                12
+                                                                            }
+                                                                            className="animate-spin inline-block relative transition-all ease-in-out duration-300 group-hover/confirm:stroke-[4px]"
+                                                                        />
+                                                                    ) : (
+                                                                        <Check
+                                                                            size={
+                                                                                12
+                                                                            }
+                                                                            strokeWidth={
+                                                                                3
+                                                                            }
+                                                                            className="inline-block relative transition-all ease-in-out duration-300 group-hover/confirm:stroke-[4px]"
+                                                                        />
+                                                                    )}
                                                                 </div>
                                                                 <div
                                                                     onClick={
