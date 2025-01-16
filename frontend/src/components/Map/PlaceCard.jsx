@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { Card, CardContent } from '../ui/card'
-import { Globe, Phone, Heart } from 'lucide-react'
-import { useAuth, SignedIn, SignedOut } from '@clerk/clerk-react'
+import { Globe, Phone, Heart, LoaderCircle } from 'lucide-react'
+import { useAuth, SignedIn } from '@clerk/clerk-react'
 import axios from 'axios'
 
 export default function PlaceCard({ restaurant, favorites, setFavorites }) {
+    const [isLoading, setIsLoading] = useState(false)
     const { userId } = useAuth()
+
     const matchingFavorite = favorites?.find((fav) => {
         const restaurantLat = restaurant.geometry.location.lat()
         const restaurantLng = restaurant.geometry.location.lng()
@@ -22,6 +25,8 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
         const apiBack = import.meta.env.VITE_AXIOS_BASE_URL
 
         try {
+            setIsLoading(true)
+
             if (isFavorite) {
                 await axios.delete(
                     `${apiBack}/favorites/${matchingFavorite.id}`
@@ -41,6 +46,7 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
                 `${apiBack}/favorites/${userId}`
             )
             setFavorites(favoritesResponse.data || [])
+            setIsLoading(false)
         } catch (error) {
             console.error('Error managing favorites:', error)
         }
@@ -81,16 +87,23 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
                                             userId
                                         )
                                     }
-                                    className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors"
+                                    className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors text-eaorange"
                                 >
-                                    <Heart
-                                        size={18}
-                                        className={`${
-                                            isFavorite
-                                                ? 'fill-eaorange text-eaorange'
-                                                : 'text-eaorange'
-                                        }`}
-                                    />
+                                    {isLoading ? (
+                                        <LoaderCircle
+                                            size={18}
+                                            className="animate-spin"
+                                        />
+                                    ) : (
+                                        <Heart
+                                            size={18}
+                                            className={`${
+                                                isFavorite
+                                                    ? 'fill-eaorange'
+                                                    : ''
+                                            }`}
+                                        />
+                                    )}
                                 </button>
                             </SignedIn>
                         </>
