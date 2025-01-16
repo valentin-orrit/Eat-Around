@@ -16,7 +16,9 @@ export default function MapInit({
     favorites,
     setFavorites,
     userPosition,
-    setUserPosition
+    setUserPosition,
+    mapKey,
+    setMapKey
 }) {
     
     const [mapLoaded, setMapLoaded] = useState(false)
@@ -24,7 +26,6 @@ export default function MapInit({
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
-    const [mapKey, setMapKey] = useState(0)
     const infoWindowRef = useRef(null)
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY

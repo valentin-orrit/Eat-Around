@@ -50,7 +50,8 @@ export default function AppSidebar({
     setFilters,
     favorites,
     setFavorites,
-    setUserPosition
+    setUserPosition,
+    setMapKey
 }) {
     const [isLoading, setIsLoading] = useState(false)
     const { userData } = useUserData()
