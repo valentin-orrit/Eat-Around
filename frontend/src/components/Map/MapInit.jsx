@@ -352,6 +352,9 @@ export default function MapInit({
                                                     restaurant={
                                                         selectedRestaurant
                                                     }
+                                                    setRestaurant={
+                                                        setSelectedRestaurant
+                                                    }
                                                     favorites={favorites}
                                                     setFavorites={setFavorites}
                                                 />
@@ -394,6 +397,7 @@ export default function MapInit({
             </div>
             <PlacesCarousel
                 restaurants={restaurants}
+                setSelectedRestaurant={setSelectedRestaurant}
                 favorites={favorites}
                 setFavorites={setFavorites}
             />

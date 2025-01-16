@@ -9,6 +9,7 @@ import PlaceCard from './PlaceCard'
 
 export default function PlacesCarousel({
     restaurants,
+    setSelectedRestaurant,
     favorites,
     setFavorites,
 }) {
@@ -31,6 +32,7 @@ export default function PlacesCarousel({
                                 <div className="flex">
                                     <PlaceCard
                                         restaurant={restaurant}
+                                        setRestaurant={setSelectedRestaurant}
                                         favorites={favorites}
                                         setFavorites={setFavorites}
                                     />

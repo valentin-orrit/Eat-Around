@@ -4,7 +4,12 @@ import { Globe, Phone, Heart, LoaderCircle } from 'lucide-react'
 import { useAuth, SignedIn } from '@clerk/clerk-react'
 import axios from 'axios'
 
-export default function PlaceCard({ restaurant, favorites, setFavorites }) {
+export default function PlaceCard({
+    restaurant,
+    setRestaurant,
+    favorites,
+    setFavorites,
+}) {
     const [isLoading, setIsLoading] = useState(false)
     const { userId } = useAuth()
 
@@ -49,6 +54,14 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
             setIsLoading(false)
         } catch (error) {
             console.error('Error managing favorites:', error)
+        }
+    }
+
+    async function handleRestaurantNameClick() {
+        if (setRestaurant) {
+            await setRestaurant(restaurant) // Update the selected restaurant
+        } else {
+            console.error('setRestaurant is not defined')
         }
     }
 
@@ -116,7 +129,10 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
                     )}
                 </div>
                 <div className="flex flex-col px-2 w-full gap-y-1">
-                    <span className="text-eabrown text-start font-semibold text-nowrap text-ellipsis overflow-hidden w-full">
+                    <span
+                        onClick={handleRestaurantNameClick}
+                        className="text-eabrown text-start font-semibold text-nowrap text-ellipsis overflow-hidden w-full cursor-pointer hover:text-eaorange"
+                    >
                         {restaurant.name.split(/[,\|\-]/)[0]}
                     </span>
                     <div className="flex items-center justify-between text-xs">
