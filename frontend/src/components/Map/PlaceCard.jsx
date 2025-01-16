@@ -65,8 +65,8 @@ export default function PlaceCard({
         <Card>
             <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-40 sm:w-52 h-auto gap-y-1">
                 <div className="relative ">
-                    {restaurant.photos?.[0] ? (
-                        <>
+                    <>
+                        {restaurant.photos?.[0] ? (
                             <img
                                 src={restaurant.photos[0].getUrl()}
                                 alt={restaurant.name.split(',')[0]}
@@ -75,54 +75,49 @@ export default function PlaceCard({
                                     'grayscale opacity-70'
                                 }`}
                             />
-                            {restaurant.opening_hours && (
-                                <div className="absolute bottom-2 left-2">
-                                    {restaurant.opening_hours?.open_now ? (
-                                        <p className="border rounded-md bg-eagreen text-eaoffwhite w-14 text-center text-xs">
-                                            open
-                                        </p>
-                                    ) : (
-                                        <p className="border rounded-md bg-red-800 text-eaoffwhite w-14 text-center text-xs">
-                                            closed
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                            <SignedIn>
-                                <button
-                                    onClick={() =>
-                                        handleSaveToFavorites(
-                                            restaurant,
-                                            userId
-                                        )
-                                    }
-                                    className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors text-eaorange"
-                                >
-                                    {isLoading ? (
-                                        <LoaderCircle
-                                            size={18}
-                                            className="animate-spin"
-                                        />
-                                    ) : (
-                                        <Heart
-                                            size={18}
-                                            className={`${
-                                                isFavorite
-                                                    ? 'fill-eaorange'
-                                                    : ''
-                                            }`}
-                                        />
-                                    )}
-                                </button>
-                            </SignedIn>
-                        </>
-                    ) : (
-                        <div className="w-full h-24 flex items-center justify-center bg-gray-200">
-                            <span className="text-sm text-gray-600">
-                                No Image Available
-                            </span>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="w-full h-24 flex items-center justify-center bg-gray-200">
+                                <span className="text-sm text-gray-600">
+                                    No Image Available
+                                </span>
+                            </div>
+                        )}
+                        {restaurant.opening_hours && (
+                            <div className="absolute bottom-2 left-2">
+                                {restaurant.opening_hours?.open_now ? (
+                                    <p className="border rounded-md bg-eagreen text-eaoffwhite w-14 text-center text-xs">
+                                        open
+                                    </p>
+                                ) : (
+                                    <p className="border rounded-md bg-red-800 text-eaoffwhite w-14 text-center text-xs">
+                                        closed
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                        <SignedIn>
+                            <button
+                                onClick={() =>
+                                    handleSaveToFavorites(restaurant, userId)
+                                }
+                                className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors text-eaorange"
+                            >
+                                {isLoading ? (
+                                    <LoaderCircle
+                                        size={18}
+                                        className="animate-spin"
+                                    />
+                                ) : (
+                                    <Heart
+                                        size={18}
+                                        className={`${
+                                            isFavorite ? 'fill-eaorange' : ''
+                                        }`}
+                                    />
+                                )}
+                            </button>
+                        </SignedIn>
+                    </>
                 </div>
                 <div className="flex flex-col px-2 w-full gap-y-1">
                     <span
