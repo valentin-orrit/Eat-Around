@@ -1,6 +1,6 @@
 import { Card, CardContent } from '../ui/card'
 import { Globe, Phone, Heart } from 'lucide-react'
-import { useAuth } from '@clerk/clerk-react'
+import { useAuth, SignedIn, SignedOut } from '@clerk/clerk-react'
 import axios from 'axios'
 
 export default function PlaceCard({ restaurant, favorites, setFavorites }) {
@@ -73,21 +73,26 @@ export default function PlaceCard({ restaurant, favorites, setFavorites }) {
                                     )}
                                 </div>
                             )}
-                            <button
-                                onClick={() =>
-                                    handleSaveToFavorites(restaurant, userId)
-                                }
-                                className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors"
-                            >
-                                <Heart
-                                    size={18}
-                                    className={`${
-                                        isFavorite
-                                            ? 'fill-eaorange text-eaorange'
-                                            : 'text-eaorange'
-                                    }`}
-                                />
-                            </button>
+                            <SignedIn>
+                                <button
+                                    onClick={() =>
+                                        handleSaveToFavorites(
+                                            restaurant,
+                                            userId
+                                        )
+                                    }
+                                    className="absolute top-2 right-2 p-1 rounded-full bg-white/95 hover:bg-white transition-colors"
+                                >
+                                    <Heart
+                                        size={18}
+                                        className={`${
+                                            isFavorite
+                                                ? 'fill-eaorange text-eaorange'
+                                                : 'text-eaorange'
+                                        }`}
+                                    />
+                                </button>
+                            </SignedIn>
                         </>
                     ) : (
                         <div className="w-full h-24 flex items-center justify-center bg-gray-200">
