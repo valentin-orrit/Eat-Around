@@ -57,12 +57,8 @@ export default function PlaceCard({
         }
     }
 
-    async function handleRestaurantNameClick() {
-        if (setRestaurant) {
-            await setRestaurant(restaurant) // Update the selected restaurant
-        } else {
-            console.error('setRestaurant is not defined')
-        }
+    function handleRestaurantNameClick() {
+        restaurant && setRestaurant(restaurant)
     }
 
     return (
