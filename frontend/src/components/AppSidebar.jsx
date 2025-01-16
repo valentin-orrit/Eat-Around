@@ -51,7 +51,7 @@ export default function AppSidebar({
     favorites,
     setFavorites,
     setUserPosition,
-    setMapKey
+    setMapKey,
 }) {
     const [isLoading, setIsLoading] = useState(false)
     const { userData } = useUserData()
@@ -133,7 +133,7 @@ export default function AppSidebar({
                     }
                     setIsLoading(false)
                 })
-        } 
+        }
     }
 
     return (
@@ -270,7 +270,6 @@ export default function AppSidebar({
                                         <ul>
                                             {favorites?.map((favorite) => (
                                                 <li
-                                                    onClick={() => requestLocation(favorite.place.address)}
                                                     key={favorite.id}
                                                     className={`flex justify-between items-center list-none group hover:cursor-pointer rounded-md px-2 text-sm ${
                                                         confirmationId ===
@@ -291,7 +290,15 @@ export default function AppSidebar({
                                                                             delete?
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="">
+                                                                        <span
+                                                                            onClick={() =>
+                                                                                requestLocation(
+                                                                                    favorite
+                                                                                        .place
+                                                                                        .address
+                                                                                )
+                                                                            }
+                                                                        >
                                                                             {
                                                                                 favorite
                                                                                     .place
