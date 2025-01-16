@@ -10,6 +10,7 @@ import PlacesCarousel from './PlacesCarousel'
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react'
 import PlaceCard from './PlaceCard'
+import CustomMarker from './CustomMarker'
 
 export default function MapInit({
     filters,
@@ -99,9 +100,6 @@ export default function MapInit({
             )
     }, [])
 
-    const handleMarkerClick = (restaurant) => {
-        setSelectedRestaurant(restaurant)
-    }
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true)
@@ -323,19 +321,12 @@ export default function MapInit({
                                         />
                                         {restaurants.map(
                                             (restaurant, index) => (
-                                                <AdvancedMarker
-                                                    key={index}
-                                                    position={{
-                                                        lat: restaurant.geometry.location.lat(),
-                                                        lng: restaurant.geometry.location.lng(),
-                                                    }}
-                                                    title={restaurant.name}
-                                                    onClick={() =>
-                                                        handleMarkerClick(
-                                                            restaurant
-                                                        )
-                                                    }
-                                                />
+                                                <CustomMarker
+                                                restaurant={restaurant}
+                                                index={index}
+                                                setSelectedRestaurant={setSelectedRestaurant}
+                                                favorites={favorites}
+                                                setFavorites={setFavorites}/>
                                             )
                                         )}
                                         {selectedRestaurant && (
