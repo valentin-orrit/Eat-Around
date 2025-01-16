@@ -50,12 +50,15 @@ export default function AppSidebar({
     setFilters,
     favorites,
     setFavorites,
+    setUserPosition,
+    setMapKey
 }) {
     const [isLoading, setIsLoading] = useState(false)
     const { userData } = useUserData()
     const { state, setOpen } = useSidebar()
     const api = import.meta.env.VITE_AXIOS_BASE_URL
     const [confirmationId, setConfirmationId] = useState(null)
+    const googleMapsApi = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
@@ -86,6 +89,51 @@ export default function AppSidebar({
 
     function cancelDelete() {
         setConfirmationId(null)
+    }
+
+    const requestLocation = (inputAddress) => {
+        setIsLoading(true)
+        const errorMessageElement = document.getElementById('error-message')
+        const clearErrorMessage = () => {
+            if (errorMessageElement) {
+                errorMessageElement.textContent = ''
+            }
+        }
+
+        if (inputAddress) {
+            fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                    inputAddress
+                )}&key=${googleMapsApi}`
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status === 'OK') {
+                        const position = data.results[0].geometry.location
+                        setUserPosition(position)
+                        setMapKey((prevKey) => prevKey + 1)
+                        setIsLoading(false)
+                        clearErrorMessage()
+                    } else {
+                        console.error('Geocoding error:', data.status)
+                        if (errorMessageElement) {
+                            errorMessageElement.textContent =
+                                'Problem locating the address'
+                            setTimeout(clearErrorMessage, 5000)
+                        }
+                        setIsLoading(false)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching geocode data:', error)
+                    if (errorMessageElement) {
+                        errorMessageElement.textContent =
+                            'Problem locating the address'
+                        setTimeout(clearErrorMessage, 5000)
+                    }
+                    setIsLoading(false)
+                })
+        } 
     }
 
     return (
@@ -222,6 +270,7 @@ export default function AppSidebar({
                                         <ul>
                                             {favorites?.map((favorite) => (
                                                 <li
+                                                    onClick={() => requestLocation(favorite.place.address)}
                                                     key={favorite.id}
                                                     className={`flex justify-between items-center list-none group hover:cursor-pointer rounded-md px-2 text-sm ${
                                                         confirmationId ===

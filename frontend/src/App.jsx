@@ -14,6 +14,8 @@ function App() {
     const { userId, isLoaded } = useAuth()
     const [favorites, setFavorites] = useState([])
     const api = import.meta.env.VITE_AXIOS_BASE_URL
+    const [userPosition, setUserPosition] = useState(null)
+    const [mapKey, setMapKey] = useState(0)
 
     const defaultFilters = [
         { key: 1, name: 'vegetarian', isActive: true, isSelected: false },
@@ -83,6 +85,10 @@ function App() {
                     setFilters={setFilters}
                     favorites={favorites}
                     setFavorites={setFavorites}
+                    userPosition={userPosition}
+                    setUserPosition={setUserPosition}
+                    mapKey={mapKey}
+                    setMapKey={setMapKey}
                 >
                     <Routes>
                         <Route
@@ -93,6 +99,10 @@ function App() {
                                     setFilters={setFilters}
                                     favorites={favorites}
                                     setFavorites={setFavorites}
+                                    userPosition={userPosition}
+                                    setUserPosition={setUserPosition}
+                                    mapKey={mapKey}
+                                    setMapKey={setMapKey}
                                 />
                             }
                         />

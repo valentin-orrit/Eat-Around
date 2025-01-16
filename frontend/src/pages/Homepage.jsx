@@ -1,7 +1,7 @@
 import MapInit from '../components/Map/MapInit'
 import LogoLight from '../assets/eat-around-logo-light.svg'
 
-export default function Home({ filters, setFilters, favorites, setFavorites }) {
+export default function Home({ filters, setFilters, favorites, setFavorites, userPosition, setUserPosition, mapKey, setMapKey }) {
     return (
         <div className="flex flex-col p-4 w-11/12 lg:px-16 lg:py-8 lg:max-w-8xl">
             <div
@@ -30,6 +30,10 @@ export default function Home({ filters, setFilters, favorites, setFavorites }) {
                     setFilters={setFilters}
                     favorites={favorites}
                     setFavorites={setFavorites}
+                    userPosition={userPosition}
+                    setUserPosition={setUserPosition}
+                    mapKey={mapKey}
+                    setMapKey={setMapKey}
                 />
             </div>
 

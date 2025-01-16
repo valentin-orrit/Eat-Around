@@ -7,27 +7,28 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 import PlacesCarousel from './PlacesCarousel'
-import axios from 'axios'
-import { useAuth } from '@clerk/clerk-react'
 import PlaceCard from './PlaceCard'
+import CustomMarker from './CustomMarker'
 
 export default function MapInit({
     filters,
     setFilters,
     favorites,
     setFavorites,
+    userPosition,
+    setUserPosition,
+    mapKey,
+    setMapKey
 }) {
-    const [userPosition, setUserPosition] = useState(null)
+    
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
-    const [mapKey, setMapKey] = useState(0)
     const infoWindowRef = useRef(null)
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-    const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
@@ -99,9 +100,6 @@ export default function MapInit({
             )
     }, [])
 
-    const handleMarkerClick = (restaurant) => {
-        setSelectedRestaurant(restaurant)
-    }
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true)
@@ -323,19 +321,12 @@ export default function MapInit({
                                         />
                                         {restaurants.map(
                                             (restaurant, index) => (
-                                                <AdvancedMarker
-                                                    key={index}
-                                                    position={{
-                                                        lat: restaurant.geometry.location.lat(),
-                                                        lng: restaurant.geometry.location.lng(),
-                                                    }}
-                                                    title={restaurant.name}
-                                                    onClick={() =>
-                                                        handleMarkerClick(
-                                                            restaurant
-                                                        )
-                                                    }
-                                                />
+                                                <CustomMarker
+                                                restaurant={restaurant}
+                                                index={index}
+                                                setSelectedRestaurant={setSelectedRestaurant}
+                                                favorites={favorites}
+                                                setFavorites={setFavorites}/>
                                             )
                                         )}
                                         {selectedRestaurant && (
