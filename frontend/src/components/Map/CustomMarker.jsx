@@ -20,7 +20,6 @@ export default function CustomMarker ({restaurant,index,setSelectedRestaurant,fa
     }
     return (
         <div>
-            {console.log(index)}
                     <AdvancedMarker
                         key={restaurant.name}
                         position={{

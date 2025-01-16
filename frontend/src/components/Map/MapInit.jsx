@@ -7,8 +7,6 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 import PlacesCarousel from './PlacesCarousel'
-import axios from 'axios'
-import { useAuth } from '@clerk/clerk-react'
 import PlaceCard from './PlaceCard'
 import CustomMarker from './CustomMarker'
 
@@ -17,8 +15,10 @@ export default function MapInit({
     setFilters,
     favorites,
     setFavorites,
+    userPosition,
+    setUserPosition
 }) {
-    const [userPosition, setUserPosition] = useState(null)
+    
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -28,7 +28,6 @@ export default function MapInit({
     const infoWindowRef = useRef(null)
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-    const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
