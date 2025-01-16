@@ -2,12 +2,13 @@ import './styles/App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Homepage'
 import Dashboard from './pages/Dashboard'
-import Contact from "./pages/Contact"
+import Contact from './pages/Contact'
 import { ProtectedAdminRoute } from './components/ProtectedAdminRoute'
 import Layout from './components/Layout'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import axios from 'axios'
+import { LoaderCircle } from 'lucide-react'
 
 function App() {
     const { userId, isLoaded } = useAuth()
@@ -67,7 +68,11 @@ function App() {
     }, [filters, userId, isLoaded])
 
     if (filters === null) {
-        return <div>Loading...</div>
+        return (
+            <div className="flex flex-col justify-center items-center align-middle h-screen">
+                <LoaderCircle size={30} className="animate-spin text-eagreen" />
+            </div>
+        )
     }
 
     return (
@@ -99,12 +104,7 @@ function App() {
                                 </ProtectedAdminRoute>
                             }
                         />
-                        <Route 
-                            path="/contact"
-                            element={
-                                    <Contact />
-                            }
-                        />
+                        <Route path="/contact" element={<Contact />} />
                     </Routes>
                 </Layout>
             </Router>
