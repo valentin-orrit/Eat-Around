@@ -1,10 +1,7 @@
 import { useAuth } from "@clerk/clerk-react"
-import { AdvancedMarker } from "@vis.gl/react-google-maps"
+import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps"
 
 export default function CustomMarker ({restaurant,index,setSelectedRestaurant,favorites}) {
-
-    const { userId } = useAuth()
-
     const matchingFavorite = favorites?.find((fav) => {
         const restaurantLat = restaurant.geometry.location.lat()
         const restaurantLng = restaurant.geometry.location.lng()
@@ -23,8 +20,9 @@ export default function CustomMarker ({restaurant,index,setSelectedRestaurant,fa
     }
     return (
         <div>
+            {console.log(index)}
                     <AdvancedMarker
-                        key={index}
+                        key={restaurant.name}
                         position={{
                             lat: restaurant.geometry.location.lat(),
                             lng: restaurant.geometry.location.lng(),
@@ -35,8 +33,16 @@ export default function CustomMarker ({restaurant,index,setSelectedRestaurant,fa
                                 restaurant
                             )
                         }
-                        glyphColor={isFavorite ? "blue" : "pink"}
-                    />
+                        
+                    >
+                        {isFavorite ?
+                        <Pin
+                        background={"#f9a705"}
+                        scale={1.1}
+                        glyphColor={"#3c8236"}
+                        borderColor={"#f9a705"}
+                    /> : <Pin/>}
+                    </AdvancedMarker>
         </div>
     )
 }
