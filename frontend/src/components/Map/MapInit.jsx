@@ -338,7 +338,7 @@ export default function MapInit({
             </div>
             <div className="justify-center">
                 {userPosition ? (
-                    <div className="mt-4">
+                    <div >
                         <div className="flex flex-col items-center">
                             <div className="w-11/12 h-72 md:w-4/5 md:h-96">
                                 <APIProvider
@@ -399,13 +399,13 @@ export default function MapInit({
                     </div>
                 ) : (
                     <>
-                        <div className="flex flex-col space-y-4">
+                        <div className="flex flex-col items-center space-y-4">
                             <h1 className="text-lg font-semibold text-gray-500">
                                 OR
                             </h1>
                             <button
                                 onClick={() => requestLocation()}
-                                className={`mx-8 py-3 bg-eaorange text-white rounded-full shadow-md hover:bg-orange-500 transition-all ${
+                                className={`mx-8 py-3 w-2/3 px-2 bg-eaorange text-white rounded-full shadow-md hover:bg-orange-500 transition-all ${
                                     isLoading
                                         ? 'cursor-not-allowed bg-blue-300'
                                         : ''

@@ -1,8 +1,13 @@
 import ContactCover from '../assets/contact-cover.jpg'
 import LogoLight from '../assets/eat-around-logo-light.svg'
+import ReCAPTCHA from "react-google-recaptcha"
+import axios from "axios"
 import { Link } from 'react-router-dom'
 
 export default function Contact() {
+    const CaptchaSiteKey = import.meta.env.VITE_GOOGLE_CAPTCHA_SITE_KEY
+    const CaptchaSecretKey = import.meta.env.VITE_GOOGLE_CAPTCHA_SECRET_KEY
+
     return (
         <div className="flex flex-col p-2 w-11/12 xl:p-16 lg:max-w-7xl pt-3">
             <div className="flex flex-col-reverse items-center lg:items-stretch lg:flex-row my-24 xl:my-10 mx-4 xl:mx-8">
@@ -65,6 +70,10 @@ export default function Contact() {
                             rows="5"
                             className="p-2 border rounded-md"
                         ></textarea>
+                                {/* <ReCAPTCHA
+                                    sitekey="YOUR_RECAPTCHA_SITE_KEY" // Replace with your site key
+                                    onChange={handleCaptcha}
+                                /> */}
                         <button
                             type="submit"
                             className="m-8 py-3 bg-eagreen text-white rounded-full shadow-md hover:bg-orange-500"
