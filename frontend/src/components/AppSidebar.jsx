@@ -369,10 +369,10 @@ export default function AppSidebar({
                                                             </div>
                                                         ) : (
                                                             <>
-                                                                <span className="hidden md:inline [li:hover_&]:hidden text-nowrap text-ellipsis">
+                                                                <span className="hidden md:inline [li:hover_&]:hidden w-1/2 text-nowrap text-ellipsis overflow-hidden">
                                                                     {
                                                                         favorite.place.address?.split(
-                                                                            ','
+                                                                            /[,\|\-]/
                                                                         )[1]
                                                                     }
                                                                 </span>
