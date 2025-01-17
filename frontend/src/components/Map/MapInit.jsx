@@ -9,6 +9,7 @@ import { Search, MapPin } from 'lucide-react'
 import PlacesCarousel from './PlacesCarousel'
 import PlaceCard from './PlaceCard'
 import CustomMarker from './CustomMarker'
+import { useAuth } from '@clerk/clerk-react'
 
 export default function MapInit({
     filters,
@@ -18,46 +19,84 @@ export default function MapInit({
     userPosition,
     setUserPosition,
     mapKey,
-    setMapKey
+    setMapKey,
 }) {
-    
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
-    const infoWindowRef = useRef(null)
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const { userId } = useAuth()
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
         .join(' ')
 
+    // Needed to enable autocomplete!!
     function loadGoogleMapsApi(apiKey, libraries = []) {
         return new Promise((resolve, reject) => {
-            if (window.google && window.google.maps) {
+            if (
+                window.google &&
+                window.google.maps &&
+                window.google.maps.places
+            ) {
                 resolve(window.google.maps)
                 return
             }
-            if (document.querySelector(`script[src*="maps.googleapis.com"]`)) {
-                // Wait for the existing script to load
+
+            const existingScript = document.querySelector(
+                `script[src*="maps.googleapis.com"]`
+            )
+            if (existingScript) {
                 const interval = setInterval(() => {
-                    if (window.google && window.google.maps) {
+                    if (
+                        window.google &&
+                        window.google.maps &&
+                        window.google.maps.places
+                    ) {
                         clearInterval(interval)
                         resolve(window.google.maps)
                     }
                 }, 50)
                 return
             }
+
+            const callbackName =
+                'googleMapsApiCallback_' +
+                Math.random().toString(36).substr(2, 9)
+            window[callbackName] = () => {
+                if (
+                    window.google &&
+                    window.google.maps &&
+                    window.google.maps.places
+                ) {
+                    resolve(window.google.maps)
+                    delete window[callbackName]
+                } else {
+                    reject(
+                        new Error('Google Maps Places library failed to load')
+                    )
+                }
+            }
+
             const script = document.createElement('script')
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=${libraries.join(
-                ','
-            )}`
+            const params = new URLSearchParams({
+                key: apiKey,
+                callback: callbackName,
+                libraries: libraries.join(','),
+                loading: 'async',
+                v: 'weekly',
+            })
+
+            script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`
             script.async = true
-            script.defer = true
-            script.onload = () => resolve(window.google.maps)
-            script.onerror = (err) => reject(err)
+            script.onerror = (err) => {
+                delete window[callbackName]
+                reject(err)
+            }
+
             document.head.appendChild(script)
         })
     }
@@ -67,7 +106,7 @@ export default function MapInit({
 
         loadGoogleMapsApi(apiKey, ['places'])
             .then(() => {
-                if (inputRef.current) {
+                if (inputRef.current && userId) {
                     const autocomplete =
                         new window.google.maps.places.Autocomplete(
                             inputRef.current,
@@ -99,7 +138,6 @@ export default function MapInit({
                 console.error('Error loading Google Maps API:', err)
             )
     }, [])
-
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true)
@@ -322,11 +360,14 @@ export default function MapInit({
                                         {restaurants.map(
                                             (restaurant, index) => (
                                                 <CustomMarker
-                                                restaurant={restaurant}
-                                                index={index}
-                                                setSelectedRestaurant={setSelectedRestaurant}
-                                                favorites={favorites}
-                                                setFavorites={setFavorites}/>
+                                                    restaurant={restaurant}
+                                                    index={index}
+                                                    setSelectedRestaurant={
+                                                        setSelectedRestaurant
+                                                    }
+                                                    favorites={favorites}
+                                                    setFavorites={setFavorites}
+                                                />
                                             )
                                         )}
                                         {selectedRestaurant && (
