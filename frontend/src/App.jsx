@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import axios from 'axios'
 import { LoaderCircle } from 'lucide-react'
+import Guc from './pages/Guc'
 
 function App() {
     const { userId, isLoaded } = useAuth()
@@ -115,6 +116,7 @@ function App() {
                             }
                         />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/guc" element={<Guc />} />
                     </Routes>
                 </Layout>
             </Router>

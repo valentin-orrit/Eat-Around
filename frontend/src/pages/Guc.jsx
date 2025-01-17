@@ -1,0 +1,164 @@
+export default function Guc ({}) {
+    return (
+        <div className="text-sm font-medium mx-24 mt-10">
+            <h1 className="text-start pl-10 mb-4 underline">General Terms of Use for the Website "Eat Around"</h1>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 1: Purpose</h2>
+            <p className="text-start pl-10">
+                These "general terms of use" govern the legal framework for using the website "Eat Around" and its services.
+            </p>
+            <ul className="text-start pl-10">
+                This agreement is concluded between:
+            <li className="text-start pl-14">- The website manager, hereinafter referred to as "the Publisher,"</li>
+            <li className="text-start pl-14">- Any natural or legal person wishing to access the site and its services, hereinafter referred to as "the User."</li>
+            </ul>
+            <p className="text-start pl-10 mb-4">
+                Acceptance of these terms is mandatory for any User, and accessing the site implies acceptance of these terms.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 2: Legal Information</h2>
+
+            <h3 className="text-start pl-10">For individuals:</h3>
+            <p className="text-start pl-10 mb-4">
+                The website "Eat Around" is published by [full name of the responsible person], residing at [postal address].
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 3: Access to Services</h2>
+            <p className="text-start pl-10">
+                The User of the website "Eat Around" has access to the following services:
+            </p>
+            <ul className="text-start pl-10">
+                <li className="text-start pl-4">- Service #1</li>
+                <li className="text-start pl-4">- Service #2</li>
+                <li className="text-start pl-4">- Service #3</li>
+                <li className="text-start pl-4">- Service #4</li>
+            </ul>
+            <p className="text-start pl-10">
+                Any User with internet access can access the site free of charge from anywhere. Costs incurred by the User for accessing the site (internet connection, computer equipment, etc.) are not the responsibility of the Publisher.
+            </p>
+            <p className="text-start pl-10">
+                Certain services are only accessible to Users who are members of the site (i.e., identified using their login credentials):
+            </p>
+            <ul className="text-start pl-10">
+                <li className="text-start pl-4">- Service #1</li>
+                <li className="text-start pl-4">- Service #2</li>
+            </ul>
+            <p className="text-start pl-10 mb-4">
+                The site and its various services may be interrupted or suspended by the Publisher, particularly during maintenance, without prior notice or justification.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 4: User Responsibility</h2>
+            <p className="text-start pl-10">
+                The User is responsible for the risks associated with the use of their login credentials and password.
+            </p>
+            <p className="text-start pl-10">
+                The User’s password must remain confidential. In case of password disclosure, the Publisher declines all responsibility.
+            </p>
+            <p className="text-start pl-10">
+                The User assumes full responsibility for the use of information and content available on the website "Eat Around."
+            </p>
+            <p className="text-start pl-10">
+                Any use of the service by the User resulting directly or indirectly in damages must be compensated to the benefit of the site.
+            </p>
+            <p className="text-start pl-10">
+                The site allows members to post the following:
+            </p>
+            <ul className="text-start pl-10">
+                <li className="text-start pl-4">- Comments</li>
+                <li className="text-start pl-4">- Works</li>
+                <li className="text-start pl-4">- Etc.</li>
+            </ul>
+            <p className="text-start pl-10">
+                The member agrees to use respectful language towards others and the law and accepts that their publications may be moderated or rejected by the Publisher without justification.
+            </p>
+            <p className="text-start pl-10">
+                By publishing on the site, the User grants the publishing company a non-exclusive, free right to represent, reproduce, adapt, modify, distribute, and disseminate their publication, either directly or through an authorized third party.
+            </p>
+            <p className="text-start pl-10 mb-4">
+                The Publisher commits to crediting the member when using their publication.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 5: Publisher Responsibility</h2>
+            <p className="text-start pl-10">
+                Any malfunction of the server or network does not engage the Publisher’s responsibility.
+            </p>
+            <p className="text-start pl-10">
+                Similarly, the site’s responsibility cannot be engaged in cases of force majeure or the unpredictable and insurmountable act of a third party.
+            </p>
+            <p className="text-start pl-10">
+                The website "Eat Around" commits to implementing all necessary means to ensure the security and confidentiality of data. However, it does not provide a guarantee of total security.
+            </p>
+            <p className="text-start pl-10 mb-4">
+                The Publisher reserves the right to deny guarantees regarding the reliability of sources, even though the information disseminated on the site is deemed reliable.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 6: Intellectual Property</h2>
+            <p className="text-start pl-10">
+                The contents of the website "Eat Around" (logos, texts, graphic elements, videos, etc.) are protected under copyright laws in accordance with the Intellectual Property Code.
+            </p>
+            <p className="text-start pl-10">
+                The User must obtain the Publisher’s authorization before reproducing, copying, or publishing these contents.
+            </p>
+            <p className="text-start pl-10">
+                These contents may only be used by Users for private purposes; commercial use is prohibited.
+            </p>
+            <p className="text-start pl-10">
+                The User is fully responsible for any content they upload and commits not to harm third parties.
+            </p>
+            <p className="text-start pl-10 mb-4">
+                The Publisher reserves the right to freely moderate or delete any content uploaded by Users without justification.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 7: Personal Data</h2>
+            <p className="text-start pl-10">
+                The User must provide personal information to register on the site.
+            </p>
+            <p className="text-start pl-10">
+                The User’s email address may be used by the website "Eat Around" to communicate various information and manage their account.
+            </p>
+            <p className="text-start pl-10">
+                "Eat Around" guarantees respect for the User’s privacy, in accordance with Law No. 78-17 of January 6, 1978, on data processing, files, and freedoms.
+            </p>
+            <p className="text-start pl-10">
+                The site is registered with the CNIL under the following number: [number].
+            </p>
+            <p className="text-start pl-10">
+                Under Articles 39 and 40 of the Law of January 6, 1978, the User has the right to access, rectify, delete, and oppose their personal data. The User may exercise this right via:
+            </p>
+            <ul className="text-start pl-10 mb-4">
+                <li className="text-start pl-4">- Their personal account on the site;</li>
+                <li className="text-start pl-4">- A contact form;</li>
+                <li className="text-start pl-4">- Email to [administrator’s email address];</li>
+                <li className="text-start pl-4">- Postal mail to [your address].</li>
+            </ul>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 8: Hyperlinks</h2>
+            <p className="text-start pl-10">
+                The domains to which hyperlinks on the site lead do not engage the responsibility of the Publisher of "Eat Around," as the Publisher has no control over these links.
+            </p>
+            <p className="text-start pl-10 mb-4">
+                Third parties may create a link to any page of the site "Eat Around" without the Publisher’s express permission.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 9: Changes to the Terms of Use</h2>
+            <p className="text-start pl-10 mb-4">
+                The website "Eat Around" reserves the right to modify the clauses of these terms of use at any time and without justification.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 10: Duration of the Contract</h2>
+            <p className="text-start pl-10 mb-4">
+                The duration of this contract is indefinite. The contract takes effect for the User from the start of their use of the service.
+            </p>
+
+            <h2 className="text-start pl-10 mb-1">ARTICLE 11: Applicable Law and Jurisdiction</h2>
+            <p className="text-start pl-10">
+                This contract is governed by French law.
+            </p>
+            <p className="text-start pl-10">
+                In the event of a dispute not resolved amicably between the User and the Publisher, the courts of [name of city] have jurisdiction to settle the matter.
+            </p>
+
+        </div>
+
+    )
+}
