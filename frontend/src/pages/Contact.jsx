@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function Contact() {
     return (
         <div className="flex flex-col p-2 w-11/12 xl:p-16 lg:max-w-7xl pt-3 h-screen">
-            <div className="flex flex-col-reverse items-center lg:items-stretch lg:flex-row my-24 xl:my-10 mx-4 xl:mx-8">
+            <div className="flex flex-col-reverse items-center lg:items-stretch lg:flex-row my-10 sm:my-24 xl:my-10 mx-4 xl:mx-8">
                 <div className="flex flex-col p-0 m-8">
                     <div className="flex flex-col text-start gap-2 mx-2">
                         <div className="flex">
