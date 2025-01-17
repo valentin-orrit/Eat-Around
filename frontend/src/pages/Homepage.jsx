@@ -1,3 +1,4 @@
+import CookieBanner from '../components/CookieBanner'
 import MapInit from '../components/Map/MapInit'
 import LogoLight from '../assets/eat-around-logo-light.svg'
 
@@ -38,6 +39,9 @@ export default function Home({ filters, setFilters, favorites, setFavorites, use
             </div>
 
             <div id="cards"></div>
+            <div>
+                    <CookieBanner />
+            </div>
         </div>
     )
 }
