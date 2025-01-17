@@ -4,13 +4,20 @@ import { Link } from 'react-router-dom'
 
 export default function Contact() {
     return (
-        <div className="flex flex-col p-4 w-11/12 xl:p-16 lg:max-w-7xl pt-3">
-            <div className="flex flex-col-reverse items-center lg:items-stretch lg:flex-row my-24 xl:my-12 mx-4 xl:mx-8">
+        <div className="flex flex-col p-2 w-11/12 xl:p-16 lg:max-w-7xl pt-3">
+            <div className="flex flex-col-reverse items-center lg:items-stretch lg:flex-row my-24 xl:my-10 mx-4 xl:mx-8">
                 <div className="flex flex-col p-0 m-8">
                     <div className="flex flex-col text-start gap-2 mx-2">
-                        <h2 className="text-eabrown text-2xl">
-                            Stay in touch!
-                        </h2>
+                        <div className="flex">
+                            <img
+                                src={LogoLight}
+                                alt="Eat around logo"
+                                className="w-10 mr-2"
+                            />
+                            <h2 className="text-eabrown text-2xl mt-2">
+                                Stay in touch!
+                            </h2>
+                        </div>
                         <p className="text-gray-500">
                             If you want to see some features implemented, more
                             filters or any other improvements, feel free to send
@@ -74,17 +81,10 @@ export default function Contact() {
                         className="w-full h-full object-cover rounded-md"
                     />
                     <Footer />
-                    <div className="absolute top-0 left-0 p-2">
-                        <div className="flex items-center">
-                            <img
-                                src={LogoLight}
-                                alt="Eat around logo"
-                                className="w-10 mr-2"
-                            />
-                            <p className="font-bold text-eaoffwhite pt-2">
-                                Eat Around
-                            </p>
-                        </div>
+                    <div className="absolute top-0 left-0 py-2 px-4">
+                        <p className="font-bold text-eaoffwhite opacity-80 pt-2">
+                            Eat Around
+                        </p>
                     </div>
                 </div>
 
@@ -98,12 +98,12 @@ export default function Contact() {
 
 function Footer() {
     return (
-        <p className="absolute bottom-0 left-0 w-full bg-eabrown text-eaoffwhite text-sm font-normal py-2 text-center rounded-b-md md:px-6 lg:px-2">
+        <p className="absolute bottom-0 left-0 w-full bg-eabrown text-eaoffwhite text-sm font-normal py-2 text-center rounded-b-md md:px-6 lg:px-2 text-opacity-70">
             Made with love by{' '}
             <Link
                 to={{ pathname: 'https://valentinorrit.com/' }}
                 target="_blank"
-                className="hover:underline text-eaorange"
+                className="hover:underline text-eaorange text-opacity-80"
             >
                 Valentin Orrit
             </Link>{' '}
@@ -111,7 +111,7 @@ function Footer() {
             <Link
                 to={{ pathname: 'https://github.com/gaultierpatrice/' }}
                 target="_blank"
-                className="hover:underline text-eaorange"
+                className="hover:underline text-eaorange text-opacity-80"
             >
                 Gaultier Patrice
             </Link>
