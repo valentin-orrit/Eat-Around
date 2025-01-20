@@ -1,4 +1,7 @@
-# THIS IS THE README
+![alt text](frontend/src/assets/eat-around-logo-light.svg)
 
-yes
-testdfdfd
+# Eat Around README :
+
+This site is about finding restaurants near my position
+
+## The app :
