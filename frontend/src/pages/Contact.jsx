@@ -1,17 +1,30 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import ContactCover from '../assets/contact-cover.jpg'
 import LogoLight from '../assets/eat-around-logo-light.svg'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
 import axios from 'axios'
 
 export default function Contact() {
     const api = import.meta.env.VITE_AXIOS_BASE_URL
+    const captchaKey = import.meta.env.VITE_GOOGLE_CAPTCHA_SITE_KEY
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
         email: '',
         message: '',
     })
+
+    useEffect(() => {
+        const loadRecaptchaScript = () => {
+            const script = document.createElement('script')
+            script.src = `https://www.google.com/recaptcha/api.js?render=${captchaKey}`
+            script.async = true
+            script.defer = true
+            document.body.appendChild(script)
+        }
+
+        loadRecaptchaScript()
+    }, [])
 
     const [status, setStatus] = useState({ success: null, message: '' })
 
@@ -27,7 +40,16 @@ export default function Contact() {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`${api}/contact`, formData)
+            const token = await window.grecaptcha.execute(`${captchaKey}`, {
+                action: 'submit',
+            })
+
+            const formDataWithToken = { ...formData, recaptchaToken: token }
+
+            const response = await axios.post(
+                `${api}/contact`,
+                formDataWithToken
+            )
 
             if (response.data.success) {
                 setStatus({
