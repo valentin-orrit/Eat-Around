@@ -12,6 +12,11 @@ services:
             - CLERK_WEBHOOK_SECRET=${CLERK_WEBHOOK_SECRET}
             - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
             - NGROK_URL=${NGROK_URL}
+            - AWS_SMTP_ENDPOINT=${AWS_SMTP_ENDPOINT}
+            - AWS_SMTP_ACCESS_KEY=${AWS_SMTP_ACCESS_KEY}
+            - AWS_SMTP_SECRET_KEY=${AWS_SMTP_SECRET_KEY}
+            - AWS_SMTP_USER_NAME=${AWS_SMTP_USER_NAME}
+            - AWS_SMTP_PASSWORD=${AWS_SMTP_PASSWORD}
         volumes:
             - ./api:/usr/src/app
 
