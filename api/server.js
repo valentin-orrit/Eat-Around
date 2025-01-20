@@ -24,6 +24,7 @@ app.use(
             'http://localhost:5173',
             'https://eat-around-frontend.fly.dev',
             `https://${process.env.NGROK_URL}`,
+            'https://eataround.co/',
         ],
         methods: ['POST', 'PUT', 'GET', 'OPTION', 'HEAD', 'DELETE', 'PATCH'],
         credentials: true,
