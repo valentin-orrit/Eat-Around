@@ -32,7 +32,7 @@ const CookieBanner = () => {
       <div className="pl-3">
         <Link
             to="/guc"
-            className="text-eaoffwhite px-3 rounded-full text-sm font-semibold"
+            className="text-eaoffwhite px-3 rounded-full font-light text-xs"
         >
           <div className="lg:hidden">
             GCU

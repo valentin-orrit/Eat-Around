@@ -418,7 +418,7 @@ export default function AppSidebar({
 
             <SidebarFooter className="bg-eagreen text-eaoffwhite">
                 <SidebarMenu>
-                    <SidebarMenuItem className="my-2 text-sm">
+                    <SidebarMenuItem className="my-0 text-sm">
                         {state === 'collapsed' ? (
                             <img
                                 src={LogoLight}
@@ -426,8 +426,19 @@ export default function AppSidebar({
                                 className="w-8"
                             />
                         ) : (
-                            <div>Eat Around © {new Date().getFullYear()}</div>
+                            <div>
+                                <div>Eat Around © {new Date().getFullYear()}</div>
+                                <Link
+                                    to="/guc"
+                                    className="text-eaoffwhite px-3
+                                    gap-5 rounded-full font-light text-xs">
+                                GCU
+                                </Link>
+                            </div>
+
                         )}
+
+
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>
