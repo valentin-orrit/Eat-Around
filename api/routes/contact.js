@@ -1,18 +1,38 @@
 import express from 'express'
 import { sendContactFormMessage } from '../config/emailService.js'
+import axios from 'axios'
 
 const router = express.Router()
 
 router.post('/contact', async (req, res) => {
-    const { fname, lname, email, message } = req.body
+    const captchaSecretKey = process.env.GOOGLE_CAPTCHA_SECRET_KEY
+    const { fname, lname, email, message, recaptchaToken } = req.body
 
-    if (!email || !message || !fname || !lname) {
+    if (!email || !message || !fname || !lname || !recaptchaToken) {
         return res
             .status(400)
             .json({ success: false, message: 'All fields are required.' })
     }
 
     try {
+        const recaptchaResponse = await axios.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            null,
+            {
+                params: {
+                    secret: captchaSecretKey,
+                    response: recaptchaToken,
+                },
+            }
+        )
+
+        if (!recaptchaResponse.data.success) {
+            return res.status(400).json({
+                success: false,
+                message: 'reCAPTCHA verification failed.',
+            })
+        }
+
         await sendContactFormMessage({
             name: `${fname} ${lname}`,
             email,
@@ -24,9 +44,10 @@ router.post('/contact', async (req, res) => {
             message: 'Your message has been sent successfully!',
         })
     } catch (error) {
+        console.error('Error verifying reCAPTCHA:', error)
         res.status(500).json({
             success: false,
-            message: 'Failed to send your message. Please try again.',
+            message: 'An error occurred. Please try again later.',
         })
     }
 })
