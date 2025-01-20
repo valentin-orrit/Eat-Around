@@ -43,6 +43,10 @@ h2 {
     }
 }
 
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
 @font-face {
     font-family: 'Palanquin';
     src: url('../assets/fonts/Palanquin/Palanquin-Light.ttf') format('ttf');
