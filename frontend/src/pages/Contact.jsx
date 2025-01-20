@@ -24,7 +24,7 @@ export default function Contact() {
         }
 
         loadRecaptchaScript()
-    }, [])
+    }, [captchaKey])
 
     const [status, setStatus] = useState({ success: null, message: '' })
 
@@ -143,6 +143,17 @@ export default function Contact() {
                         >
                             🖐️ Say Hi!
                         </button>
+
+                        <small className="text-eaogreyaccent">
+                            This site is protected by reCAPTCHA and the Google
+                            <a href="https://policies.google.com/privacy">
+                                Privacy Policy
+                            </a>
+                            <a href="https://policies.google.com/terms">
+                                Terms of Service
+                            </a>{' '}
+                            apply.
+                        </small>
                     </form>
                     {status.message && (
                         <p
