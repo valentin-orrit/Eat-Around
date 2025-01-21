@@ -1,4 +1,4 @@
-![alt text](frontend/src/assets/eat-around-logo-light.svg)
+<img src="frontend/src/assets/eat-around-logo-light.svg" alt="Eat Around Logo" width="100" />
 
 # Eat Around - Gluten-Free Restaurant Finder
 
