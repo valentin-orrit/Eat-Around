@@ -17,6 +17,7 @@ function App() {
     const api = import.meta.env.VITE_AXIOS_BASE_URL
     const [userPosition, setUserPosition] = useState(null)
     const [mapKey, setMapKey] = useState(0)
+    const [selectedRestaurant, setSelectedRestaurant] = useState(null)
 
     const defaultFilters = [
         { key: 1, name: 'vegetarian', isActive: true, isSelected: false },
@@ -90,6 +91,8 @@ function App() {
                     setUserPosition={setUserPosition}
                     mapKey={mapKey}
                     setMapKey={setMapKey}
+                    selectedRestaurant={selectedRestaurant}
+                    setSelectedRestaurant={setSelectedRestaurant}
                 >
                     <Routes>
                         <Route
@@ -104,6 +107,10 @@ function App() {
                                     setUserPosition={setUserPosition}
                                     mapKey={mapKey}
                                     setMapKey={setMapKey}
+                                    selectedRestaurant={selectedRestaurant}
+                                    setSelectedRestaurant={
+                                        setSelectedRestaurant
+                                    }
                                 />
                             }
                         />

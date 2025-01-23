@@ -16,29 +16,47 @@ router.get('/places', async (req, res) => {
 
 // POST - add place to favorite
 router.post('/add-place-to-favorite', async (req, res) => {
-    const { name, address, latitude, longitude, clerkUserId } = req.body;
-
+    const { name, address, latitude, longitude, clerkUserId, place_id } =
+        req.body
     try {
         if (!clerkUserId) {
-            return res.status(400).json({ error: 'clerkUserId is required' });
+            return res.status(400).json({ error: 'clerkUserId is required' })
         }
-
         const user = await prisma.user.findUnique({
             where: { clerkUserId },
-        });
-
+        })
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' })
         }
 
         let place = await prisma.place.findFirst({
-            where: { name, latitude, longitude },
+            where: {
+                OR: [
+                    {
+                        name,
+                        latitude,
+                        longitude,
+                    },
+                    ...(place_id ? [{ place_id }] : []),
+                ],
+            },
         })
 
         if (!place) {
             place = await prisma.place.create({
-                data: { name, address, latitude, longitude },
-            });
+                data: {
+                    name,
+                    address,
+                    latitude,
+                    longitude,
+                    ...(place_id ? { place_id } : {}),
+                },
+            })
+        } else if (place_id && !place.place_id) {
+            place = await prisma.place.update({
+                where: { id: place.id },
+                data: { place_id },
+            })
         }
 
         const favorite = await prisma.favorite.upsert({
@@ -50,15 +68,13 @@ router.post('/add-place-to-favorite', async (req, res) => {
                 placeId: place.id,
             },
             update: {},
-        });
+        })
 
-        res.status(201).json({ message: 'Place added to favorites', favorite });
-
+        res.status(201).json({ message: 'Place added to favorites', favorite })
     } catch (error) {
-        console.error('Error adding place to favorites:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Error adding place to favorites:', error)
+        res.status(500).json({ error: error.message })
     }
-});
-
+})
 
 export default router

@@ -20,12 +20,13 @@ export default function MapInit({
     setUserPosition,
     mapKey,
     setMapKey,
+    selectedRestaurant,
+    setSelectedRestaurant,
 }) {
     const [mapLoaded, setMapLoaded] = useState(false)
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const { userId } = useAuth()

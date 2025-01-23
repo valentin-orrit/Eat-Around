@@ -31,6 +31,7 @@ model Place {
   address   String?
   latitude  Float
   longitude Float
+  place_id  String?
   favorites Favorite[]
 
   createdAt DateTime @default(now())
