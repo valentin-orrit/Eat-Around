@@ -281,6 +281,7 @@ export default function MapInit({
                         'formatted_phone_number',
                         'website',
                         'opening_hours',
+                        'utc_offset_minutes',
                     ],
                 },
                 (details, status) => {
@@ -354,7 +355,7 @@ export default function MapInit({
             </div>
             <div className="justify-center">
                 {userPosition ? (
-                    <div >
+                    <div>
                         <div className="flex flex-col items-center">
                             <div className="w-11/12 h-72 md:w-4/5 md:h-96">
                                 <APIProvider
