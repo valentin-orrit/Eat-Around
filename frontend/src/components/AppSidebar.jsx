@@ -426,17 +426,11 @@ export default function AppSidebar({
                                 className="w-8"
                             />
                         ) : (
-                            <div>
+                            <div className="flex justify-between items-center text-gray-300 text-xs mx-2">
                                 <div>
                                     Eat Around © {new Date().getFullYear()}
                                 </div>
-                                <Link
-                                    to="/guc"
-                                    className="text-eaoffwhite px-3
-                                    gap-5 rounded-full font-light text-xs"
-                                >
-                                    GCU
-                                </Link>
+                                <Link to="/guc">GCU</Link>
                             </div>
                         )}
                     </SidebarMenuItem>
