@@ -64,14 +64,14 @@ export default function PlaceCard({
 
     return (
         <Card>
-            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-40 sm:w-52 h-auto gap-y-1">
+            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-30 sm:w-52 h-auto gap-y-1">
                 <div className="relative ">
                     {restaurant.photos?.[0] ? (
                         <>
                             <img
                                 src={restaurant.photos[0].getUrl()}
                                 alt={restaurant.name.split(',')[0]}
-                                className={`object-cover h-24 w-full rounded-md ${
+                                className={`object-cover h-16 sm:h-24 w-full rounded-md ${
                                     !restaurant.opening_hours?.open_now &&
                                     'grayscale opacity-70'
                                 }`}

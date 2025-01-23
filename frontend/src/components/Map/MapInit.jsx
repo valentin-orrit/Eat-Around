@@ -314,7 +314,7 @@ export default function MapInit({
             >
                 <div
                     id="search"
-                    className="flex items-center w-full h-10 p-2 border border-gray-300 rounded-full shadow-md bg-white"
+                    className="flex items-center w-11/12 md:w-full h-10 p-2 border border-gray-300 rounded-full shadow-md bg-white"
                 >
                     <Search className="stroke-eaogreyaccent" />
                     <input

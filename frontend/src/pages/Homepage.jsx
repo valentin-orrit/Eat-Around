@@ -15,7 +15,7 @@ export default function Home({
     setSelectedRestaurant,
 }) {
     return (
-        <div className="flex flex-col p-4 w-11/12 lg:px-16 lg:py-8 lg:max-w-8xl">
+        <div className="flex flex-col p-0 md:p-4 w-full md:w-11/12 lg:px-16 lg:py-8 lg:max-w-8xl">
             <div
                 id="title"
                 className="flex justify-center items-center mt-4 lg:mt-0 mb-8"

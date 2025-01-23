@@ -29,7 +29,7 @@ export default function Layout({
                 setSelectedRestaurant={setSelectedRestaurant}
             />
             <main className="flex w-full">
-                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite  sticky top-4 p-0 m-2 lg:hidden" />
+                <SidebarTrigger className="text-eablack hover:bg-eagreen hover:text-eaoffwhite absolute md:sticky top-4 p-0 m-2 lg:hidden" />
                 <div className="flex w-full justify-center">{children}</div>
             </main>
         </SidebarProvider>
