@@ -7,6 +7,7 @@ import usersRouter from './routes/users.js'
 import citiesRouter from './routes/cities.js'
 import placesRouter from './routes/places.js'
 import favoritesRouter from './routes/favorites.js'
+import contactRouter from './routes/contact.js'
 import clerkWebhooksRouter from './routes/clerk-webhooks.js'
 import { startNgrok } from './config/ngrok.js'
 
@@ -23,6 +24,7 @@ app.use(
             'http://localhost:5173',
             'https://eat-around-frontend.fly.dev',
             `https://${process.env.NGROK_URL}`,
+            'https://eataround.co',
         ],
         methods: ['POST', 'PUT', 'GET', 'OPTION', 'HEAD', 'DELETE', 'PATCH'],
         credentials: true,
@@ -57,6 +59,7 @@ app.use('/', usersRouter)
 app.use('/', citiesRouter)
 app.use('/', placesRouter)
 app.use('/', favoritesRouter)
+app.use('/', contactRouter)
 app.use('/', clerkWebhooksRouter)
 
 app.get('/', (req, res) => {

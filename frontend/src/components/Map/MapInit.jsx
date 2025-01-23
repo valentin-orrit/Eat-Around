@@ -220,35 +220,50 @@ export default function MapInit({
                 document.createElement('div')
             )
 
-            const fetchNearbyRestaurants = () => {
-                service.nearbySearch(
-                    {
-                        location: userPosition,
-                        radius: 5000,
-                        type: 'restaurant',
-                        keyword: selectedFilters,
-                    },
-                    async (results, status) => {
-                        if (
-                            status === google.maps.places.PlacesServiceStatus.OK
-                        ) {
-                            const detailedRestaurants = await Promise.all(
-                                results.map((restaurant) =>
-                                    fetchRestaurantDetails(service, restaurant)
+            const fetchNearbyPlaces = async () => {
+                const types = ['restaurant', 'cafe', 'bakery']
+                try {
+                    const promises = types.map(
+                        (type) =>
+                            new Promise((resolve, reject) => {
+                                service.nearbySearch(
+                                    {
+                                        location: userPosition,
+                                        radius: 5000,
+                                        type: type,
+                                        keyword: selectedFilters,
+                                    },
+                                    (results, status) => {
+                                        if (
+                                            status ===
+                                            google.maps.places
+                                                .PlacesServiceStatus.OK
+                                        ) {
+                                            resolve(results)
+                                        } else {
+                                            reject(
+                                                `Error with type ${type}: ${status}`
+                                            )
+                                        }
+                                    }
                                 )
-                            )
-                            setRestaurants(detailedRestaurants)
-                        } else {
-                            console.error(
-                                'Error searching for restaurants:',
-                                status
-                            )
-                        }
-                    }
-                )
+                            })
+                    )
+
+                    const results = await Promise.all(promises)
+                    const combinedResults = results.flat()
+                    const detailedPlaces = await Promise.all(
+                        combinedResults.map((place) =>
+                            fetchRestaurantDetails(service, place)
+                        )
+                    )
+                    setRestaurants(detailedPlaces)
+                } catch (error) {
+                    console.error('Error fetching places:', error)
+                }
             }
 
-            fetchNearbyRestaurants()
+            fetchNearbyPlaces()
         }
     }, [mapLoaded, userPosition, filters])
 
