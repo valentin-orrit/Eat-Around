@@ -52,6 +52,8 @@ export default function AppSidebar({
     setFavorites,
     setUserPosition,
     setMapKey,
+    selectedRestaurant,
+    setSelectedRestaurant,
 }) {
     const [isLoading, setIsLoading] = useState(false)
     const { userData } = useUserData()
@@ -91,48 +93,39 @@ export default function AppSidebar({
         setConfirmationId(null)
     }
 
-    const requestLocation = (inputAddress) => {
-        setIsLoading(true)
-        const errorMessageElement = document.getElementById('error-message')
-        const clearErrorMessage = () => {
-            if (errorMessageElement) {
-                errorMessageElement.textContent = ''
-            }
-        }
+    function handleTitleClick(favorite) {
+        const service = new google.maps.places.PlacesService(
+            document.createElement('div')
+        )
 
-        if (inputAddress) {
-            fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-                    inputAddress
-                )}&key=${googleMapsApi}`
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.status === 'OK') {
-                        const position = data.results[0].geometry.location
-                        setUserPosition(position)
+        if (favorite.place.place_id) {
+            service.getDetails(
+                {
+                    placeId: favorite.place.place_id,
+                    fields: [
+                        'name',
+                        'vicinity',
+                        'photos',
+                        'rating',
+                        'formatted_phone_number',
+                        'website',
+                        'opening_hours',
+                        'geometry',
+                    ],
+                },
+                (placeDetails, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        setSelectedRestaurant(placeDetails)
+                        setUserPosition({
+                            lat: placeDetails.geometry.location.lat(),
+                            lng: placeDetails.geometry.location.lng(),
+                        })
                         setMapKey((prevKey) => prevKey + 1)
-                        setIsLoading(false)
-                        clearErrorMessage()
-                    } else {
-                        console.error('Geocoding error:', data.status)
-                        if (errorMessageElement) {
-                            errorMessageElement.textContent =
-                                'Problem locating the address'
-                            setTimeout(clearErrorMessage, 5000)
-                        }
-                        setIsLoading(false)
                     }
-                })
-                .catch((error) => {
-                    console.error('Error fetching geocode data:', error)
-                    if (errorMessageElement) {
-                        errorMessageElement.textContent =
-                            'Problem locating the address'
-                        setTimeout(clearErrorMessage, 5000)
-                    }
-                    setIsLoading(false)
-                })
+                }
+            )
+        } else {
+            console.error('could not find place_id')
         }
     }
 
@@ -292,10 +285,8 @@ export default function AppSidebar({
                                                                     ) : (
                                                                         <span
                                                                             onClick={() =>
-                                                                                requestLocation(
+                                                                                handleTitleClick(
                                                                                     favorite
-                                                                                        .place
-                                                                                        .address
                                                                                 )
                                                                             }
                                                                         >
@@ -426,19 +417,13 @@ export default function AppSidebar({
                                 className="w-8"
                             />
                         ) : (
-                            <div>
-                                <div>Eat Around © {new Date().getFullYear()}</div>
-                                <Link
-                                    to="/guc"
-                                    className="text-eaoffwhite px-3
-                                    gap-5 rounded-full font-light text-xs">
-                                GCU
-                                </Link>
+                            <div className="flex justify-between items-center text-gray-300 text-xs mx-2">
+                                <div>
+                                    Eat Around © {new Date().getFullYear()}
+                                </div>
+                                <Link to="/guc">GCU</Link>
                             </div>
-
                         )}
-
-
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>

@@ -42,6 +42,7 @@ export default function PlaceCard({
                     address: place.vicinity,
                     latitude: place.geometry.location.lat(),
                     longitude: place.geometry.location.lng(),
+                    place_id: place.place_id,
                     clerkUserId: userId,
                 })
             }
