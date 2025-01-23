@@ -136,8 +136,9 @@ export default function PlaceCard({
                         <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
-                        <span className="hidden sm:inline text-end">
-                            {restaurant.rating} ⭐
+                        <span className="hidden sm:inline text-end items-center space-x-1">
+                            <span>{restaurant.rating} ⭐</span>
+                            <span>({restaurant.user_ratings_total})</span>
                         </span>
                     </div>
                     <div className="flex justify-between mt-2">
