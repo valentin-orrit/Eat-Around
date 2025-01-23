@@ -183,6 +183,7 @@ const Sidebar = React.forwardRef(
                 <Sheet
                     open={openMobile}
                     onOpenChange={setOpenMobile}
+                    modal={false}
                     {...props}
                 >
                     <SheetTitle className="hidden"></SheetTitle>

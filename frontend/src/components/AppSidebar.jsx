@@ -427,18 +427,18 @@ export default function AppSidebar({
                             />
                         ) : (
                             <div>
-                                <div>Eat Around © {new Date().getFullYear()}</div>
+                                <div>
+                                    Eat Around © {new Date().getFullYear()}
+                                </div>
                                 <Link
                                     to="/guc"
                                     className="text-eaoffwhite px-3
-                                    gap-5 rounded-full font-light text-xs">
-                                GCU
+                                    gap-5 rounded-full font-light text-xs"
+                                >
+                                    GCU
                                 </Link>
                             </div>
-
                         )}
-
-
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>
