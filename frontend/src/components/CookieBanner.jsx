@@ -22,9 +22,9 @@ const CookieBanner = () => {
   if (!isVisible) return null;
 
   return (
-<div className="fixed mb-4 w-3/5 bottom-0 right-0 mr-4 rounded-md bg-eagreen text-eaoffwhite p-4 shadow-lg z-50">
+<div className="fixed mb-4 w-3/4 md:w-3/5 bottom-0 right-0 mr-4 rounded-md bg-eagreen text-eaoffwhite p-4 shadow-lg z-50">
   <div className="flex items-center justify-between text-start text-xs">
-    <p className="text-sm pr-8">
+    <p className="text-sm pr-8 ">
       This website uses cookies to enhance your browsing experience. By continuing to use this site, you acknowledge our use of cookies.
     </p>
     <div className="flex items-center space-x-4">

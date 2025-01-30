@@ -72,13 +72,13 @@ export default function PlaceCard({
                                 src={restaurant.photos[0].getUrl()}
                                 alt={restaurant.name.split(',')[0]}
                                 className={`object-cover h-16 sm:h-24 w-full rounded-md ${
-                                    !restaurant.opening_hours?.open_now &&
+                                    !restaurant.opening_hours?.isOpen() &&
                                     'grayscale opacity-70'
                                 }`}
                             />
                             {restaurant.opening_hours && (
                                 <div className="absolute bottom-2 left-2">
-                                    {restaurant.opening_hours?.open_now ? (
+                                    {restaurant.opening_hours?.isOpen() ? (
                                         <p className="border rounded-md bg-eagreen text-eaoffwhite w-14 text-center text-xs">
                                             open
                                         </p>
@@ -136,8 +136,9 @@ export default function PlaceCard({
                         <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
-                        <span className="hidden sm:inline text-end">
-                            {restaurant.rating} ⭐
+                        <span className="hidden sm:inline text-end items-center space-x-1">
+                            <span>{restaurant.rating} ⭐</span>
+                            <span>({restaurant.user_ratings_total})</span>
                         </span>
                     </div>
                     <div className="flex justify-between mt-2">
