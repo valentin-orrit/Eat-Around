@@ -64,7 +64,7 @@ export default function PlaceCard({
 
     return (
         <Card>
-            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-30 sm:w-52 h-auto gap-y-1">
+            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-32 sm:w-52 h-auto gap-y-1">
                 <div className="relative ">
                     {restaurant.opening_hours && (
                         <div className="absolute bottom-2 left-2 z-10">
@@ -106,15 +106,15 @@ export default function PlaceCard({
                             <img
                                 src={restaurant.photos[0].getUrl()}
                                 alt={restaurant.name.split(',')[0]}
-                                className={`object-cover h-16 sm:h-24 w-full rounded-md ${
+                                className={`object-cover h-12 sm:h-24 w-full rounded-md ${
                                     !restaurant.opening_hours?.isOpen() &&
                                     'grayscale opacity-70'
                                 }`}
                             />
                         </>
                     ) : (
-                        <div className="w-full h-24 flex items-center justify-center bg-gray-200">
-                            <span className="text-sm text-gray-600">
+                        <div className="object-cover h-12 sm:h-24 w-full rounded-md flex items-center justify-center bg-gray-200">
+                            <span className="hidden sm:inline text-sm text-gray-600">
                                 No Image Available
                             </span>
                         </div>
@@ -131,7 +131,7 @@ export default function PlaceCard({
                         <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
-                        <span className="hidden sm:inline-flex items-center gap-x-0.1">
+                        <span className="inline-flex items-center gap-x-0.1">
                             {[...Array(5)].map((_, index) => (
                                 <span
                                     key={index}
@@ -155,20 +155,23 @@ export default function PlaceCard({
                             <span>({restaurant.user_ratings_total})</span>
                         </span>
                     </div>
-                    <div className="flex justify-between mt-2">
+                    <div className="flex items-center justify-between my-2">
                         {restaurant.website && (
                             <a
                                 href={restaurant.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-start"
+                                className="text-start mb-1"
                             >
                                 <Globe size={18} />
                             </a>
                         )}
                         {restaurant.formatted_phone_number && (
                             <p className="flex text-xs tracking-tight">
-                                <Phone size={14} className="mr-1" />
+                                <Phone
+                                    size={14}
+                                    className="mr-1 hidden sm:inline"
+                                />
                                 {restaurant.formatted_phone_number}
                             </p>
                         )}

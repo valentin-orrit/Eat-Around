@@ -370,7 +370,7 @@ export default function MapInit({
                 {userPosition ? (
                     <div>
                         <div className="flex flex-col items-center">
-                            <div className="w-11/12 h-72 md:w-4/5 md:h-96">
+                            <div className="w-11/12 h-80 md:w-4/5 md:h-96">
                                 <APIProvider
                                     apiKey={apiKey}
                                     libraries={['places']}

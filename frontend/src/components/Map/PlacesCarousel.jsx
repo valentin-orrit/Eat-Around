@@ -14,14 +14,14 @@ export default function PlacesCarousel({
     setFavorites,
 }) {
     return (
-        <div className="flex justify-center align-middle text-eablack mt-8 w-full">
+        <div className="flex justify-center align-middle text-eablack mt-8 w-full flex-wrap">
             {restaurants.length > 0 && (
                 <Carousel
                     opts={{
                         align: 'start',
                         loop: true,
                     }}
-                    className="max-w-44 sm:max-w-md md:max-w-md lg:max-w-lg xl:max-w-4xl 2xl:max-w-5xl"
+                    className="max-w-64 min-[340px]:max-w-72 min-[380px]:max-w-80 min-[406px]:max-w-96 min-[460px]:max-w-md md:max-w-md lg:max-w-lg xl:max-w-4xl 2xl:max-w-5xl"
                 >
                     <CarouselContent className="">
                         {restaurants.map((restaurant, index) => (
@@ -40,8 +40,10 @@ export default function PlacesCarousel({
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
+                    <div className="hidden sm:flex">
+                        <CarouselPrevious />
+                        <CarouselNext />
+                    </div>
                 </Carousel>
             )}
         </div>
