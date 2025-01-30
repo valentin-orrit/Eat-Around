@@ -6,7 +6,7 @@ import {
     InfoWindow,
     Pin,
 } from '@vis.gl/react-google-maps'
-import { Search, MapPin } from 'lucide-react'
+import { Search, MapPin, LoaderCircle } from 'lucide-react'
 import PlacesCarousel from './PlacesCarousel'
 import PlaceCard from './PlaceCard'
 import CustomMarker from './CustomMarker'
@@ -462,9 +462,14 @@ export default function MapInit({
                             >
                                 <div className="flex items-center justify-center gap-2 font-medium">
                                     <MapPin className="" />
-                                    {isLoading
-                                        ? 'Loading...'
-                                        : 'use my location'}
+                                    {isLoading ? (
+                                        <LoaderCircle
+                                            size={18}
+                                            className="animate-spin"
+                                        />
+                                    ) : (
+                                        'use my location'
+                                    )}
                                 </div>
                             </button>
                         </div>
