@@ -287,7 +287,17 @@ export default function MapInit({
                 },
                 (details, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        resolve({ ...restaurant, ...details })
+                        const cleanDetails = Object.keys(details).reduce(
+                            (acc, key) => {
+                                if (key !== 'utc_offset') {
+                                    acc[key] = details[key]
+                                }
+                                return acc
+                            },
+                            {}
+                        )
+
+                        resolve({ ...restaurant, ...cleanDetails })
                     } else {
                         console.error('Error fetching details:', status)
                         resolve(restaurant)
