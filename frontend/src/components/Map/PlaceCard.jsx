@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Card, CardContent } from '../ui/card'
-import { Globe, Phone, Heart, LoaderCircle } from 'lucide-react'
+import { Globe, Phone, Heart, LoaderCircle, Star } from 'lucide-react'
 import { useAuth, SignedIn } from '@clerk/clerk-react'
 import axios from 'axios'
 
@@ -131,12 +131,25 @@ export default function PlaceCard({
                         <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
-                        <span className="hidden sm:inline text-end items-center space-x-1">
+                        <span className="hidden sm:inline-flex items-center gap-x-0.1">
                             {[...Array(5)].map((_, index) => (
-                                <span key={index}>
-                                    {index < Math.round(restaurant.rating)
-                                        ? '★'
-                                        : '☆'}
+                                <span
+                                    key={index}
+                                    className="inline-block gap-x-0"
+                                >
+                                    {index < Math.round(restaurant.rating) ? (
+                                        <Star
+                                            className={'fill-eaorange'}
+                                            size={10}
+                                            strokeWidth={1}
+                                        />
+                                    ) : (
+                                        <Star
+                                            className={''}
+                                            size={10}
+                                            strokeWidth={1}
+                                        />
+                                    )}
                                 </span>
                             ))}
                             <span>({restaurant.user_ratings_total})</span>
