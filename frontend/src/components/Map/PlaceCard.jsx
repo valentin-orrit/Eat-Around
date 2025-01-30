@@ -132,7 +132,13 @@ export default function PlaceCard({
                             {restaurant.vicinity.split(',')[0]}
                         </span>
                         <span className="hidden sm:inline text-end items-center space-x-1">
-                            <span>{restaurant.rating} ⭐</span>
+                            {[...Array(5)].map((_, index) => (
+                                <span key={index}>
+                                    {index < Math.round(restaurant.rating)
+                                        ? '★'
+                                        : '☆'}
+                                </span>
+                            ))}
                             <span>({restaurant.user_ratings_total})</span>
                         </span>
                     </div>
