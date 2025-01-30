@@ -64,7 +64,7 @@ export default function PlaceCard({
 
     return (
         <Card>
-            <CardContent className="flex flex-col flex-wrap mt-1 p-1 w-32 sm:w-52 h-auto gap-y-1">
+            <CardContent className="flex flex-col flex-wrap mt-1 px-1 w-32 sm:w-52 h-auto gap-y-1 m-0">
                 <div className="relative ">
                     {restaurant.opening_hours && (
                         <div className="absolute bottom-2 left-2 z-10">
@@ -120,15 +120,15 @@ export default function PlaceCard({
                         </div>
                     )}
                 </div>
-                <div className="flex flex-col px-2 w-full gap-y-1">
+                <div className="flex flex-col w-full sm:gap-y-1">
                     <span
                         onClick={handleRestaurantNameClick}
-                        className="text-eabrown text-start font-semibold text-nowrap text-ellipsis overflow-hidden w-full cursor-pointer hover:text-eaorange"
+                        className="text-eabrown text-start text-sm sm:text-base font-semibold text-nowrap text-ellipsis overflow-hidden w-full cursor-pointer hover:text-eaorange"
                     >
                         {restaurant.name.split(/[,\|\-]/)[0]}
                     </span>
-                    <div className="flex items-center justify-between text-xs">
-                        <span className="text-start text-nowrap text-ellipsis overflow-hidden w-36">
+                    <div className="flex items-center justify-between text-xs gap-0.5 sm:gap-0.5">
+                        <span className="hidden sm:block text-start text-nowrap text-ellipsis overflow-hidden w-36">
                             {restaurant.vicinity.split(',')[0]}
                         </span>
                         <span className="inline-flex items-center gap-x-0.1">
@@ -155,7 +155,7 @@ export default function PlaceCard({
                             <span>({restaurant.user_ratings_total})</span>
                         </span>
                     </div>
-                    <div className="flex items-center justify-between my-2">
+                    <div className="flex items-center justify-between sm:my-1">
                         {restaurant.website && (
                             <a
                                 href={restaurant.website}
