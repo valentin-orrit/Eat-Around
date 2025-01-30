@@ -4,6 +4,7 @@ import {
     APIProvider,
     Map,
     InfoWindow,
+    Pin,
 } from '@vis.gl/react-google-maps'
 import { Search, MapPin } from 'lucide-react'
 import PlacesCarousel from './PlacesCarousel'
@@ -30,6 +31,7 @@ export default function MapInit({
     const inputRef = useRef(null)
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const { userId } = useAuth()
+    const [open, setOpen] = useState(false)
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
@@ -383,8 +385,26 @@ export default function MapInit({
                                     >
                                         <AdvancedMarker
                                             position={userPosition}
-                                            title="Your location"
-                                        />
+                                            onClick={() => setOpen(true)}
+                                        >
+                                            <Pin
+                                                background={'#f9a705'}
+                                                scale={1.1}
+                                                glyphColor={'#3c8236'}
+                                                borderColor={'#f9a705'}
+                                            />
+                                        </AdvancedMarker>
+
+                                        {open && (
+                                            <InfoWindow
+                                                position={userPosition}
+                                                onCloseClick={() =>
+                                                    setOpen(false)
+                                                }
+                                            >
+                                                <div>Your Position</div>
+                                            </InfoWindow>
+                                        )}
                                         {restaurants.map(
                                             (restaurant, index) => (
                                                 <CustomMarker
