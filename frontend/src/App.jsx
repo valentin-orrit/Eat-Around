@@ -20,7 +20,7 @@ function App() {
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
 
     const defaultFilters = [
-        { key: 1, name: 'vegetarian', isActive: true, isSelected: false },
+        { key: 1, name: 'vegetarian', isActive: true, isSelected: true },
         { key: 2, name: 'vegan', isActive: true, isSelected: false },
         { key: 3, name: 'gluten-free', isActive: true, isSelected: false },
         { key: 4, name: 'lactose-free', isActive: true, isSelected: false },
