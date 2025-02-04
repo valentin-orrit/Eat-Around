@@ -16,6 +16,10 @@ export default function Home({
 }) {
     return (
         <div className="flex flex-col p-0 md:p-4 w-full md:w-11/12 lg:px-16 lg:py-8 lg:max-w-8xl">
+            {!userPosition && (
+                <div className="flex flex-col my-8 md:my-16"></div>
+            )}
+
             <div
                 id="title"
                 className="flex justify-center items-center mt-4 lg:mt-0 mb-8"

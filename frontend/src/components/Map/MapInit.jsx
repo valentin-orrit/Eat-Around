@@ -321,6 +321,26 @@ export default function MapInit({
 
     return (
         <div className="flex flex-col w-full">
+            {!userPosition && (
+                <div className="flex flex-col lg:flex-row items-center align-middle justify-between my-8 mx-6 p-2 sm:p-4 bg-white rounded-md w-auto border border-eaogreymute shadow-md">
+                    <h2 className="text-eablack text-left lg:px-2">
+                        welcome
+                        <span className="hidden 2xl:inline">
+                            {' '}
+                            to Eat Around
+                        </span>
+                        !
+                    </h2>
+
+                    <p className="text-left text-sm text-eablack px-2 italic">
+                        Search for an address or use your location to find the
+                        best places around! Select the filters that fit your
+                        regime. Create an account to manage your favorite places
+                        and filters.
+                    </p>
+                </div>
+            )}
+
             <div
                 id="searchandfilters"
                 className="flex flex-col xl:flex-row justify-center items-center lg:mx-16"
