@@ -10,6 +10,7 @@ import favoritesRouter from './routes/favorites.js'
 import contactRouter from './routes/contact.js'
 import clerkWebhooksRouter from './routes/clerk-webhooks.js'
 import { startNgrok } from './config/ngrok.js'
+import googlemapsKeyRouter from './routes/googlemaps-key.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -61,6 +62,7 @@ app.use('/', placesRouter)
 app.use('/', favoritesRouter)
 app.use('/', contactRouter)
 app.use('/', clerkWebhooksRouter)
+app.use('/', googlemapsKeyRouter)
 
 app.get('/', (req, res) => {
     const welcomeMessage = '<h1>Welcome to Eat Around API</h1>'
