@@ -11,6 +11,7 @@ import PlacesCarousel from './PlacesCarousel'
 import PlaceCard from './PlaceCard'
 import CustomMarker from './CustomMarker'
 import { useAuth } from '@clerk/clerk-react'
+import axios from 'axios'
 
 export default function MapInit({
     filters,
@@ -28,14 +29,30 @@ export default function MapInit({
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [address, setAddress] = useState('')
+    const api = import.meta.env.VITE_AXIOS_BASE_URL
+    const [apiKey, setApiKey] = useState(null)
     const inputRef = useRef(null)
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const { userId } = useAuth()
     const [open, setOpen] = useState(false)
     const selectedFilters = filters
         .filter((f) => f.isSelected)
         .map((f) => f.name)
         .join(' ')
+
+    async function fetchGmapsKey(api, setGmapsKey) {
+        if (!api) return
+
+        try {
+            const response = await axios.get(`${api}/maps-key`)
+            setGmapsKey(response.data.apiKey || '')
+        } catch (error) {
+            console.error('Error fetching Google Maps API key:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchGmapsKey(api, setApiKey)
+    }, [])
 
     // Needed to enable autocomplete!!
     function loadGoogleMapsApi(apiKey, libraries = []) {
@@ -105,8 +122,7 @@ export default function MapInit({
     }
 
     useEffect(() => {
-        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-
+        if (!apiKey) return
         loadGoogleMapsApi(apiKey, ['places'])
             .then(() => {
                 if (inputRef.current && userId) {
@@ -140,7 +156,7 @@ export default function MapInit({
             .catch((err) =>
                 console.error('Error loading Google Maps API:', err)
             )
-    }, [])
+    }, [apiKey])
 
     const requestLocation = (inputAddress) => {
         setIsLoading(true)

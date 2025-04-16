@@ -60,7 +60,6 @@ export default function AppSidebar({
     const { state, setOpen } = useSidebar()
     const api = import.meta.env.VITE_AXIOS_BASE_URL
     const [confirmationId, setConfirmationId] = useState(null)
-    const googleMapsApi = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
     function toggleFilter(filterName) {
         setFilters((prevFilters) =>
